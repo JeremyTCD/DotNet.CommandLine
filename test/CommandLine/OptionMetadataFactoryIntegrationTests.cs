@@ -28,10 +28,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
         private class DummyModel
         {
-            [Option(nameof(DummyStrings.OptionShortName_Dummy), 
+            [Option(typeof(DummyStrings),
+                nameof(DummyStrings.OptionShortName_Dummy), 
                 nameof(DummyStrings.OptionLongName_Dummy), 
-                nameof(DummyStrings.OptionDescription_Dummy),
-                ResourceType = typeof(DummyStrings))]
+                nameof(DummyStrings.OptionDescription_Dummy))]
             public string DummyProperty { get; }
         }
     }
