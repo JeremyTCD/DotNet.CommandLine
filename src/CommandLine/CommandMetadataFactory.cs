@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
@@ -12,20 +13,20 @@ namespace JeremyTCD.DotNet.CommandLine
             _optionMetadataFactory = optionMetadataFactory;
         }
 
-        public CommandMetadata CreateFromAttribute(CommandAttribute commandAttribute)
+        public CommandMetadata CreateFromAttribute(CommandAttribute commandAttribute, Type commandModelType)
         {
             List<OptionMetadata> optionMetadata = new List<OptionMetadata>();
-            foreach(PropertyInfo propertyInfo in commandAttribute.CommandModelType.GetRuntimeProperties())
+            foreach(PropertyInfo propertyInfo in commandModelType.GetRuntimeProperties())
             {
                 OptionAttribute optionAttribute = propertyInfo.GetCustomAttribute<OptionAttribute>();
 
                 if(optionAttribute != null)
                 {
-                    optionMetadata.Add(_optionMetadataFactory.CreateFromAttribute(optionAttribute));
+                    optionMetadata.Add(_optionMetadataFactory.CreateFromAttribute(optionAttribute, propertyInfo));
                 }
             }
 
-            return new CommandMetadata(commandAttribute.CommandModelType, commandAttribute.IsDefault, 
+            return new CommandMetadata(commandModelType, commandAttribute.IsDefault, 
                 commandAttribute.Name, commandAttribute.Description, optionMetadata);
         }
     }

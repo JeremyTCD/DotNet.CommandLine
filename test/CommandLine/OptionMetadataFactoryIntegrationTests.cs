@@ -10,20 +10,22 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromAttribute_CreatesOptionMetadataFromOptionAttribute()
         {
             // Arrange
-            OptionAttribute dummyOptionAttribute = typeof(DummyModel).
+            PropertyInfo dummyPropertyInfo = typeof(DummyModel).
                 GetRuntimeProperties().
-                First().
+                First();
+            OptionAttribute dummyOptionAttribute = dummyPropertyInfo.
                 GetCustomAttribute<OptionAttribute>();
 
             OptionMetadataFactory optionMetadataFactory = new OptionMetadataFactory();
 
             // Act
-            OptionMetadata optionMetadata = optionMetadataFactory.CreateFromAttribute(dummyOptionAttribute);
+            OptionMetadata optionMetadata = optionMetadataFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
 
             // Assert
             Assert.Equal(DummyStrings.OptionShortName_Dummy, optionMetadata.ShortName);
             Assert.Equal(DummyStrings.OptionLongName_Dummy, optionMetadata.LongName);
             Assert.Equal(DummyStrings.OptionDescription_Dummy, optionMetadata.Description);
+            Assert.Equal(dummyPropertyInfo, optionMetadata.PropertyInfo);
         }
 
         private class DummyModel
