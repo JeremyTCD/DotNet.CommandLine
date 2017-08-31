@@ -16,10 +16,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             OptionAttribute dummyOptionAttribute = dummyPropertyInfo.
                 GetCustomAttribute<OptionAttribute>();
 
-            OptionMetadataFactory optionMetadataFactory = new OptionMetadataFactory();
+            OptionFactory optionMetadataFactory = new OptionFactory();
 
             // Act
-            OptionMetadata optionMetadata = optionMetadataFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
+            Option optionMetadata = optionMetadataFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
 
             // Assert
             Assert.Equal(DummyStrings.OptionShortName_Dummy, optionMetadata.ShortName);
