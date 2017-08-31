@@ -4,10 +4,10 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
 {
-    public class OptionMetadataFactoryIntegrationTests
+    public class OptionFactoryIntegrationTests
     {
         [Fact]
-        public void CreateFromAttribute_CreatesOptionMetadataFromOptionAttribute()
+        public void CreateFromAttribute_CreatesOptionFromOptionAttribute()
         {
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyModel).
@@ -16,16 +16,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             OptionAttribute dummyOptionAttribute = dummyPropertyInfo.
                 GetCustomAttribute<OptionAttribute>();
 
-            OptionFactory optionMetadataFactory = new OptionFactory();
+            OptionFactory optionFactory = new OptionFactory();
 
             // Act
-            Option optionMetadata = optionMetadataFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
+            Option option = optionFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
 
             // Assert
-            Assert.Equal(DummyStrings.OptionShortName_Dummy, optionMetadata.ShortName);
-            Assert.Equal(DummyStrings.OptionLongName_Dummy, optionMetadata.LongName);
-            Assert.Equal(DummyStrings.OptionDescription_Dummy, optionMetadata.Description);
-            Assert.Equal(dummyPropertyInfo, optionMetadata.PropertyInfo);
+            Assert.Equal(DummyStrings.OptionShortName_Dummy, option.ShortName);
+            Assert.Equal(DummyStrings.OptionLongName_Dummy, option.LongName);
+            Assert.Equal(DummyStrings.OptionDescription_Dummy, option.Description);
+            Assert.Equal(dummyPropertyInfo, option.PropertyInfo);
         }
 
         private class DummyModel

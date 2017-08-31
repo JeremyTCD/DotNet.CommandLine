@@ -10,14 +10,14 @@ namespace JeremyTCD.DotNet.CommandLine
         public string Description { get; }
         public bool IsDefault { get; }
 
-        public IEnumerable<Option> OptionMetadata {get;}
+        public IEnumerable<Option> Options {get;}
 
-        public Command(Type commandModelType, bool isDefault, string name, string description, IEnumerable<Option> optionMetadata)
+        public Command(Type commandModelType, bool isDefault, string name, string description, IEnumerable<Option> options)
         {
             CommandModelType = commandModelType;
             Name = name;
             Description = description;
-            OptionMetadata = optionMetadata;
+            Options = options;
             IsDefault = isDefault;
         }
     }
