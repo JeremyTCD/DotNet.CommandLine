@@ -117,7 +117,40 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="CommandDescription_Dummy" xml:space="preserve">
+    <value>Dummy description</value>
+  </data>
+  <data name="CommandName_Dummy" xml:space="preserve">
+    <value>dummy</value>
+  </data>
   <data name="DummyString" xml:space="preserve">
     <value>DummyValue</value>
+  </data>
+  <data name="OptionDescription_Dummy" xml:space="preserve">
+    <value>Dummy description</value>
+  </data>
+  <data name="OptionLongName_Dummy" xml:space="preserve">
+    <value>dummy</value>
+  </data>
+  <data name="OptionLongName_MultipleValues" xml:space="preserve">
+    <value>multiplevalues</value>
+  </data>
+  <data name="OptionLongName_NoValue" xml:space="preserve">
+    <value>novalue</value>
+  </data>
+  <data name="OptionLongName_SingleValue" xml:space="preserve">
+    <value>singlevalue</value>
+  </data>
+  <data name="OptionShortName_Dummy" xml:space="preserve">
+    <value>d</value>
+  </data>
+  <data name="OptionShortName_MultipleValues" xml:space="preserve">
+    <value>mv</value>
+  </data>
+  <data name="OptionShortName_NoValue" xml:space="preserve">
+    <value>nv</value>
+  </data>
+  <data name="OptionShortName_SingleValue" xml:space="preserve">
+    <value>sv</value>
   </data>
 </root>

@@ -62,11 +62,110 @@ namespace JeremyTCD.DotNet.CommandLine.Tests {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Dummy description.
+        /// </summary>
+        internal static string CommandDescription_Dummy {
+            get {
+                return ResourceManager.GetString("CommandDescription_Dummy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dummy.
+        /// </summary>
+        internal static string CommandName_Dummy {
+            get {
+                return ResourceManager.GetString("CommandName_Dummy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to DummyValue.
         /// </summary>
         internal static string DummyString {
             get {
                 return ResourceManager.GetString("DummyString", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Dummy description.
+        /// </summary>
+        internal static string OptionDescription_Dummy {
+            get {
+                return ResourceManager.GetString("OptionDescription_Dummy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to dummy.
+        /// </summary>
+        internal static string OptionLongName_Dummy {
+            get {
+                return ResourceManager.GetString("OptionLongName_Dummy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to multiplevalues.
+        /// </summary>
+        internal static string OptionLongName_MultipleValues {
+            get {
+                return ResourceManager.GetString("OptionLongName_MultipleValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to novalue.
+        /// </summary>
+        internal static string OptionLongName_NoValue {
+            get {
+                return ResourceManager.GetString("OptionLongName_NoValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to singlevalue.
+        /// </summary>
+        internal static string OptionLongName_SingleValue {
+            get {
+                return ResourceManager.GetString("OptionLongName_SingleValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to d.
+        /// </summary>
+        internal static string OptionShortName_Dummy {
+            get {
+                return ResourceManager.GetString("OptionShortName_Dummy", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to mv.
+        /// </summary>
+        internal static string OptionShortName_MultipleValues {
+            get {
+                return ResourceManager.GetString("OptionShortName_MultipleValues", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to nv.
+        /// </summary>
+        internal static string OptionShortName_NoValue {
+            get {
+                return ResourceManager.GetString("OptionShortName_NoValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to sv.
+        /// </summary>
+        internal static string OptionShortName_SingleValue {
+            get {
+                return ResourceManager.GetString("OptionShortName_SingleValue", resourceCulture);
             }
         }
     }
