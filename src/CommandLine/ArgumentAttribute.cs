@@ -5,26 +5,31 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public abstract class ArgumentAttribute : Attribute
     {
-        public Type ResourceType { get; set; }
+        protected Type _resourceType { get; set; }
+
+        public ArgumentAttribute(Type resourceType)
+        {
+            _resourceType = resourceType;
+        }
 
         public string GetResource(string resourceName)
         {
-            if (ResourceType == null)
+            if (_resourceType == null)
             {
-                throw new InvalidOperationException(Strings.Exception_, GetType().Name);
+                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
             }
 
             if (resourceName == null)
             {
-                throw new InvalidOperationException(Strings.Exception_, GetType().Name);
+                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
 
             }
 
-            PropertyInfo propertyInfo = ResourceType.GetTypeInfo().GetDeclaredProperty(resourceName);
+            PropertyInfo propertyInfo = _resourceType.GetTypeInfo().GetDeclaredProperty(resourceName);
 
             if (propertyInfo == null)
             {
-                throw new InvalidOperationException(Strings.Exception_, GetType().Name);
+                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
             }
 
             if (!propertyInfo.GetMethod.IsStatic)

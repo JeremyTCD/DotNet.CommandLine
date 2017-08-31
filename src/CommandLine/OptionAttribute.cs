@@ -1,8 +1,7 @@
 ﻿using System;
 
-namespace JeremyTCD.DotNet.CommandLine.src
+namespace JeremyTCD.DotNet.CommandLine
 {
-
     [AttributeUsage(AttributeTargets.Property, AllowMultiple = false, Inherited = true)]
     public class OptionAttribute : ArgumentAttribute
     {
@@ -48,11 +47,12 @@ namespace JeremyTCD.DotNet.CommandLine.src
         }
 
         /// <summary>
-        /// Creates a <see cref="VerbAttribute"/> instance.
+        /// Creates a <see cref="CommandAttribute"/> instance.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public OptionAttribute(string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null)
+        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null):
+            base(resourceType)
         {
             _shortNameResourceName = shortNameResourceName;
             _longNameResourceName = longNameResourceName;
