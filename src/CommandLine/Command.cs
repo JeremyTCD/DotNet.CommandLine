@@ -3,16 +3,16 @@ using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class CommandMetadata
+    public class Command
     {
         public Type CommandModelType { get; }
         public string Name { get; }
         public string Description { get; }
         public bool IsDefault { get; }
 
-        public IEnumerable<OptionMetadata> OptionMetadata {get;}
+        public IEnumerable<Option> OptionMetadata {get;}
 
-        public CommandMetadata(Type commandModelType, bool isDefault, string name, string description, IEnumerable<OptionMetadata> optionMetadata)
+        public Command(Type commandModelType, bool isDefault, string name, string description, IEnumerable<Option> optionMetadata)
         {
             CommandModelType = commandModelType;
             Name = name;
