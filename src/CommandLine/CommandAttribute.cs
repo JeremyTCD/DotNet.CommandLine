@@ -36,19 +36,16 @@ namespace JeremyTCD.DotNet.CommandLine
 
         public bool IsDefault { get; }
 
-        public Type CommandModelType { get; }
-
         /// <summary>
         /// Creates a <see cref="CommandAttribute"/> instance.
         /// </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public CommandAttribute(Type commandModelType, Type resourceType = null, string nameResourceName = null, string descriptionResourceName = null, 
+        public CommandAttribute(Type resourceType = null, string nameResourceName = null, string descriptionResourceName = null, 
             bool isDefault = false): base(resourceType)
         {
             _nameResourceName = nameResourceName;
             _descriptionResourceName = descriptionResourceName;
-            CommandModelType = commandModelType;
             IsDefault = isDefault;
         }
     }
