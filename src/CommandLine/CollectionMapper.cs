@@ -16,10 +16,9 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Ensures that <paramref name="value"/> is not null and that the property represented by <paramref name="propertyInfo"/> is assignable to
-        /// <see cref="ICollection{T}"/>. If both conditions are met, sets the property in 
-        /// <paramref name="target"/> to an <see cref="ICollection{T}"/> containing the result of splitting <paramref name="value"/> using ','
-        /// as separator.
+        /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is assignable to
+        /// <see cref="ICollection{T}"/>, sets the corresponding property in <paramref name="target"/> to an <see cref="ICollection{T}"/> 
+        /// containing the result of splitting <paramref name="value"/> using ',' as separator.
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>

@@ -6,7 +6,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// If <paramref name="value"/> is null and the property represented by <paramref name="propertyInfo"/> is of type bool, 
-        /// sets the property in <paramref name="target"/> to true. 
+        /// sets the corresponding property in <paramref name="target"/> to true. 
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>
