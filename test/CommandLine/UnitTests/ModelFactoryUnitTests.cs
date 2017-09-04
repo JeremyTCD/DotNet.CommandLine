@@ -25,7 +25,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string dummyOptionKey = "dummyOptionKey";
             Arguments dummyArguments = new Arguments(null, new Dictionary<string, string>() { { dummyOptionKey, null } });
-            Command dummyCommand = _commandFactory.CreateFromType(typeof(DummyModel));
+            Command dummyCommand = _commandFactory.TryCreateFromType(typeof(DummyModel));
             DummyModel dummyModel = new DummyModel();
 
             Mock<IActivatorService> mockActivatorService = _mockRepository.Create<IActivatorService>();
@@ -49,7 +49,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyOptionKey = DummyStrings.OptionShortName_Dummy;
             string dummyOptionValue = "dummyOptionValue";
             Arguments dummyArguments = new Arguments(null, new Dictionary<string, string>() { { dummyOptionKey, dummyOptionValue } });
-            Command dummyCommand = _commandFactory.CreateFromType(typeof(DummyModel));
+            Command dummyCommand = _commandFactory.TryCreateFromType(typeof(DummyModel));
             DummyModel dummyModel = new DummyModel();
 
             Mock<IActivatorService> mockActivatorService = _mockRepository.Create<IActivatorService>();
@@ -73,7 +73,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyOptionKey = DummyStrings.OptionShortName_Dummy;
             string dummyOptionValue = "dummyOptionValue";
             Arguments dummyArguments = new Arguments(null, new Dictionary<string, string>() { { dummyOptionKey, dummyOptionValue } });
-            Command dummyCommand = _commandFactory.CreateFromType(typeof(DummyModel));
+            Command dummyCommand = _commandFactory.TryCreateFromType(typeof(DummyModel));
             DummyModel dummyModel = new DummyModel();
 
             Mock<IActivatorService> mockActivatorService = _mockRepository.Create<IActivatorService>();
@@ -97,7 +97,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyOptionKey = DummyStrings.OptionShortName_Dummy;
             string dummyOptionValue = "dummyOptionValue";
             Arguments dummyArguments = new Arguments(null, new Dictionary<string, string>() { { dummyOptionKey, dummyOptionValue } });
-            Command dummyCommand = _commandFactory.CreateFromType(typeof(DummyModel));
+            Command dummyCommand = _commandFactory.TryCreateFromType(typeof(DummyModel));
             DummyModel dummyModel = new DummyModel();
 
             Mock<IActivatorService> mockActivatorService = _mockRepository.Create<IActivatorService>();
