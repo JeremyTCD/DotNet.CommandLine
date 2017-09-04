@@ -1,5 +1,4 @@
-﻿using System.Linq;
-using System.Reflection;
+﻿using System.Reflection;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
@@ -7,19 +6,30 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     public class OptionFactoryIntegrationTests
     {
         [Fact]
-        public void CreateFromAttribute_CreatesOptionFromOptionAttribute()
+        public void TryCreateFromPropertyInfo_ReturnsNullIfPropertyInfoDoesNotContainOptionAttribute()
         {
             // Arrange
-            PropertyInfo dummyPropertyInfo = typeof(DummyModel).
-                GetRuntimeProperties().
-                First();
-            OptionAttribute dummyOptionAttribute = dummyPropertyInfo.
-                GetCustomAttribute<OptionAttribute>();
+            PropertyInfo dummyPropertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.DummyNoAttributeProperty));
 
             OptionFactory optionFactory = new OptionFactory();
 
             // Act
-            Option option = optionFactory.CreateFromAttribute(dummyOptionAttribute, dummyPropertyInfo);
+            Option option = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
+
+            // Assert
+            Assert.Null(option);
+        }
+
+        [Fact]
+        public void TryCreateFromPropertyInfo_CreatesOptionIfSuccessful()
+        {
+            // Arrange
+            PropertyInfo dummyPropertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.DummyProperty));
+
+            OptionFactory optionFactory = new OptionFactory();
+
+            // Act
+            Option option = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
 
             // Assert
             Assert.Equal(DummyStrings.OptionShortName_Dummy, option.ShortName);
@@ -35,6 +45,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 nameof(DummyStrings.OptionLongName_Dummy), 
                 nameof(DummyStrings.OptionDescription_Dummy))]
             public string DummyProperty { get; }
+
+            public string DummyNoAttributeProperty { get; }
         }
     }
 }
