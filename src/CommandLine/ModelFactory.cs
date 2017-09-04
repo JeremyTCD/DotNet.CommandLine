@@ -51,6 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
 
                 bool propertySet = false;
+                Exception innerException = null;
 
                 try
                 {
@@ -65,12 +66,12 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
                 catch (Exception exception)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_InvalidOptionValue, optionArg.Value, optionArg.Key), exception);
+                    innerException = exception;
                 }
 
-                if (!propertySet)
+                if (!propertySet || innerException != null)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_InvalidOptionValue, optionArg.Value, optionArg.Key));
+                    throw new ParseException(string.Format(Strings.Exception_InvalidOptionValue, optionArg.Value, optionArg.Key), innerException);
                 }
             }
 
