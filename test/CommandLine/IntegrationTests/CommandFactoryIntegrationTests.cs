@@ -32,7 +32,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(DummyStrings.CommandName_Dummy, result.Name);
             Assert.Equal(DummyStrings.CommandDescription_Dummy, result.Description);
             Assert.True(result.IsDefault);
-            Assert.Equal(typeof(DummyModel), result.CommandModelType);
+            Assert.Equal(typeof(DummyModel), result.ModelType);
             Assert.Single(result.Options);
             Assert.Equal(dummyOption, result.Options.First());
         }
