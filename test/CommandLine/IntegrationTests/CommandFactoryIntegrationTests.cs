@@ -11,30 +11,47 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void CreateFromAttribute_CreatesCommandFromCommandAttribute()
+        public void TryCreateFromType_ReturnsNullIfTypeDoesNotContainCommandAttribute()
+        {
+            // Arrange
+            Type dummyModelType = typeof(DummyNoAttributeModel);
+            CommandFactory commandFactory = new CommandFactory(null);
+
+            // Act
+            Command command = commandFactory.TryCreateFromType(dummyModelType);
+
+            // Assert
+            Assert.Null(command);
+        }
+
+        [Fact]
+        public void TryCreateFromType_CreatesCommandIfSuccessful()
         {
             // Arrange
             Type dummyCommandModelType = typeof(DummyModel);
-            CommandAttribute dummyCommandAttribute = dummyCommandModelType.GetTypeInfo().GetCustomAttribute<CommandAttribute>();
-            PropertyInfo dummyOptionPropertyInfo = typeof(DummyModel).GetRuntimeProperties().First();
-            OptionAttribute dummyOptionAttribute = dummyOptionPropertyInfo.GetCustomAttribute<OptionAttribute>();
-
+            PropertyInfo dummyPropertyInfo = dummyCommandModelType.GetProperty(nameof(DummyModel.DummyProperty));
             Option dummyOption = new Option(null, null, null, null);
+
             Mock<IOptionFactory> mockOptionFactory = _mockRepository.Create<IOptionFactory>();
-            mockOptionFactory.Setup(o => o.CreateFromAttribute(dummyOptionAttribute, dummyOptionPropertyInfo)).Returns(dummyOption);
+            mockOptionFactory.Setup(o => o.TryCreateFromPropertyInfo(dummyPropertyInfo)).Returns(dummyOption);
 
             CommandFactory commandFactory = new CommandFactory(mockOptionFactory.Object);
 
             // Act
-            Command result = commandFactory.CreateFromAttribute(dummyCommandAttribute, dummyCommandModelType);
+            Command result = commandFactory.TryCreateFromType(dummyCommandModelType);
 
             // Assert
+            _mockRepository.VerifyAll();
             Assert.Equal(DummyStrings.CommandName_Dummy, result.Name);
             Assert.Equal(DummyStrings.CommandDescription_Dummy, result.Description);
             Assert.True(result.IsDefault);
             Assert.Equal(typeof(DummyModel), result.ModelType);
             Assert.Single(result.Options);
             Assert.Equal(dummyOption, result.Options.First());
+        }
+
+        private class DummyNoAttributeModel
+        {
         }
 
         [Command(typeof(DummyStrings), nameof(DummyStrings.CommandName_Dummy), nameof(DummyStrings.CommandDescription_Dummy), true)]

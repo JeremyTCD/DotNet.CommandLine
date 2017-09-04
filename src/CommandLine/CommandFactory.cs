@@ -8,25 +8,44 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private IOptionFactory _optionFactory { get; }
 
+        /// <summary>
+        /// Creates a <see cref="CommandFactory"/> instance.
+        /// </summary>
+        /// <param name="optionFactory"></param>
         public CommandFactory(IOptionFactory optionFactory)
         {
             _optionFactory = optionFactory;
         }
 
-        public Command CreateFromAttribute(CommandAttribute commandAttribute, Type commandModelType)
+        /// <summary>
+        /// Creates a <see cref="Command"/> instance from <paramref name="modelType"/>'s <see cref="CommandAttribute"/>.
+        /// </summary>
+        /// <param name="modelType">
+        /// <see cref="Type"/> instance with a <see cref="CommandAttribute"/>
+        /// </param>
+        /// <returns>
+        /// <see cref="Command"/> if successful, null if <paramref name="modelType"/> does not contain a <see cref="CommandAttribute"/>.
+        /// </returns>
+        public Command TryCreateFromType(Type modelType)
         {
-            List<Option> options = new List<Option>();
-            foreach(PropertyInfo propertyInfo in commandModelType.GetRuntimeProperties())
-            {
-                OptionAttribute optionAttribute = propertyInfo.GetCustomAttribute<OptionAttribute>();
+            CommandAttribute commandAttribute = modelType.GetTypeInfo().GetCustomAttribute<CommandAttribute>();
 
-                if(optionAttribute != null)
+            if (commandAttribute == null)
+            {
+                return null;
+            }
+
+            List<Option> options = new List<Option>();
+            foreach (PropertyInfo propertyInfo in modelType.GetRuntimeProperties())
+            {
+                Option option = _optionFactory.TryCreateFromPropertyInfo(propertyInfo);
+                if (option != null)
                 {
-                    options.Add(_optionFactory.CreateFromAttribute(optionAttribute, propertyInfo));
+                    options.Add(option);
                 }
             }
 
-            return new Command(commandModelType, commandAttribute.IsDefault, 
+            return new Command(modelType, commandAttribute.IsDefault,
                 commandAttribute.Name, commandAttribute.Description, options);
         }
     }
