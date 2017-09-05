@@ -62,6 +62,15 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
+        /// </summary>
+        public static string Exception_CommandDoesNotExist {
+            get {
+                return ResourceManager.GetString("Exception_CommandDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Invalid arguments.
         /// </summary>
         public static string Exception_InvalidArguments {
@@ -85,6 +94,34 @@ namespace JeremyTCD.DotNet.CommandLine {
         public static string Exception_MalformedArguments {
             get {
                 return ResourceManager.GetString("Exception_MalformedArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple commands have the name &quot;{0}&quot;.
+        /// </summary>
+        public static string Exception_MultipleCommandsWithSameName {
+            get {
+                return ResourceManager.GetString("Exception_MultipleCommandsWithSameName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Multiple default commands:
+        ///{0}.
+        /// </summary>
+        public static string Exception_MultipleDefaultCommands {
+            get {
+                return ResourceManager.GetString("Exception_MultipleDefaultCommands", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to No default command.
+        /// </summary>
+        public static string Exception_NoDefaultCommand {
+            get {
+                return ResourceManager.GetString("Exception_NoDefaultCommand", resourceCulture);
             }
         }
         

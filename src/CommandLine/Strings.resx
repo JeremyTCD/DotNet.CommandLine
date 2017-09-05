@@ -117,6 +117,9 @@
   <resheader name="writer">
     <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
   </resheader>
+  <data name="Exception_CommandDoesNotExist" xml:space="preserve">
+    <value>Command "{0}" does not exist</value>
+  </data>
   <data name="Exception_InvalidArguments" xml:space="preserve">
     <value>Invalid arguments</value>
   </data>
@@ -125,6 +128,16 @@
   </data>
   <data name="Exception_MalformedArguments" xml:space="preserve">
     <value>Malformed arguments "{0}"</value>
+  </data>
+  <data name="Exception_MultipleCommandsWithSameName" xml:space="preserve">
+    <value>Multiple commands have the name "{0}"</value>
+  </data>
+  <data name="Exception_MultipleDefaultCommands" xml:space="preserve">
+    <value>Multiple default commands:
+{0}</value>
+  </data>
+  <data name="Exception_NoDefaultCommand" xml:space="preserve">
+    <value>No default command</value>
   </data>
   <data name="Exception_OptionDoesNotExist" xml:space="preserve">
     <value>Option "-{0}" does not exist</value>
