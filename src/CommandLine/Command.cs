@@ -5,7 +5,7 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class Command
     {
-        public Type CommandModelType { get; }
+        public Type ModelType { get; }
         public string Name { get; }
         public string Description { get; }
         public bool IsDefault { get; }
@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
         public Command(Type commandModelType, bool isDefault, string name, string description, IEnumerable<Option> options)
         {
-            CommandModelType = commandModelType;
+            ModelType = commandModelType;
             Name = name;
             Description = description;
             Options = options;
