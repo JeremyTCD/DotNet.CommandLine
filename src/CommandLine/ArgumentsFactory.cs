@@ -1,27 +1,63 @@
-﻿namespace JeremyTCD.DotNet.CommandLine
+﻿using System.Collections.Generic;
+
+namespace JeremyTCD.DotNet.CommandLine
 {
     public class ArgumentsFactory : IArgumentsFactory
     {
+        /// <summary>
+        /// Creates an <see cref="Arguments"/> instance from a string array. This function serves as an early filter for
+        /// malformed arguments. 
+        /// </summary>
+        /// <param name="args"></param>
+        /// <returns>
+        /// <see cref="Arguments"/>
+        /// </returns>
+        /// <exception cref="ParseException">
+        /// Thrown if array contains null or whitespace elements. 
+        /// </exception>
+        /// <exception cref="ParseException">
+        /// Thrown if an element in <paramref name="args"/> other than the first element has the format of a command.
+        /// </exception>
         public Arguments CreateFromArray(string[] args)
         {
-            Arguments result = new Arguments();
-            foreach(string arg in args)
+            int numArgs = args.Length;
+            string commandName = null;
+            Dictionary<string, string> options = new Dictionary<string, string>();
+
+            for (int i = 0; i < numArgs; i++)
             {
-                if (arg.StartsWith("--") || arg.StartsWith("-"))
+                string arg = args[i];
+                bool isMalformed = false;
+
+                if (string.IsNullOrWhiteSpace(arg))
                 {
-                    result.Options.Add(arg);
-                }
-                else if(result.Verb == null)
-                {
-                    result.Verb = arg;
+                    isMalformed = true;
                 }
                 else
                 {
-                    // TODO verb already specified, throw
+                    if (arg.StartsWith("-"))
+                    {
+                        string[] split = arg.Split('=');
+
+                        options.Add(split[0].Remove(0, 1), split.Length > 1 ? split[1] : null);
+                    }
+                    else if (i == 0)
+                    {
+                        commandName = arg;
+                    }
+                    else
+                    {
+                        isMalformed = true;
+                    }
+                }
+
+                if (isMalformed)
+                {
+                    throw new ParseException(string.Format(Strings.Exception_MalformedArguments, string.Join(" ", args)));
                 }
             }
 
-            return result;
+            return new Arguments(commandName, options);
         }
     }
 }
