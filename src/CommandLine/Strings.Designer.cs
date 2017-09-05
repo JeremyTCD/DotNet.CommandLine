@@ -64,9 +64,9 @@ namespace JeremyTCD.DotNet.CommandLine {
         /// <summary>
         ///   Looks up a localized string similar to Invalid arguments.
         /// </summary>
-        public static string Exception_Arguments {
+        public static string Exception_InvalidArguments {
             get {
-                return ResourceManager.GetString("Exception_Arguments", resourceCulture);
+                return ResourceManager.GetString("Exception_InvalidArguments", resourceCulture);
             }
         }
         
