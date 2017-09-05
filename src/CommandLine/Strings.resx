@@ -120,8 +120,28 @@
   <data name="Exception_Arguments" xml:space="preserve">
     <value>Invalid arguments</value>
   </data>
-  <data name="Exception_ArgumentsContainMultipleCommands" xml:space="preserve">
-    <value>Arguments contain multiple commands:
-{0}</value>
+  <data name="Exception_InvalidOptionValue" xml:space="preserve">
+    <value>"{0}" is an invalid value for option "-{1}"</value>
+  </data>
+  <data name="Exception_MalformedArguments" xml:space="preserve">
+    <value>Malformed arguments "{0}"</value>
+  </data>
+  <data name="Exception_OptionDoesNotExist" xml:space="preserve">
+    <value>Option "-{0}" does not exist</value>
+  </data>
+  <data name="Exception_ParameterShouldBeNull" xml:space="preserve">
+    <value>Parameter "{0}" should not be null</value>
+  </data>
+  <data name="Exception_PropertyCannotHoldMultipleValues" xml:space="preserve">
+    <value>Property "{0}" cannot hold multiple values</value>
+  </data>
+  <data name="Exception_PropertyDoesNotHaveOptionAttribute" xml:space="preserve">
+    <value>Property "{0}" does not have an OptionAttribute</value>
+  </data>
+  <data name="Exception_PropertyIsNotAFlag" xml:space="preserve">
+    <value>Property "{0}" is not a flag</value>
+  </data>
+  <data name="Exception_TypeDoesNotHaveCommandAttribute" xml:space="preserve">
+    <value>Type "{0}" does not have a CommandAttribute</value>
   </data>
 </root>
