@@ -2,7 +2,7 @@
 using System;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
+namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
     public class CommandSetFactoryUnitTests
     {
