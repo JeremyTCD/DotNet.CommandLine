@@ -8,6 +8,14 @@ namespace JeremyTCD.DotNet.CommandLine
         public IDictionary<string, Command> Commands { get; }
 
         /// <summary>
+        /// Creates a <see cref="CommandSet"/> instance.
+        /// </summary>
+        internal CommandSet()
+        {
+            Commands = new Dictionary<string, Command>();
+        }
+
+        /// <summary>
         /// Creates a <see cref="CommandSet"/> instance. 
         /// </summary>
         /// <param name="commands">Cannot contain more than 1 default command.</param>
