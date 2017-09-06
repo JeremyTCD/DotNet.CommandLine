@@ -31,21 +31,23 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         public ParseResult Parse(string[] args, CommandSet commandSet)
         {
-            ParseResult result = new ParseResult();
+            Command command = null;
+            object model = null;
+            ParseException parseException = null;
 
             try
             {
                 Arguments arguments = _argumentsFactory.CreateFromArray(args);
 
-                result.Command = GetCommandByName(arguments.CommandName, commandSet);
-                result.Model = _modelFactory.Create(arguments, result.Command);
+                command = GetCommandByName(arguments.CommandName, commandSet);
+                model = _modelFactory.Create(arguments, command);
             }
             catch(Exception exception) 
             {
-                result.ParseException = exception is ParseException ? exception as ParseException : new ParseException(exception);
+                parseException = exception is ParseException ? exception as ParseException : new ParseException(exception);
             }
 
-            return result;
+            return new ParseResult(parseException, command, model);
         }
 
         /// <summary>
