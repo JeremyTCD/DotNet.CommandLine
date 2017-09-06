@@ -13,6 +13,11 @@ namespace JeremyTCD.DotNet.CommandLine
         public ParseException() : base(Strings.Exception_InvalidArguments) { }
 
         /// <summary>
+        /// Creates a <see cref="ParseException"/> instance with a default parse error message.
+        /// </summary>
+        public ParseException(Exception innerException) : base(Strings.Exception_InvalidArguments, innerException) { }
+
+        /// <summary>
         /// Creates a <see cref="ParseException"/> instance.
         /// </summary>
         /// <param name="userMessage">Must be suitable for end user consumption.</param>
