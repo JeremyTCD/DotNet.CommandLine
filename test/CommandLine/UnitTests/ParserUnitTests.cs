@@ -82,7 +82,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             Arguments dummyArguments = new Arguments(dummyCommandName, null);
             Command dummyCommand = new Command(null, false, null, null, null);
-            CommandSet dummyCommandSet = new CommandSet() { { dummyCommandName, dummyCommand } };
+            CommandSet dummyCommandSet = new CommandSet();
             object dummyModel = new object();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
@@ -91,12 +91,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IModelFactory> mockModelFactory = _mockRepository.Create<IModelFactory>();
             mockModelFactory.Setup(m => m.Create(dummyArguments, dummyCommand)).Returns(dummyModel);
 
-            Parser parser = new Parser(mockArgumentsFactory.Object, mockModelFactory.Object);
+            Mock<Parser> mockParser = _mockRepository.Create<Parser>(mockArgumentsFactory.Object, mockModelFactory.Object);
+            mockParser.Setup(p => p.GetCommandByName(dummyCommandName, dummyCommandSet)).Returns(dummyCommand);
+            mockParser.CallBase = true;
 
             // Act
-            ParseResult result = parser.Parse(dummyArgs, dummyCommandSet);
+            ParseResult result = mockParser.Object.Parse(dummyArgs, dummyCommandSet);
 
             // Assert
+            _mockRepository.VerifyAll();
             Assert.Equal(dummyCommand, result.Command);
             Assert.Equal(dummyModel, result.Model);
         }
@@ -106,25 +109,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             string[] dummyArgs = new string[0];
-            string dummyCommandName = "dummyCommandName";
-            Arguments dummyArguments = new Arguments(dummyCommandName, null);
-            Command dummyCommand = new Command(null, false, null, null, null);
-            CommandSet dummyCommandSet = new CommandSet() { { dummyCommandName, dummyCommand } };
+            Arguments dummyArguments = new Arguments(null, null);
             ParseException dummyParseException = new ParseException();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
+            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
 
-            Mock<IModelFactory> mockModelFactory = _mockRepository.Create<IModelFactory>();
-            mockModelFactory.Setup(m => m.Create(dummyArguments, dummyCommand)).Throws(dummyParseException);
-
-            Parser parser = new Parser(mockArgumentsFactory.Object, mockModelFactory.Object);
+            Parser parser = new Parser(mockArgumentsFactory.Object, null);
 
             // Act
-            ParseResult result = parser.Parse(dummyArgs, dummyCommandSet);
+            ParseResult result = parser.Parse(dummyArgs, null);
 
             // Assert
-            Assert.Equal(dummyCommand, result.Command);
+            _mockRepository.VerifyAll();
             Assert.Equal(dummyParseException, result.ParseException);
         }
 
@@ -133,25 +130,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             string[] dummyArgs = new string[0];
-            string dummyCommandName = "dummyCommandName";
-            Arguments dummyArguments = new Arguments(dummyCommandName, null);
-            Command dummyCommand = new Command(null, false, null, null, null);
-            CommandSet dummyCommandSet = new CommandSet() { { dummyCommandName, dummyCommand } };
+            Arguments dummyArguments = new Arguments(null, null);
             Exception dummyException = new Exception();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
+            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
 
-            Mock<IModelFactory> mockModelFactory = _mockRepository.Create<IModelFactory>();
-            mockModelFactory.Setup(m => m.Create(dummyArguments, dummyCommand)).Throws(dummyException);
-
-            Parser parser = new Parser(mockArgumentsFactory.Object, mockModelFactory.Object);
+            Parser parser = new Parser(mockArgumentsFactory.Object, null);
 
             // Act
-            ParseResult result = parser.Parse(dummyArgs, dummyCommandSet);
+            ParseResult result = parser.Parse(dummyArgs, null);
 
             // Assert
-            Assert.Equal(dummyCommand, result.Command);
+            _mockRepository.VerifyAll();
             Assert.NotNull(result.ParseException);
             Assert.Equal(dummyException, result.ParseException.InnerException);
         }

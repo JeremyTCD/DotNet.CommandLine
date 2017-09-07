@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="Command"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null. Default command if it is null.
         /// </returns>
-        internal Command GetCommandByName(string commandName, CommandSet commandSet)
+        internal virtual Command GetCommandByName(string commandName, CommandSet commandSet)
         {
             if (commandName != null)
             {
