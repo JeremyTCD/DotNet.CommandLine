@@ -3,23 +3,23 @@ using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class CommandSet : IDictionary<string, Command>
+    public class CommandSet : IDictionary<string, ICommand>
     {
-        public IDictionary<string, Command> Commands { get; }
+        public IDictionary<string, ICommand> Commands { get; }
 
         /// <summary>
         /// Creates a <see cref="CommandSet"/> instance.
         /// </summary>
         internal CommandSet()
         {
-            Commands = new Dictionary<string, Command>();
+            Commands = new Dictionary<string, ICommand>();
         }
 
         /// <summary>
         /// Creates a <see cref="CommandSet"/> instance. 
         /// </summary>
         /// <param name="commands">Cannot contain more than 1 default command.</param>
-        internal CommandSet(IDictionary<string, Command> commands)
+        internal CommandSet(IDictionary<string, ICommand> commands)
         {
             Commands = commands;
         }
@@ -27,15 +27,15 @@ namespace JeremyTCD.DotNet.CommandLine
         #region IDictionary<string, Command> member implementations
         public ICollection<string> Keys => Commands.Keys;
 
-        public ICollection<Command> Values => Commands.Values;
+        public ICollection<ICommand> Values => Commands.Values;
 
         public int Count => Commands.Count;
 
         public bool IsReadOnly => Commands.IsReadOnly;
 
-        public Command this[string key] { get => Commands[key]; set => Commands[key] = value; }
+        public ICommand this[string key] { get => Commands[key]; set => Commands[key] = value; }
 
-        public void Add(string key, Command value)
+        public void Add(string key, ICommand value)
         {
             Commands.Add(key, value);
         }
@@ -50,12 +50,12 @@ namespace JeremyTCD.DotNet.CommandLine
             return Commands.Remove(key);
         }
 
-        public bool TryGetValue(string key, out Command value)
+        public bool TryGetValue(string key, out ICommand value)
         {
             return Commands.TryGetValue(key, out value);
         }
 
-        public void Add(KeyValuePair<string, Command> item)
+        public void Add(KeyValuePair<string, ICommand> item)
         {
             Commands.Add(item);
         }
@@ -65,22 +65,22 @@ namespace JeremyTCD.DotNet.CommandLine
             Commands.Clear();
         }
 
-        public bool Contains(KeyValuePair<string, Command> item)
+        public bool Contains(KeyValuePair<string, ICommand> item)
         {
             return Commands.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<string, Command>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
         {
             Commands.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(KeyValuePair<string, Command> item)
+        public bool Remove(KeyValuePair<string, ICommand> item)
         {
             return Commands.Remove(item);
         }
 
-        public IEnumerator<KeyValuePair<string, Command>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
         {
             return Commands.GetEnumerator();
         }
