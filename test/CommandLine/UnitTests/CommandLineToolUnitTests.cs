@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IPrinter> mockPrinter = _mockRepository.Create<IPrinter>();
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
-            ParseResult dummyParseResult = new ParseResult(null, mockCommand.Object, null);
+            ParseResult dummyParseResult = new ParseResult(null, mockCommand.Object);
             mockCommand.Setup(c => c.Run(dummyParseResult, mockPrinter.Object)).Returns(dummyExitCode);
 
             Mock<ICommandSetFactory> mockCommandSetFactory = _mockRepository.Create<ICommandSetFactory>();
@@ -46,7 +46,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             CommandSet dummyCommandSet = new CommandSet();
             string[] dummyArgs = new string[0];
             ParseException dummyParseException = new ParseException();
-            ParseResult dummyParseResult = new ParseResult(dummyParseException, null, null);
+            ParseResult dummyParseResult = new ParseResult(dummyParseException, null);
 
             Mock<IPrinter> mockPrinter = _mockRepository.Create<IPrinter>();
             mockPrinter.Setup(p => p.PrintParseException(dummyParseException));

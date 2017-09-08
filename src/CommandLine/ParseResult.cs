@@ -4,13 +4,11 @@
     {
         public readonly ParseException ParseException;
         public readonly ICommand Command;
-        public readonly CommandSet CommandSet;
 
-        public ParseResult(ParseException parseException, ICommand command, CommandSet commandSet)
+        public ParseResult(ParseException parseException, ICommand command)
         {
             ParseException = parseException;
             Command = command;
-            CommandSet = commandSet;
         }
     }
 }

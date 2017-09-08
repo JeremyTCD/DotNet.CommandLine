@@ -5,64 +5,61 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class Parser : IParser
     {
-        private IArgumentsFactory _argumentsFactory { get; }
-        private IModelFactory _modelFactory { get; }
+        private readonly IArgumentsFactory _argumentsFactory;
+        private readonly ICommandMapper _commandMapper;
 
         /// <summary>
         /// Creates a <see cref="Parser"/> instance.
         /// </summary>
         /// <param name="argumentsFactory"></param>
-        /// <param name="modelFactory"></param>
-        public Parser(IArgumentsFactory argumentsFactory, IModelFactory modelFactory)
+        /// <param name="commandMapper"></param>
+        public Parser(IArgumentsFactory argumentsFactory, ICommandMapper commandMapper)
         {
             _argumentsFactory = argumentsFactory;
-            _modelFactory = modelFactory;
+            _commandMapper = commandMapper;
         }
 
         /// <summary>
-        /// Processes <paramref name="args"/>, selects the relevant <see cref="Command"/> from <paramref name="commandSet"/> and creates
-        /// an instance of its model type.
+        /// Parses <paramref name="args"/>.
         /// </summary>
         /// <param name="args"></param>
-        /// <param name="commands"></param>
+        /// <param name="commandSet"></param>
         /// <returns>
-        /// <see cref="ParseResult"/> containing model and <see cref="Command"/> instances if successful. <see cref="ParseResult"/> containing 
-        /// a <see cref="ParseException"/> if unsuccessful.
+        /// <see cref="ParseResult"/> 
         /// </returns>
         public ParseResult Parse(string[] args, CommandSet commandSet)
         {
-            Command command = null;
-            object model = null;
+            ICommand command = null;
             ParseException parseException = null;
 
             try
             {
                 Arguments arguments = _argumentsFactory.CreateFromArray(args);
-
                 command = GetCommandByName(arguments.CommandName, commandSet);
-                model = _modelFactory.Create(arguments, command);
+
+                _commandMapper.Map(arguments, command);
             }
             catch(Exception exception) 
             {
                 parseException = exception is ParseException ? exception as ParseException : new ParseException(exception);
             }
 
-            return new ParseResult(parseException, command, model);
+            return new ParseResult(parseException, command);
         }
 
         /// <summary>
-        /// Gets <see cref="Command"/> specified by <paramref name="commandName"/> from <paramref name="commandSet"/>.
+        /// Gets <see cref="ICommand"/> specified by <paramref name="commandName"/> from <paramref name="commandSet"/>.
         /// </summary>
         /// <param name="commandName"></param>
         /// <param name="commandSet"></param>
         /// <returns>
-        /// <see cref="Command"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null. Default command if it is null.
+        /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null. Default command if it is null.
         /// </returns>
-        internal virtual Command GetCommandByName(string commandName, CommandSet commandSet)
+        internal virtual ICommand GetCommandByName(string commandName, CommandSet commandSet)
         {
             if (commandName != null)
             {
-                commandSet.TryGetValue(commandName, out Command command);
+                commandSet.TryGetValue(commandName, out ICommand command);
 
                 if (command == null)
                 {
@@ -73,7 +70,7 @@ namespace JeremyTCD.DotNet.CommandLine
             }
             else
             {
-                Command defaultCommand = commandSet.Values.SingleOrDefault(c => c.IsDefault);
+                ICommand defaultCommand = commandSet.Values.SingleOrDefault(c => c.IsDefault);
 
                 if (defaultCommand == null)
                 {
