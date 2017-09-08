@@ -1,56 +1,34 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
     public class CommandSetFactory : ICommandSetFactory
     {
-        private ICommandFactory _commandFactory { get; }
-
         /// <summary>
-        /// Creates a <see cref="CommandSetFactory"/> instance.
-        /// </summary>
-        /// <param name="commandFactory"></param>
-        public CommandSetFactory(ICommandFactory commandFactory)
-        {
-            _commandFactory = commandFactory;
-        }
-
-        /// <summary>
-        /// Creates a <see cref="CommandSet"/> instance from <paramref name="types"/>. This function serves as an early filter for
+        /// Creates a <see cref="CommandSet"/> instance from <paramref name="commands"/>. This function serves as an early filter for
         /// incompatible/invalid commands. 
         /// </summary>
-        /// <param name="types"></param>
+        /// <param name="commands"></param>
         /// <returns>
         /// <see cref="CommandSet"/>
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if a <see cref="Type"/> in <paramref name="types"/> does not have a <see cref="CommandAttribute"/>.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
         /// Thrown there are multiple default commands.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if multiple commands have the same name
+        /// Thrown if a <see cref="ICommand"/> has no name.
         /// </exception>
-        public CommandSet CreateFromTypes(IEnumerable<Type> types)
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if multiple commands have the same name.
+        /// </exception>
+        public CommandSet CreateFromCommands(IEnumerable<ICommand> commands)
         {
-            Dictionary<string, Command> commands = new Dictionary<string, Command>(types.Count());
-            Command defaultCommand = null;
+            ICommand defaultCommand = null;
+            CommandSet result = new CommandSet();
 
-            foreach (Type type in types)
+            foreach (ICommand command in commands)
             {
-                CommandAttribute commandAttribute = type.GetTypeInfo().GetCustomAttribute<CommandAttribute>();
-
-                if (commandAttribute == null)
-                {
-                    throw new InvalidOperationException(string.Format(Strings.Exception_TypeDoesNotHaveCommandAttribute, type.Name));
-                }
-
-                Command command = _commandFactory.TryCreateFromType(type);
-
                 if (command.IsDefault)
                 {
                     if (defaultCommand != null)
@@ -64,9 +42,14 @@ namespace JeremyTCD.DotNet.CommandLine
                     }
                 }
 
+                if(command.Name == null)
+                {
+                    throw new InvalidOperationException(Strings.Exception_CommandsMustHaveNames);
+                }
+
                 try
                 {
-                    commands.Add(command.Name, command);
+                    result.Add(command.Name, command); // Weed out commands with the same name
                 }
                 catch(ArgumentException exception)
                 {
@@ -74,7 +57,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
             }
 
-            return new CommandSet(commands);
+            return result;
         }
     }
 }

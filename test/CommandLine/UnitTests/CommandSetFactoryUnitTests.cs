@@ -9,106 +9,90 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private MockRepository _mockRepository { get; } = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void CreateFromTypes_ThrowsInvalidOperationExceptionIfATypeDoesNotHaveACommandAttribute()
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
         {
             // Arrange
-            CommandSetFactory commandSetFactory = new CommandSetFactory(null);
-
-            // Act and Assert
-            InvalidOperationException exception = Assert.
-                Throws<InvalidOperationException>(() => commandSetFactory.CreateFromTypes(new[] { typeof(DummyNoCommandAttributeModel) }));
-            Assert.Equal(string.Format(Strings.Exception_TypeDoesNotHaveCommandAttribute, nameof(DummyNoCommandAttributeModel)), exception.Message);
-        }
-
-        [Fact]
-        public void CreateFromTypes_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
-        {
-            // Arrange
-            Type dummyType = typeof(DummyModel);
-            Type[] dummyTypes = new[] { dummyType, dummyType };
-
             string dummyCommand1Name = "dummyCommand1Name";
             string dummyCommand2Name = "dummyCommand2Name";
-            Command dummyCommand1 = new Command(null, true, dummyCommand1Name, null, null);
-            Command dummyCommand2 = new Command(null, true, dummyCommand2Name, null, null);
-            Mock<ICommandFactory> mockCommandFactory = _mockRepository.Create<ICommandFactory>();
-            mockCommandFactory.
-                SetupSequence(c => c.TryCreateFromType(dummyType)).
-                Returns(dummyCommand1).
-                Returns(dummyCommand2);
+            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, true);
+            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, true);
+            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory(mockCommandFactory.Object);
+            CommandSetFactory commandSetFactory = new CommandSetFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.
-                Throws<InvalidOperationException>(() => commandSetFactory.CreateFromTypes(dummyTypes));
-            _mockRepository.VerifyAll();
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
                 exception.Message);
         }
 
         [Fact]
-        public void CreateFromTypes_ThrowsInvalidOperationExceptionIfMultipleCommandsHaveTheSameName()
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandHasNoName()
         {
             // Arrange
-            Type dummyType = typeof(DummyModel);
-            Type[] dummyTypes = new[] { dummyType, dummyType };
+            DummyCommand dummyCommand = new DummyCommand(null, true);
+            DummyCommand[] dummyCommands = new[] { dummyCommand };
 
-            string dummyCommandName = "dummyCommandName";
-            Command dummyCommand1 = new Command(null, true, dummyCommandName, null, null);
-            Command dummyCommand2 = new Command(null, false, dummyCommandName, null, null);
-            Mock<ICommandFactory> mockCommandFactory = _mockRepository.Create<ICommandFactory>();
-            mockCommandFactory.
-                SetupSequence(c => c.TryCreateFromType(dummyType)).
-                Returns(dummyCommand1).
-                Returns(dummyCommand2);
-
-            CommandSetFactory commandSetFactory = new CommandSetFactory(mockCommandFactory.Object);
+            CommandSetFactory commandSetFactory = new CommandSetFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.
-                Throws<InvalidOperationException>(() => commandSetFactory.CreateFromTypes(dummyTypes));
-            _mockRepository.VerifyAll();
-            Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName),
-                exception.Message);
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
         }
 
         [Fact]
-        public void CreateFromTypes_CreatesCommandSetFromTypes()
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfMultipleCommandsHaveTheSameName()
         {
             // Arrange
-            Type dummyType = typeof(DummyModel);
-            Type[] dummyTypes = new[] { dummyType, dummyType };
+            string dummyCommandName = "dummyCommandName";
+            DummyCommand dummyCommand1 = new DummyCommand(dummyCommandName, false);
+            DummyCommand dummyCommand2 = new DummyCommand(dummyCommandName, false);
+            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
+            CommandSetFactory commandSetFactory = new CommandSetFactory();
+
+            // Act and Assert
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName), exception.Message);
+        }
+
+        [Fact]
+        public void CreateFromCommands_CreatesCommandSetFromTypes()
+        {
+            // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
             string dummyCommand2Name = "dummyCommand2Name";
-            Command dummyCommand1 = new Command(null, true, dummyCommand1Name, null, null);
-            Command dummyCommand2 = new Command(null, false, dummyCommand2Name, null, null);
-            Mock<ICommandFactory> mockCommandFactory = _mockRepository.Create<ICommandFactory>();
-            mockCommandFactory.
-                SetupSequence(c => c.TryCreateFromType(dummyType)).
-                Returns(dummyCommand1).
-                Returns(dummyCommand2);
+            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, true);
+            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
+            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory(mockCommandFactory.Object);
+            CommandSetFactory commandSetFactory = new CommandSetFactory();
 
-            // Act
-            CommandSet result = commandSetFactory.CreateFromTypes(dummyTypes);
+            // Act 
+            CommandSet result = commandSetFactory.CreateFromCommands(dummyCommands);
 
             // Assert
-            _mockRepository.VerifyAll();
             Assert.Equal(2, result.Count);
-            Assert.Contains(dummyCommand1, result.Values);
-            Assert.Contains(dummyCommand2, result.Values);
+            Assert.Equal(dummyCommand1, result[dummyCommand1Name]);
+            Assert.Equal(dummyCommand2, result[dummyCommand2Name]);
         }
 
-        [Command(typeof(DummyStrings), nameof(DummyStrings.CommandName_Dummy), nameof(DummyStrings.CommandDescription_Dummy))]
-        private class DummyModel
+        private class DummyCommand : ICommand
         {
-        }
+            public string Name { get; }
+            public string Description => throw new NotImplementedException();
+            public bool IsDefault { get; }
 
-        private class DummyNoCommandAttributeModel
-        {
+            public DummyCommand(string name, bool isDefault)
+            {
+                Name = name;
+                IsDefault = isDefault;
+            }
+
+            public int Run(ParseResult parseResult, IPrinter printer)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }
