@@ -7,22 +7,22 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is of a type that 
-        /// can be converted to from <see cref="string"/>, sets corresponding property in <paramref name="target"/> to <paramref name="value"/>.
+        /// can be converted to from <see cref="string"/>, sets corresponding property in <paramref name="command"/> to <paramref name="value"/>.
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>
-        /// <param name="target"></param>
+        /// <param name="command"></param>
         /// <returns>
         /// True if property was set succesfully, false otherwise.
         /// </returns>
-        public bool TryMap(PropertyInfo propertyInfo, string value, object target)
+        public bool TryMap(PropertyInfo propertyInfo, string value, Command command)
         {
             if(value == null || !CanBeConvertedToFromString(propertyInfo.PropertyType))
             {
                 return false;
             }
 
-            propertyInfo.SetValue(target, Convert.ChangeType(value, propertyInfo.PropertyType));
+            propertyInfo.SetValue(command, Convert.ChangeType(value, propertyInfo.PropertyType));
             return true;
         }
 

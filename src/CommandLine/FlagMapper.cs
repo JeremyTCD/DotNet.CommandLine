@@ -1,4 +1,4 @@
-﻿using System;using System.Reflection;
+﻿using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -6,22 +6,22 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// If <paramref name="value"/> is null and the property represented by <paramref name="propertyInfo"/> is of type bool, 
-        /// sets the corresponding property in <paramref name="target"/> to true. 
+        /// sets the corresponding property in <paramref name="command"/> to true. 
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>
-        /// <param name="target"></param>
+        /// <param name="command"></param>
         /// <returns>
         /// True if property was set succesfully, false otherwise.
         /// </returns>
-        public bool TryMap(PropertyInfo propertyInfo, string value, object target)
+        public bool TryMap(PropertyInfo propertyInfo, string value, Command command)
         {
             if(value != null || propertyInfo.PropertyType != typeof(bool))
             {
                 return false;
             }
 
-            propertyInfo.SetValue(target, true);
+            propertyInfo.SetValue(command, true);
 
             return true;
         }

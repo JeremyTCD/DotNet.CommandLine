@@ -9,13 +9,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     {
         [Theory]
         [MemberData(nameof(ReturnsTrueIfTypeCanBeConvertedToFromString))]
-        public void IsBuiltInType_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
+        public void CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper builtInTypeMapper = new StringConvertibleMapper();
+            StringConvertibleMapper stringConvertibleMapper = new StringConvertibleMapper();
 
             // Act
-            bool result = builtInTypeMapper.CanBeConvertedToFromString(type);
+            bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
 
             // Assert
             Assert.True(result);
@@ -42,13 +42,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
         [Theory]
         [MemberData(nameof(ReturnsFalseIfTypeCannotBeConvertedToFromString))]
-        public void IsBuiltInType_ReturnsFalseIfTypeCannotBeConvertedToFromString(Type type)
+        public void CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper builtInTypeMapper = new StringConvertibleMapper();
+            StringConvertibleMapper stringConvertibleMapper = new StringConvertibleMapper();
 
             // Act
-            bool result = builtInTypeMapper.CanBeConvertedToFromString(type);
+            bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
 
             // Assert
             Assert.False(result);
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             yield return new object[] { typeof(List<>) };
             yield return new object[] { typeof(Array) };
-            yield return new object[] { typeof(DummyModel) };
+            yield return new object[] { typeof(DummyCommand) };
         }
 
         [Fact]
@@ -78,7 +78,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfPropertyTypeCannotBeConvertedToFromString()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.NotConvertible));
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotConvertible));
             StringConvertibleMapper defaultMapper = new StringConvertibleMapper();
 
             // Act
@@ -92,8 +92,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsTrueIfMappingIsSuccessful()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.Convertible));
-            DummyModel dummyModel = new DummyModel();
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Convertible));
+            DummyCommand dummyModel = new DummyCommand();
             StringConvertibleMapper defaultMapper = new StringConvertibleMapper();
             string dummyString = "1";
 
@@ -105,10 +105,17 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
-        private class DummyModel
+        private class DummyCommand : Command
         {
             public List<int> NotConvertible { get; set; }
             public int Convertible { get; set; }
+
+            public DummyCommand() : base(null, null, false) { }
+
+            public override int Run(ParseResult parseResult, IPrinter printer)
+            {
+                throw new NotImplementedException();
+            }
         }
     }
 }

@@ -1,6 +1,5 @@
 ﻿using JeremyTCD.DotNetCore.Utils;
 using Moq;
-using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
@@ -26,7 +25,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfPropertyTypeIsNotAssignableToCollection()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.NotCollection));
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotCollection));
             CollectionMapper collectionMapper = new CollectionMapper(null);
 
             // Act
@@ -42,16 +41,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             Mock<ILoggingService<ActivatorService>> mockASLS = new Mock<ILoggingService<ActivatorService>>();
             IActivatorService activatorService = new ActivatorService(mockASLS.Object);
-            PropertyInfo propertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.StringCollection));
-            DummyModel dummyModel = new DummyModel();
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.StringCollection));
+            DummyCommand dummyCommand = new DummyCommand();
             CollectionMapper collectionMapper = new CollectionMapper(activatorService);
             string dummyString = "1,2,3";
 
             // Act
-            bool result = collectionMapper.TryMap(propertyInfo, dummyString, dummyModel);
+            bool result = collectionMapper.TryMap(propertyInfo, dummyString, dummyCommand);
 
             // Assert
-            Assert.Equal(new List<string> { "1", "2", "3" }, dummyModel.StringCollection);
+            Assert.Equal(new List<string> { "1", "2", "3" }, dummyCommand.StringCollection);
             Assert.True(result);
         }
 
@@ -61,24 +60,31 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             Mock<ILoggingService<ActivatorService>> mockASLS = new Mock<ILoggingService<ActivatorService>>();
             IActivatorService activatorService = new ActivatorService(mockASLS.Object);
-            PropertyInfo propertyInfo = typeof(DummyModel).GetProperty(nameof(DummyModel.IntCollection));
-            DummyModel dummyModel = new DummyModel();
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.IntCollection));
+            DummyCommand dummyCommand = new DummyCommand();
             CollectionMapper collectionMapper = new CollectionMapper(activatorService);
             string dummyString = "1,2,3";
 
             // Act
-            bool result = collectionMapper.TryMap(propertyInfo, dummyString, dummyModel);
+            bool result = collectionMapper.TryMap(propertyInfo, dummyString, dummyCommand);
 
             // Assert
-            Assert.Equal(new List<int> { 1, 2, 3 }, dummyModel.IntCollection);
+            Assert.Equal(new List<int> { 1, 2, 3 }, dummyCommand.IntCollection);
             Assert.True(result);
         }
 
-        private class DummyModel
+        private class DummyCommand : Command
         {
             public List<string> StringCollection { get; set; }
             public List<int> IntCollection { get; set; }
             public string NotCollection { get; set; }
+
+            public DummyCommand() : base(null, null, false) { }
+
+            public override int Run(ParseResult parseResult, IPrinter printer)
+            {
+                throw new System.NotImplementedException();
+            }
         }
     }
 }

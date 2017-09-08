@@ -17,19 +17,19 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is assignable to
-        /// <see cref="ICollection{T}"/>, sets the corresponding property in <paramref name="target"/> to an <see cref="ICollection{T}"/> 
+        /// <see cref="ICollection{T}"/>, sets the corresponding property in <paramref name="command"/> to an <see cref="ICollection{T}"/> 
         /// containing the result of splitting <paramref name="value"/> using ',' as separator.
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>
-        /// <param name="target"></param>
+        /// <param name="command"></param>
         /// <returns>
         /// True if property was set succesfully, false otherwise.
         /// </returns>
         /// <exception cref="InvalidCastException"></exception>
         /// <exception cref="FormatException"></exception>
         /// <exception cref="OverflowException"></exception>
-        public bool TryMap(PropertyInfo propertyInfo, string value, object target)
+        public bool TryMap(PropertyInfo propertyInfo, string value, Command command)
         {
             if(value == null)
             {
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 add.Invoke(collection, new[] { Convert.ChangeType(subValue, genericType) });
             }
 
-            propertyInfo.SetValue(target, collection);
+            propertyInfo.SetValue(command, collection);
 
             return true;
         }
