@@ -2,27 +2,28 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class ModelFactory : IModelFactory
+    public class CommandMapper : ICommandMapper
     {
-        private IActivatorService _activatorService { get; }
-        private IEnumerable<IMapper> _mappers { get; }
+        private readonly IOptionFactory _optionFactory;
+        private readonly IEnumerable<IMapper> _mappers;
 
         /// <summary>
-        /// Creates a <see cref="ModelFactory"/> instance.
+        /// Creates a <see cref="CommandMapper"/> instance.
         /// </summary>
-        /// <param name="activatorService"></param>
         /// <param name="mappers"></param>
-        public ModelFactory(IActivatorService activatorService, IEnumerable<IMapper> mappers)
+        /// <param name="optionFactory"></param>
+        public CommandMapper(IEnumerable<IMapper> mappers, IOptionFactory optionFactory)
         {
-            _activatorService = activatorService;
+            _optionFactory = optionFactory;
             _mappers = mappers;
         }
 
         /// <summary>
-        /// Creates an instance of the type that <paramref name="command"/> maps to.
+        /// Maps <paramref name="arguments"/> to properties in <paramref name="command"/> that have an <see cref="OptionAttribute"/>.
         /// </summary>
         /// <param name="arguments"></param>
         /// <param name="command"></param>
@@ -35,15 +36,13 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="ParseException">
         /// Thrown if <paramref name="arguments"/> contains an invalid option value.
         /// </exception>
-        public object Create(Arguments arguments, Command command)
+        public void Map(Arguments arguments, ICommand command)
         {
-            object result = _activatorService.CreateInstance(command.ModelType);
+            List<Option> options = GetOptionsFromCommand(command);
 
             foreach (KeyValuePair<string, string> optionArg in arguments.OptionArgs)
             {
-                Option option = command.
-                    Options.
-                    SingleOrDefault(o => o.ShortName == optionArg.Key || o.LongName == optionArg.Key);
+                Option option = options.SingleOrDefault(o => o.ShortName == optionArg.Key || o.LongName == optionArg.Key);
 
                 if (option == null)
                 {
@@ -57,7 +56,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 {
                     foreach (IMapper mapper in _mappers)
                     {
-                        if (mapper.TryMap(option.PropertyInfo, optionArg.Value, result))
+                        if (mapper.TryMap(option.PropertyInfo, optionArg.Value, command))
                         {
                             propertySet = true;
                             break;
@@ -72,6 +71,19 @@ namespace JeremyTCD.DotNet.CommandLine
                 if (!propertySet || innerException != null)
                 {
                     throw new ParseException(string.Format(Strings.Exception_InvalidOptionValue, optionArg.Value, optionArg.Key), innerException);
+                }
+            }
+        }
+
+        internal virtual List<Option> GetOptionsFromCommand(ICommand command)
+        {
+            List<Option> result = new List<Option>();
+            foreach (PropertyInfo propertyInfo in command.GetType().GetProperties())
+            {
+                Option option = _optionFactory.TryCreateFromPropertyInfo(propertyInfo);
+                if (option != null)
+                {
+                    result.Add(option);
                 }
             }
 
