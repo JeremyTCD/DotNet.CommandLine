@@ -114,7 +114,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             public string Description => throw new NotImplementedException();
             public bool IsDefault => throw new NotImplementedException();
 
-            public int Run(ParseResult parseResult, IPrinter printer)
+            public int Run(ParseResult parseResult, IPrinter printer, AppContext appContext)
             {
                 throw new NotImplementedException();
             }
