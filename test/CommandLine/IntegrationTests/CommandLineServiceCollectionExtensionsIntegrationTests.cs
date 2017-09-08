@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
 
             // Assert
             ServiceDescriptorComparer comparer = new ServiceDescriptorComparer();
-            Assert.Contains(ServiceDescriptor.Singleton<ICommandLineTool, CommandLineTool>(), services, comparer);
+            Assert.Contains(ServiceDescriptor.Singleton<ICommandLineApp, CommandLineApp>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IParser, Parser>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IPrinter, Printer>(), services, comparer);

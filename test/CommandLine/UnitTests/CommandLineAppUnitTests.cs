@@ -3,7 +3,7 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
-    public class CommandLineToolUnitTests
+    public class CommandLineAppUnitTests
     {
         private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
@@ -28,7 +28,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandSet)).Returns(dummyParseResult);
 
-            CommandLineTool commandLineTool = new CommandLineTool(mockParser.Object, mockCommandSetFactory.Object, mockPrinter.Object, dummyCommands);
+            CommandLineApp commandLineTool = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockPrinter.Object, dummyCommands);
 
             // Act
             int result = commandLineTool.Run(dummyArgs, null);
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandSet)).Returns(dummyParseResult);
 
-            CommandLineTool commandLineTool = new CommandLineTool(mockParser.Object, mockCommandSetFactory.Object, mockPrinter.Object, dummyCommands);
+            CommandLineApp commandLineTool = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockPrinter.Object, dummyCommands);
 
             // Act
             int result = commandLineTool.Run(dummyArgs, null);

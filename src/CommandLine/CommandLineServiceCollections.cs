@@ -8,7 +8,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         public static IServiceCollection AddCommandLine(this IServiceCollection serviceCollection)
         {
-            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineTool, CommandLineTool>());
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineApp, CommandLineApp>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IParser, Parser>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IPrinter, Printer>());

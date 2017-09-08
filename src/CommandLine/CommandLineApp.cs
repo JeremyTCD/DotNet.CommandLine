@@ -2,7 +2,7 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class CommandLineTool : ICommandLineTool
+    public class CommandLineApp : ICommandLineApp
     {
         private readonly IParser _parser;
         private readonly ICommandSetFactory _commandSetFactory;
@@ -10,14 +10,14 @@ namespace JeremyTCD.DotNet.CommandLine
         private readonly IEnumerable<ICommand> _commands;
 
         /// <summary>
-        /// Creates a <see cref="CommandLineTool"/> instance.
+        /// Creates a <see cref="CommandLineApp"/> instance.
         /// </summary>
         /// <param name="commandSetFactory"></param>
         /// <param name="parser"></param>
         /// <param name="printer"></param>
         /// <param name="environmentService"></param>
         /// <param name="commands"></param>
-        public CommandLineTool(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
+        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
         {
             _commands = commands;
             _parser = parser;
@@ -35,6 +35,8 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="int"/>
         /// </returns>
+        // TODO rename class to CommandLineApp
+        // TODO AppContext class
         public int Run(string[] args, PrinterOptions printerOptions)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
