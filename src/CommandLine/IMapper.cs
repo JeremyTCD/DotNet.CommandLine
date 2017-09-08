@@ -4,6 +4,6 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public interface IMapper
     {
-        bool TryMap(PropertyInfo propertyInfo, string value, Command command);
+        bool TryMap(PropertyInfo propertyInfo, string value, ICommand command);
     }
 }

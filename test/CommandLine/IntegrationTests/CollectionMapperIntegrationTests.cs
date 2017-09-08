@@ -73,15 +73,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
-        private class DummyCommand : Command
+        private class DummyCommand : ICommand
         {
             public List<string> StringCollection { get; set; }
             public List<int> IntCollection { get; set; }
             public string NotCollection { get; set; }
 
-            public DummyCommand() : base(null, null, false) { }
+            public string Name => throw new System.NotImplementedException();
 
-            public override int Run(ParseResult parseResult, IPrinter printer)
+            public string Description => throw new System.NotImplementedException();
+
+            public bool IsDefault => throw new System.NotImplementedException();
+
+            public int Run(ParseResult parseResult, IPrinter printer)
             {
                 throw new System.NotImplementedException();
             }

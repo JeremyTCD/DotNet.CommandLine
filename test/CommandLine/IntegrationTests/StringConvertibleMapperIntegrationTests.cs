@@ -105,14 +105,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
-        private class DummyCommand : Command
+        private class DummyCommand : ICommand
         {
             public List<int> NotConvertible { get; set; }
             public int Convertible { get; set; }
 
-            public DummyCommand() : base(null, null, false) { }
+            public string Name => throw new NotImplementedException();
+            public string Description => throw new NotImplementedException();
+            public bool IsDefault => throw new NotImplementedException();
 
-            public override int Run(ParseResult parseResult, IPrinter printer)
+            public int Run(ParseResult parseResult, IPrinter printer)
             {
                 throw new NotImplementedException();
             }
