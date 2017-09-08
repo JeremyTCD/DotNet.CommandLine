@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Options;
+using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -8,6 +9,8 @@ namespace JeremyTCD.DotNet.CommandLine
         private readonly ICommandSetFactory _commandSetFactory;
         private readonly IPrinter _printer;
         private readonly IEnumerable<ICommand> _commands;
+        private readonly IAppContextFactory _appContextFactory;
+        private readonly AppOptions _appOptions;
 
         /// <summary>
         /// Creates a <see cref="CommandLineApp"/> instance.
@@ -17,8 +20,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="printer"></param>
         /// <param name="environmentService"></param>
         /// <param name="commands"></param>
-        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
+        /// <param name="appContextFactory"></param>
+        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands,
+            IOptions<AppOptions> optionsAccessor, IAppContextFactory appContextFactory)
         {
+            _appContextFactory = appContextFactory;
+            _appOptions = optionsAccessor.Value;
             _commands = commands;
             _parser = parser;
             _printer = printer;
@@ -31,13 +38,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Otherwise, prints <see cref="ParseResult.ParseException"/> and app get help hint then returns 1.
         /// </summary>
         /// <param name="args"></param>
-        /// <param name="printerOptions"></param>
         /// <returns>
         /// <see cref="int"/>
         /// </returns>
         // TODO rename class to CommandLineApp
         // TODO AppContext class
-        public int Run(string[] args, PrinterOptions printerOptions)
+        public int Run(string[] args)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
             ParseResult result = _parser.Parse(args, commandSet);
@@ -50,8 +56,10 @@ namespace JeremyTCD.DotNet.CommandLine
                 return 1;
             }
 
+            AppContext appContext = _appContextFactory.Create(commandSet, _appOptions);
+
             // If command is not null, allow it to handle ParseExceptions
-            return result.Command.Run(result, _printer);
+            return result.Command.Run(result, _printer, appContext);
         }
     }
 }
