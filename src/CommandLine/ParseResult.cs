@@ -3,14 +3,14 @@
     public class ParseResult
     {
         public readonly ParseException ParseException;
-        public readonly Command Command;
-        public readonly object Model;
+        public readonly ICommand Command;
+        public readonly CommandSet CommandSet;
 
-        public ParseResult(ParseException parseException, Command command, object model)
+        public ParseResult(ParseException parseException, ICommand command, CommandSet commandSet)
         {
             ParseException = parseException;
             Command = command;
-            Model = model;
+            CommandSet = commandSet;
         }
     }
 }
