@@ -63,7 +63,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (command == null)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_CommandDoesNotExist, commandName));
+                    throw new ParseException(string.Format(Strings.ParseException_CommandDoesNotExist, commandName));
                 }
 
                 return command;
@@ -74,7 +74,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (defaultCommand == null)
                 {
-                    throw new ParseException(Strings.Exception_NoDefaultCommand);
+                    throw new ParseException(Strings.ParseException_NoDefaultCommand);
                 }
 
                 return defaultCommand;

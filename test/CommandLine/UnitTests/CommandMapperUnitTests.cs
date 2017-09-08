@@ -26,7 +26,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => mockCommandMapper.Object.Map(dummyArguments, dummyCommand));
             _mockRepository.VerifyAll();
-            Assert.Equal(string.Format(Strings.Exception_OptionDoesNotExist, dummyOptionKey), parseException.Message);
+            Assert.Equal(string.Format(Strings.ParseException_OptionDoesNotExist, dummyOptionKey), parseException.Message);
         }
 
         [Fact]
@@ -53,7 +53,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => mockCommandMapper.Object.Map(dummyArguments, mockCommand.Object));
             _mockRepository.VerifyAll();
-            Assert.Equal(string.Format(Strings.Exception_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
+            Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
             Assert.Equal(dummyException, parseException.InnerException);
         }
 
@@ -80,7 +80,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => mockCommandMapper.Object.Map(dummyArguments, mockCommand.Object));
             _mockRepository.VerifyAll();
-            Assert.Equal(string.Format(Strings.Exception_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
+            Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
         }
 
         [Fact]

@@ -62,38 +62,11 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
+        ///   Looks up a localized string similar to Commands must have names.
         /// </summary>
-        public static string Exception_CommandDoesNotExist {
+        public static string Exception_CommandsMustHaveNames {
             get {
-                return ResourceManager.GetString("Exception_CommandDoesNotExist", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Invalid arguments.
-        /// </summary>
-        public static string Exception_InvalidArguments {
-            get {
-                return ResourceManager.GetString("Exception_InvalidArguments", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to &quot;{0}&quot; is an invalid value for option &quot;-{1}&quot;.
-        /// </summary>
-        public static string Exception_InvalidOptionValue {
-            get {
-                return ResourceManager.GetString("Exception_InvalidOptionValue", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Malformed arguments &quot;{0}&quot;.
-        /// </summary>
-        public static string Exception_MalformedArguments {
-            get {
-                return ResourceManager.GetString("Exception_MalformedArguments", resourceCulture);
+                return ResourceManager.GetString("Exception_CommandsMustHaveNames", resourceCulture);
             }
         }
         
@@ -117,65 +90,112 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
+        /// </summary>
+        public static string ParseException_CommandDoesNotExist {
+            get {
+                return ResourceManager.GetString("ParseException_CommandDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Invalid arguments.
+        /// </summary>
+        public static string ParseException_InvalidArguments {
+            get {
+                return ResourceManager.GetString("ParseException_InvalidArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to &quot;{0}&quot; is an invalid value for option &quot;-{1}&quot;.
+        /// </summary>
+        public static string ParseException_InvalidOptionValue {
+            get {
+                return ResourceManager.GetString("ParseException_InvalidOptionValue", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Malformed arguments &quot;{0}&quot;.
+        /// </summary>
+        public static string ParseException_MalformedArguments {
+            get {
+                return ResourceManager.GetString("ParseException_MalformedArguments", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to No default command.
         /// </summary>
-        public static string Exception_NoDefaultCommand {
+        public static string ParseException_NoDefaultCommand {
             get {
-                return ResourceManager.GetString("Exception_NoDefaultCommand", resourceCulture);
+                return ResourceManager.GetString("ParseException_NoDefaultCommand", resourceCulture);
             }
         }
         
         /// <summary>
         ///   Looks up a localized string similar to Option &quot;-{0}&quot; does not exist.
         /// </summary>
-        public static string Exception_OptionDoesNotExist {
+        public static string ParseException_OptionDoesNotExist {
             get {
-                return ResourceManager.GetString("Exception_OptionDoesNotExist", resourceCulture);
+                return ResourceManager.GetString("ParseException_OptionDoesNotExist", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Parameter &quot;{0}&quot; should not be null.
+        ///   Looks up a localized string similar to Run &quot;{0} -help&quot; for usage information..
         /// </summary>
-        public static string Exception_ParameterShouldBeNull {
+        public static string Printer_AppGetHelpHint {
             get {
-                return ResourceManager.GetString("Exception_ParameterShouldBeNull", resourceCulture);
+                return ResourceManager.GetString("Printer_AppGetHelpHint", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &quot;{0}&quot; cannot hold multiple values.
+        ///   Looks up a localized string similar to Run &quot;{0} {1} -help&quot; for usage information..
         /// </summary>
-        public static string Exception_PropertyCannotHoldMultipleValues {
+        public static string Printer_CommandGetHelpHint {
             get {
-                return ResourceManager.GetString("Exception_PropertyCannotHoldMultipleValues", resourceCulture);
+                return ResourceManager.GetString("Printer_CommandGetHelpHint", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &quot;{0}&quot; does not have an OptionAttribute.
+        ///   Looks up a localized string similar to {0}
+        ///{1}
+        ///.
         /// </summary>
-        public static string Exception_PropertyDoesNotHaveOptionAttribute {
+        public static string Printer_Header {
             get {
-                return ResourceManager.GetString("Exception_PropertyDoesNotHaveOptionAttribute", resourceCulture);
+                return ResourceManager.GetString("Printer_Header", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Property &quot;{0}&quot; is not a flag.
+        ///   Looks up a localized string similar to Error: {0}.
         /// </summary>
-        public static string Exception_PropertyIsNotAFlag {
+        public static string Printer_ParseException {
             get {
-                return ResourceManager.GetString("Exception_PropertyIsNotAFlag", resourceCulture);
+                return ResourceManager.GetString("Printer_ParseException", resourceCulture);
             }
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to Type &quot;{0}&quot; does not have a CommandAttribute.
+        ///   Looks up a localized string similar to No command with name &quot;{0}&quot; exists.
         /// </summary>
-        public static string Exception_TypeDoesNotHaveCommandAttribute {
+        public static string PrintException_NoSuchCommand {
             get {
-                return ResourceManager.GetString("Exception_TypeDoesNotHaveCommandAttribute", resourceCulture);
+                return ResourceManager.GetString("PrintException_NoSuchCommand", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Print failed.
+        /// </summary>
+        public static string PrintException_PrintFailed {
+            get {
+                return ResourceManager.GetString("PrintException_PrintFailed", resourceCulture);
             }
         }
     }

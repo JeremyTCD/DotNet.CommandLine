@@ -53,7 +53,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (isMalformed)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_MalformedArguments, string.Join(" ", args)));
+                    throw new ParseException(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", args)));
                 }
             }
 

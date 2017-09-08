@@ -10,12 +10,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Creates a <see cref="ParseException"/> instance with a default parse error message.
         /// </summary>
-        public ParseException() : base(Strings.Exception_InvalidArguments) { }
+        public ParseException() : base(Strings.ParseException_InvalidArguments) { }
 
         /// <summary>
         /// Creates a <see cref="ParseException"/> instance with a default parse error message.
         /// </summary>
-        public ParseException(Exception innerException) : base(Strings.Exception_InvalidArguments, innerException) { }
+        public ParseException(Exception innerException) : base(Strings.ParseException_InvalidArguments, innerException) { }
 
         /// <summary>
         /// Creates a <see cref="ParseException"/> instance.

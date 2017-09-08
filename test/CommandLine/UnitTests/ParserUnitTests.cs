@@ -18,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommandByName(dummyCommandName, dummyCommandSet));
-            Assert.Equal(string.Format(Strings.Exception_CommandDoesNotExist, dummyCommandName), exception.Message);
+            Assert.Equal(string.Format(Strings.ParseException_CommandDoesNotExist, dummyCommandName), exception.Message);
         }
 
         [Fact]
@@ -51,7 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommandByName(null, dummyCommandSet));
-            Assert.Equal(Strings.Exception_NoDefaultCommand, exception.Message);
+            Assert.Equal(Strings.ParseException_NoDefaultCommand, exception.Message);
         }
 
         [Fact]

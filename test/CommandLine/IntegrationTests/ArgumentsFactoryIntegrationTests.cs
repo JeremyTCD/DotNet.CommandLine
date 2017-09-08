@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(dummyArgs));
-            Assert.Equal(string.Format(Strings.Exception_MalformedArguments, string.Join(" ", dummyArgs)), exception.Message);
+            Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", dummyArgs)), exception.Message);
         }
 
         public static IEnumerable<object[]> ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespaceData()
@@ -56,7 +56,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(args));
-            Assert.Equal(string.Format(Strings.Exception_MalformedArguments, string.Join(" ", args)), exception.Message);
+            Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", args)), exception.Message);
         }
 
         public static IEnumerable<object[]> ThrowsArgumentsExceptionIfACommandNameIsNotTheFirstElementInArray()

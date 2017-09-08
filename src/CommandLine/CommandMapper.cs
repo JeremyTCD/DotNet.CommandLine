@@ -45,7 +45,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (option == null)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_OptionDoesNotExist, optionArg.Key));
+                    throw new ParseException(string.Format(Strings.ParseException_OptionDoesNotExist, optionArg.Key));
                 }
 
                 bool propertySet = false;
@@ -69,7 +69,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (!propertySet || innerException != null)
                 {
-                    throw new ParseException(string.Format(Strings.Exception_InvalidOptionValue, optionArg.Value, optionArg.Key), innerException);
+                    throw new ParseException(string.Format(Strings.ParseException_InvalidOptionValue, optionArg.Value, optionArg.Key), innerException);
                 }
             }
         }
