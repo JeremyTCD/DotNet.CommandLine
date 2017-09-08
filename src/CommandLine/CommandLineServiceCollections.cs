@@ -12,10 +12,9 @@ namespace JeremyTCD.DotNet.CommandLine
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IParser, Parser>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IPrinter, Printer>());
-            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandFactory, CommandFactory>());
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandMapper, CommandMapper>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IOptionFactory, OptionFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IArgumentsFactory, ArgumentsFactory>());
-            serviceCollection.TryAdd(ServiceDescriptor.Singleton<IModelFactory, ModelFactory>());
 
             // Multiple implementations of IMapper are allowed
             serviceCollection.AddSingleton<IMapper, CollectionMapper>();

@@ -23,10 +23,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
             Assert.Contains(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IParser, Parser>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IPrinter, Printer>(), services, comparer);
-            Assert.Contains(ServiceDescriptor.Singleton<ICommandFactory, CommandFactory>(), services, comparer);
+            Assert.Contains(ServiceDescriptor.Singleton<ICommandMapper, CommandMapper>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IOptionFactory, OptionFactory>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IArgumentsFactory, ArgumentsFactory>(), services, comparer);
-            Assert.Contains(ServiceDescriptor.Singleton<IModelFactory, ModelFactory>(), services, comparer);
+
             Assert.Contains(ServiceDescriptor.Singleton<IMapper, CollectionMapper>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IMapper, FlagMapper>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IMapper, StringConvertibleMapper>(), services, comparer);
