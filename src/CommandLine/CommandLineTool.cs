@@ -1,15 +1,13 @@
-﻿using JeremyTCD.DotNetCore.Utils;
-using System;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
     public class CommandLineTool : ICommandLineTool
     {
-        private readonly IEnvironmentService _environmentService;
         private readonly IParser _parser;
-        private readonly IPrinter _printer;
         private readonly ICommandSetFactory _commandSetFactory;
+        private readonly IPrinter _printer;
+        private readonly IEnumerable<ICommand> _commands;
 
         /// <summary>
         /// Creates a <see cref="CommandLineTool"/> instance.
@@ -17,75 +15,41 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="commandSetFactory"></param>
         /// <param name="parser"></param>
         /// <param name="printer"></param>
-        public CommandLineTool(IParser parser, IPrinter printer, ICommandSetFactory commandSetFactory, IEnvironmentService environmentService)
+        /// <param name="environmentService"></param>
+        /// <param name="commands"></param>
+        public CommandLineTool(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
         {
-            _environmentService = environmentService;
+            _commands = commands;
             _parser = parser;
             _printer = printer;
             _commandSetFactory = commandSetFactory;
         }
 
         /// <summary>
-        /// Parses <paramref name="args"/> into a model. 
-        /// <para />
-        /// If parsing is successful, calls <see cref="IPrinter.PrintHeader"/>. If model is assignable to <see cref="IRunnable"/>, calls <see cref="IRunnable.Run(IPrinter)"/>. 
-        /// If <see cref="IRunnable.Run(IPrinter)"/> returns a non negative integer, exits process with the integer as exit code. Otherwise, returns a <see cref="ParseResult"/> 
-        /// instance.
-        /// <para />
-        /// If parsing is unsuccessful, prints error and help messages before exiting process with exit code 1.
+        /// Parses <paramref name="args"/>, creating a <see cref="ParseResult"/> instance. 
+        /// If <see cref="ParseResult"/> instance has <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> and returns its return value.
+        /// Otherwise, prints <see cref="ParseResult.ParseException"/> and app get help hint then returns 1.
         /// </summary>
         /// <param name="args"></param>
-        /// <param name="modelTypes"></param>
-        /// <param name="appName"></param>
-        /// <param name="appVersion"></param>
+        /// <param name="printerOptions"></param>
         /// <returns>
-        /// <see cref="ParseResult"/>
+        /// <see cref="int"/>
         /// </returns>
-        public ParseResult Run(string[] args, IEnumerable<Type> modelTypes, string appName, string appVersion)
+        public int Run(string[] args, PrinterOptions printerOptions)
         {
-            CommandSet commandSet = _commandSetFactory.CreateFromTypes(modelTypes);
+            CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
             ParseResult result = _parser.Parse(args, commandSet);
 
-            _printer.PrintHeader();
-
-            if (result.ParseException != null)
+            if(result.Command == null)
             {
-                HandleParseException(result);
-            }
-            else if (result.Model is IRunnable)
-            {
-                HandleRunnable(result);
-            }
-
-            return result;
-        }
-
-        internal virtual void HandleRunnable(ParseResult result)
-        {
-            IRunnable runnable = result.Model as IRunnable;
-            int exitCode = runnable.Run(_printer);
-
-            if (exitCode > -1)
-            {
-                _environmentService.Exit(exitCode);
-            }
-        }
-
-        internal virtual void HandleParseException(ParseResult result)
-        {
-            _printer.PrintParseException(result.ParseException);
-
-            if (result.Command != null)
-            {
-                // Hint for getting command specific help
-                _printer.PrintGetHelpHint(result.Command);
-            }
-            else
-            {
+                _printer.PrintParseException(result.ParseException);
                 _printer.PrintGetHelpHint();
+
+                return 1;
             }
 
-            _environmentService.Exit(1);
+            // If command is not null, allow it to handle ParseExceptions
+            return result.Command.Run(result, _printer);
         }
     }
 }
