@@ -1,24 +1,18 @@
-﻿using System;
-using System.Collections.Generic;
-
-namespace JeremyTCD.DotNet.CommandLine
+﻿namespace JeremyTCD.DotNet.CommandLine
 {
-    public class Command
+    public abstract class Command
     {
-        public Type ModelType { get; }
-        public string Name { get; }
-        public string Description { get; }
-        public bool IsDefault { get; }
+        public readonly string Name;
+        public readonly string Description;
+        public readonly bool IsDefault;
 
-        public IEnumerable<Option> Options {get;}
-
-        public Command(Type commandModelType, bool isDefault, string name, string description, IEnumerable<Option> options)
+        public Command(string name, string description, bool isDefault)
         {
-            ModelType = commandModelType;
             Name = name;
             Description = description;
-            Options = options;
             IsDefault = isDefault;
         }
+
+        public abstract int Run(ParseResult parseResult, IPrinter printer);
     }
 }
