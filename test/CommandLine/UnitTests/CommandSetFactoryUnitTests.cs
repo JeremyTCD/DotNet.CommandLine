@@ -57,6 +57,23 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         }
 
         [Fact]
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereIsNoDefaultCommand()
+        {
+            // Arrange
+            string dummyCommand1Name = "dummyCommand1Name";
+            string dummyCommand2Name = "dummyCommand2Name";
+            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, false);
+            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
+            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
+
+            CommandSetFactory commandSetFactory = new CommandSetFactory();
+
+            // Act and Assert
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            Assert.Equal(Strings.Exception_DefaultCommandRequired, exception.Message);
+        }
+
+        [Fact]
         public void CreateFromCommands_CreatesCommandSetFromTypes()
         {
             // Arrange
@@ -89,7 +106,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, IPrinter printer, AppContext appContext)
+            public int Run(ParseResult parseResult, IPrinter printer)
             {
                 throw new NotImplementedException();
             }

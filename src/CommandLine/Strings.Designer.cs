@@ -71,6 +71,15 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Default command required.
+        /// </summary>
+        public static string Exception_DefaultCommandRequired {
+            get {
+                return ResourceManager.GetString("Exception_DefaultCommandRequired", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Multiple commands have the name &quot;{0}&quot;.
         /// </summary>
         public static string Exception_MultipleCommandsWithSameName {

@@ -22,6 +22,9 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if multiple commands have the same name.
         /// </exception>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if there is no default command.
+        /// </exception>
         public CommandSet CreateFromCommands(IEnumerable<ICommand> commands)
         {
             ICommand defaultCommand = null;
@@ -55,6 +58,11 @@ namespace JeremyTCD.DotNet.CommandLine
                 {
                     throw new InvalidOperationException(string.Format(Strings.Exception_MultipleCommandsWithSameName, command.Name), exception);
                 }
+            }
+
+            if(defaultCommand == null)
+            {
+                throw new InvalidOperationException(Strings.Exception_DefaultCommandRequired);
             }
 
             return result;

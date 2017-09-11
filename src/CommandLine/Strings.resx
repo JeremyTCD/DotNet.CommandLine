@@ -165,4 +165,7 @@
   <data name="Exception_CommandsMustHaveNames" xml:space="preserve">
     <value>Commands must have names</value>
   </data>
+  <data name="Exception_DefaultCommandRequired" xml:space="preserve">
+    <value>Default command required</value>
+  </data>
 </root>
