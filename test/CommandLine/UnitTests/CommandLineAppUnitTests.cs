@@ -9,7 +9,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void Run_ParsesAndCallsCommandRunIfParsingIsSuccessful()
+        public void Run_ParsesCallsCommandRunAndReturnsExitCode()
         {
             // Arrange
             ICommand[] dummyCommands = new ICommand[0];

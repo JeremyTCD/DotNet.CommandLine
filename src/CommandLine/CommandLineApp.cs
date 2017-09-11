@@ -34,15 +34,13 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// Parses <paramref name="args"/>, creating a <see cref="ParseResult"/> instance. 
-        /// If <see cref="ParseResult"/> instance has <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> and returns its return value.
+        /// If <see cref="ParseResult"/> instance has an <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> and returns its return value.
         /// Otherwise, prints <see cref="ParseResult.ParseException"/> and app get help hint then returns 1.
         /// </summary>
         /// <param name="args"></param>
         /// <returns>
         /// <see cref="int"/>
         /// </returns>
-        // TODO rename class to CommandLineApp
-        // TODO AppContext class
         public int Run(string[] args)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
