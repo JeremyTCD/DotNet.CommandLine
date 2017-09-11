@@ -57,7 +57,7 @@ namespace JeremyTCD.DotNet.CommandLine
             AppContext appContext = _appContextFactory.Create(commandSet, _appOptions);
 
             // If command is not null, allow it to handle ParseExceptions
-            return result.Command.Run(result, _printer, appContext);
+            return result.Command.Run(result, appContext);
         }
     }
 }
