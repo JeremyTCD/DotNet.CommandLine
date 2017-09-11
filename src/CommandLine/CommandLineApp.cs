@@ -7,9 +7,8 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly IParser _parser;
         private readonly ICommandSetFactory _commandSetFactory;
-        private readonly IPrinter _printer;
+        private readonly IPrinterFactory _printerFactory;
         private readonly IEnumerable<ICommand> _commands;
-        private readonly IAppContextFactory _appContextFactory;
         private readonly AppOptions _appOptions;
 
         /// <summary>
@@ -17,18 +16,16 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="commandSetFactory"></param>
         /// <param name="parser"></param>
-        /// <param name="printer"></param>
+        /// <param name="printerFactory"></param>
         /// <param name="environmentService"></param>
         /// <param name="commands"></param>
-        /// <param name="appContextFactory"></param>
-        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands,
-            IOptions<AppOptions> optionsAccessor, IAppContextFactory appContextFactory)
+        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinterFactory printerFactory, IEnumerable<ICommand> commands,
+            IOptions<AppOptions> optionsAccessor)
         {
-            _appContextFactory = appContextFactory;
             _appOptions = optionsAccessor.Value;
             _commands = commands;
             _parser = parser;
-            _printer = printer;
+            _printerFactory = printerFactory;
             _commandSetFactory = commandSetFactory;
         }
 
@@ -44,20 +41,19 @@ namespace JeremyTCD.DotNet.CommandLine
         public int Run(string[] args)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
+            IPrinter printer = _printerFactory.Create(_appOptions, commandSet);
             ParseResult result = _parser.Parse(args, commandSet);
 
             if(result.Command == null)
             {
-                _printer.PrintParseException(result.ParseException);
-                _printer.PrintGetHelpHint();
+                printer.PrintParseException(result.ParseException);
+                printer.PrintAppGetHelpHint();
 
                 return 1;
             }
 
-            AppContext appContext = _appContextFactory.Create(commandSet, _appOptions);
-
             // If command is not null, allow it to handle ParseExceptions
-            return result.Command.Run(result, appContext);
+            return result.Command.Run(result, printer);
         }
     }
 }
