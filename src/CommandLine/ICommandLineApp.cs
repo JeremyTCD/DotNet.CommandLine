@@ -2,6 +2,6 @@
 {
     public interface ICommandLineApp
     {
-        int Run(string[] args);
+        int Run(string[] args, PrinterOptions printerOptions);
     }
 }

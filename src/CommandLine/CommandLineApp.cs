@@ -1,5 +1,4 @@
-﻿using Microsoft.Extensions.Options;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -7,7 +6,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly IParser _parser;
         private readonly ICommandSetFactory _commandSetFactory;
-        private readonly IPrinterFactory _printerFactory;
+        private readonly IPrinter _printer;
         private readonly IEnumerable<ICommand> _commands;
         private readonly AppOptions _appOptions;
 
@@ -16,11 +15,10 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="commandSetFactory"></param>
         /// <param name="parser"></param>
-        /// <param name="printerFactory"></param>
+        /// <param name="printer"></param>
         /// <param name="environmentService"></param>
         /// <param name="commands"></param>
-        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinterFactory printerFactory, IEnumerable<ICommand> commands,
-            IOptions<AppOptions> optionsAccessor)
+        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
         {
             _appOptions = optionsAccessor.Value;
             _commands = commands;
@@ -35,25 +33,25 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Otherwise, prints <see cref="ParseResult.ParseException"/> and app get help hint then returns 1.
         /// </summary>
         /// <param name="args"></param>
+        /// <param name="printerOptions"></param>
         /// <returns>
         /// <see cref="int"/>
         /// </returns>
         public int Run(string[] args)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
-            IPrinter printer = _printerFactory.Create(_appOptions, commandSet);
             ParseResult result = _parser.Parse(args, commandSet);
 
             if(result.Command == null)
             {
-                printer.PrintParseException(result.ParseException);
-                printer.PrintAppGetHelpHint();
+                _printer.PrintParseException(result.ParseException);
+                _printer.PrintGetHelpHint();
 
                 return 1;
             }
 
             // If command is not null, allow it to handle ParseExceptions
-            return result.Command.Run(result, printer);
+            return result.Command.Run(result, _printer);
         }
     }
 }
