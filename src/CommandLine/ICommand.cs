@@ -6,6 +6,6 @@
         string Description { get; }
         bool IsDefault { get; }
 
-        int Run(ParseResult parseResult, IPrinter printer);
+        int Run(ParseResult parseResult, AppContext appContext);
     }
 }

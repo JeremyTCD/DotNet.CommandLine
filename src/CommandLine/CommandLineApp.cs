@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using Microsoft.Extensions.Options;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -6,9 +8,9 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly IParser _parser;
         private readonly ICommandSetFactory _commandSetFactory;
-        private readonly IPrinter _printer;
         private readonly IEnumerable<ICommand> _commands;
         private readonly AppOptions _appOptions;
+        private readonly IAppContextFactory _appContextFactory;
 
         /// <summary>
         /// Creates a <see cref="CommandLineApp"/> instance.
@@ -18,19 +20,20 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="printer"></param>
         /// <param name="environmentService"></param>
         /// <param name="commands"></param>
-        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IPrinter printer, IEnumerable<ICommand> commands)
+        public CommandLineApp(IParser parser, ICommandSetFactory commandSetFactory, IAppContextFactory appContextFactory, IEnumerable<ICommand> commands,
+            IOptions<AppOptions> optionsAccessor)
         {
             _appOptions = optionsAccessor.Value;
             _commands = commands;
             _parser = parser;
-            _printerFactory = printerFactory;
+            _appContextFactory = appContextFactory;
             _commandSetFactory = commandSetFactory;
         }
 
         /// <summary>
         /// Parses <paramref name="args"/>, creating a <see cref="ParseResult"/> instance. 
         /// If <see cref="ParseResult"/> instance has an <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> and returns its return value.
-        /// Otherwise, prints <see cref="ParseResult.ParseException"/> and app get help hint then returns 1.
+        /// Otherwise, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> on the default command and returns its return value.
         /// </summary>
         /// <param name="args"></param>
         /// <param name="printerOptions"></param>
@@ -40,18 +43,15 @@ namespace JeremyTCD.DotNet.CommandLine
         public int Run(string[] args)
         {
             CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
+            AppContext appContext = _appContextFactory.Create(commandSet, _appOptions);
             ParseResult result = _parser.Parse(args, commandSet);
 
             if(result.Command == null)
             {
-                _printer.PrintParseException(result.ParseException);
-                _printer.PrintGetHelpHint();
-
-                return 1;
+                return commandSet.Values.Single(c => c.IsDefault).Run(result, appContext);
             }
 
-            // If command is not null, allow it to handle ParseExceptions
-            return result.Command.Run(result, _printer);
+            return result.Command.Run(result, appContext);
         }
     }
 }

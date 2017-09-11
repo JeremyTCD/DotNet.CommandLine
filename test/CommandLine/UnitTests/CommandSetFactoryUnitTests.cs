@@ -106,7 +106,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, IPrinter printer)
+            public int Run(ParseResult parseResult, AppContext appContext)
             {
                 throw new NotImplementedException();
             }

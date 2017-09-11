@@ -85,7 +85,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, IPrinter printer, AppContext appContext)
+            public int Run(ParseResult parseResult, AppContext appContext)
             {
                 throw new System.NotImplementedException();
             }
