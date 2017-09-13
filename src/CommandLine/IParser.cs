@@ -2,6 +2,6 @@
 {
     public interface IParser
     {
-        ParseResult Parse(string[] args, ICommandSet commandSet);
+        ParseResult Parse(string[] args, CommandSet commandSet);
     }
 }
