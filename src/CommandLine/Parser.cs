@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -27,7 +26,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="ParseResult"/> 
         /// </returns>
-        public ParseResult Parse(string[] args, CommandSet commandSet)
+        public ParseResult Parse(string[] args, ICommandSet commandSet)
         {
             ICommand command = null;
             ParseException parseException = null;
@@ -35,11 +34,11 @@ namespace JeremyTCD.DotNet.CommandLine
             try
             {
                 Arguments arguments = _argumentsFactory.CreateFromArray(args);
-                command = GetCommandByName(arguments.CommandName, commandSet);
+                command = GetCommand(arguments.CommandName, commandSet);
 
-                _commandMapper.Map(arguments, command);
+                _commandMapper.Map(arguments, command, commandSet.TryGetCommandOptions(arguments.CommandName));
             }
-            catch(Exception exception) 
+            catch (Exception exception)
             {
                 parseException = exception is ParseException ? exception as ParseException : new ParseException(exception);
             }
@@ -48,37 +47,24 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Gets <see cref="ICommand"/> specified by <paramref name="commandName"/> from <paramref name="commandSet"/>.
+        /// Gets <see cref="ICommand"/> with name <paramref name="commandName"/> from <paramref name="commandSet"/>.
         /// </summary>
         /// <param name="commandName"></param>
         /// <param name="commandSet"></param>
         /// <returns>
-        /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null. Default command if it is null.
+        /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null, default 
+        /// <see cref="ICommand"/> otherwise.
         /// </returns>
-        internal virtual ICommand GetCommandByName(string commandName, CommandSet commandSet)
+        internal virtual ICommand GetCommand(string commandName, ICommandSet commandSet)
         {
-            if (commandName != null)
+            ICommand result = commandName == null ? commandSet.DefaultCommand : commandSet.TryGetCommand(commandName);
+
+            if (result == null)
             {
-                commandSet.TryGetValue(commandName, out ICommand command);
-
-                if (command == null)
-                {
-                    throw new ParseException(string.Format(Strings.ParseException_CommandDoesNotExist, commandName));
-                }
-
-                return command;
+                throw new ParseException(string.Format(Strings.ParseException_CommandDoesNotExist, commandName));
             }
-            else
-            {
-                ICommand defaultCommand = commandSet.Values.SingleOrDefault(c => c.IsDefault);
 
-                if (defaultCommand == null)
-                {
-                    throw new ParseException(Strings.ParseException_NoDefaultCommand);
-                }
-
-                return defaultCommand;
-            }
+            return result;
         }
     }
 }
