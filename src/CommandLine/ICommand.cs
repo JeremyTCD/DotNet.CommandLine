@@ -1,4 +1,6 @@
-﻿namespace JeremyTCD.DotNet.CommandLine
+﻿using System.Collections.Generic;
+
+namespace JeremyTCD.DotNet.CommandLine
 {
     public interface ICommand
     {
