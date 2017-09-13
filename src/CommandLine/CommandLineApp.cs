@@ -48,7 +48,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
             if(result.Command == null)
             {
-                return commandSet.Values.Single(c => c.IsDefault).Run(result, appContext);
+                return commandSet.DefaultCommand.Run(result, appContext);
             }
 
             return result.Command.Run(result, appContext);
