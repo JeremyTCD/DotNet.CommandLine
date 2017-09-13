@@ -1,24 +1,23 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
     public class CommandMapper : ICommandMapper
     {
-        private readonly IOptionFactory _optionFactory;
         private readonly IEnumerable<IMapper> _mappers;
+        private readonly IOptionsFactory _optionsFactory;
 
         /// <summary>
         /// Creates a <see cref="CommandMapper"/> instance.
         /// </summary>
         /// <param name="mappers"></param>
         /// <param name="optionFactory"></param>
-        public CommandMapper(IEnumerable<IMapper> mappers, IOptionFactory optionFactory)
+        public CommandMapper(IEnumerable<IMapper> mappers, IOptionsFactory optionsFactory)
         {
-            _optionFactory = optionFactory;
             _mappers = mappers;
+            _optionsFactory = optionsFactory;
         }
 
         /// <summary>
@@ -26,6 +25,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="arguments"></param>
         /// <param name="command"></param>
+        /// <param name="commandOptions"></param>
         /// <returns>
         /// object
         /// </returns>
@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </exception>
         public void Map(Arguments arguments, ICommand command)
         {
-            List<Option> options = GetOptionsFromCommand(command);
+            IEnumerable<Option> options = _optionsFactory.CreateFromCommand(command);
 
             foreach (KeyValuePair<string, string> optionArg in arguments.OptionArgs)
             {
@@ -64,29 +64,20 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
                 catch (Exception exception)
                 {
+                    if (exception is ParseException)
+                    {
+                        throw;
+                    }
+
                     innerException = exception;
                 }
 
                 if (!propertySet || innerException != null)
                 {
-                    throw new ParseException(string.Format(Strings.ParseException_InvalidOptionValue, optionArg.Value, optionArg.Key), innerException);
+                    throw new ParseException(string.Format(Strings.ParseException_InvalidOptionValue, optionArg.Value, optionArg.Key), 
+                        innerException);
                 }
             }
-        }
-
-        internal virtual List<Option> GetOptionsFromCommand(ICommand command)
-        {
-            List<Option> result = new List<Option>();
-            foreach (PropertyInfo propertyInfo in command.GetType().GetProperties())
-            {
-                Option option = _optionFactory.TryCreateFromPropertyInfo(propertyInfo);
-                if (option != null)
-                {
-                    result.Add(option);
-                }
-            }
-
-            return result;
         }
     }
 }
