@@ -1,6 +1,5 @@
 ﻿using Moq;
 using System;
-using System.Collections.Generic;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
@@ -19,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
             mockCommandSet.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
-            Parser parser = new Parser(null, null, null);
+            Parser parser = new Parser(null, null);
 
             // Act and Assert                                   
             ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommand(dummyCommandName, mockCommandSet.Object));
@@ -37,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
             mockCommandSet.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
-            Parser parser = new Parser(null, null, null);
+            Parser parser = new Parser(null, null);
 
             // Act 
             ICommand result = parser.GetCommand(dummyCommandName, mockCommandSet.Object);
@@ -56,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
             mockCommandSet.Setup(c => c.DefaultCommand).Returns(dummyCommand);
 
-            Parser parser = new Parser(null, null, null);
+            Parser parser = new Parser(null, null);
 
             // Act 
             ICommand result = parser.GetCommand(null, mockCommandSet.Object);
@@ -74,20 +73,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             Arguments dummyArguments = new Arguments(dummyCommandName, null);
             DummyCommand dummyCommand = new DummyCommand();
-            List<Option> dummyOptions = new List<Option>();
             CommandSet dummyCommandSet = new CommandSet();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
 
-            Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
-            mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(dummyOptions);
-
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
-            mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand, dummyOptions));
+            mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand));
 
             Mock<Parser> mockParser = _mockRepository.
-                Create<Parser>(mockArgumentsFactory.Object, mockCommandMapper.Object, mockOptionsFactory.Object);
+                Create<Parser>(mockArgumentsFactory.Object, mockCommandMapper.Object);
             mockParser.Setup(p => p.GetCommand(dummyCommandName, dummyCommandSet)).Returns(dummyCommand);
             mockParser.CallBase = true;
 
@@ -109,7 +104,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
 
-            Parser parser = new Parser(mockArgumentsFactory.Object, null, null);
+            Parser parser = new Parser(mockArgumentsFactory.Object, null);
 
             // Act
             ParseResult result = parser.Parse(dummyArgs, null);
@@ -129,7 +124,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
 
-            Parser parser = new Parser(mockArgumentsFactory.Object, null, null);
+            Parser parser = new Parser(mockArgumentsFactory.Object, null);
 
             // Act
             ParseResult result = parser.Parse(dummyArgs, null);

@@ -6,18 +6,16 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly IArgumentsFactory _argumentsFactory;
         private readonly ICommandMapper _commandMapper;
-        private readonly IOptionsFactory _optionsFactory;
 
         /// <summary>
         /// Creates a <see cref="Parser"/> instance.
         /// </summary>
         /// <param name="argumentsFactory"></param>
         /// <param name="commandMapper"></param>
-        public Parser(IArgumentsFactory argumentsFactory, ICommandMapper commandMapper, IOptionsFactory optionsFactory)
+        public Parser(IArgumentsFactory argumentsFactory, ICommandMapper commandMapper)
         {
             _argumentsFactory = argumentsFactory;
             _commandMapper = commandMapper;
-            _optionsFactory = optionsFactory;
         }
 
         /// <summary>
@@ -38,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 Arguments arguments = _argumentsFactory.CreateFromArray(args);
                 command = GetCommand(arguments.CommandName, commandSet);
 
-                _commandMapper.Map(arguments, command, _optionsFactory.CreateFromCommand(command));
+                _commandMapper.Map(arguments, command);
             }
             catch (Exception exception)
             {
