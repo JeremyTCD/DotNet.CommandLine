@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
@@ -17,21 +18,22 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         public List<Option> CreateFromCommand(ICommand command)
         {
-            _optionsCache.TryGetValue(command, out List<Option> options);
+            _optionsCache.TryGetValue(command, out List<Option> result);
 
-            if (options == null)
+            if (result == null)
             {
-                options = new List<Option>();
+                result = new List<Option>();
                 foreach (PropertyInfo propertyInfo in command.GetType().GetProperties())
                 {
                     Option option = TryCreateFromPropertyInfo(propertyInfo);
                     if (option != null)
                     {
-                        options.Add(option);
+                        result.Add(option);
                     }
                 }
+                _optionsCache.Add(command, result);
             }
-            return options;
+            return result;
         }
 
         /// <summary>
@@ -43,6 +45,9 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="Option"/> if successful, null if <paramref name="propertyInfo"/> does not contain an <see cref="OptionAttribute"/>.
         /// </returns>
+        /// <exception cref="InvalidOperationException">
+        /// Thrown if <paramref name="propertyInfo"/> instance's <see cref="OptionAttribute"/> has neither a long name or a short name.
+        /// </exception>
         internal virtual Option TryCreateFromPropertyInfo(PropertyInfo propertyInfo)
         {
             OptionAttribute optionAttribute = propertyInfo.GetCustomAttribute<OptionAttribute>();
@@ -50,6 +55,11 @@ namespace JeremyTCD.DotNet.CommandLine
             if (optionAttribute == null)
             {
                 return null;
+            }
+
+            if(string.IsNullOrWhiteSpace(optionAttribute.ShortName) && string.IsNullOrWhiteSpace(optionAttribute.LongName))
+            {
+                throw new InvalidOperationException(string.Format(Strings.Exception_OptionAttributeMustHaveName, propertyInfo.Name));
             }
 
             return new Option(propertyInfo, optionAttribute.ShortName, optionAttribute.LongName, optionAttribute.Description);

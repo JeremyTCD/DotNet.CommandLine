@@ -168,4 +168,7 @@
   <data name="Exception_DefaultCommandRequired" xml:space="preserve">
     <value>Default command required</value>
   </data>
+  <data name="Exception_OptionAttributeMustHaveName" xml:space="preserve">
+    <value>OptionAttribute for property "{0}" must have either a short or long name.</value>
+  </data>
 </root>

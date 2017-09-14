@@ -9,7 +9,7 @@ namespace JeremyTCD.DotNet.CommandLine
         public string LongName { get; }
         public string Description { get; }
 
-        public Option(PropertyInfo propertyInfo, string shortName, string longName, string description)
+        internal Option(PropertyInfo propertyInfo, string shortName, string longName, string description)
         {
             PropertyInfo = propertyInfo;
             ShortName = shortName;

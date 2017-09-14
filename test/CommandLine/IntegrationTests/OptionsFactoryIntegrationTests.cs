@@ -1,4 +1,5 @@
 ﻿using Moq;
+using System;
 using System.Collections.Generic;
 using System.Reflection;
 using Xunit;
@@ -61,6 +62,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(dummyPropertyInfo, result.PropertyInfo);
         }
 
+        [Fact]
+        public void TryCreateFromPropertyInfo_ThrowsInvalidOperationExceptionIfOptionAttributeHasNeitherALongNameOrAShortName()
+        {
+            // Arrange
+            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyNoNameProperty));
+
+            OptionsFactory optionFactory = new OptionsFactory();
+
+            // Act and Assert
+            Exception exception = Assert.Throws<InvalidOperationException>(() => optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo));
+            Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommand.DummyNoNameProperty)), exception.Message);
+        }
+
         private class DummyCommand : ICommand
         {
             [Option(typeof(DummyStrings),
@@ -68,6 +82,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 nameof(DummyStrings.OptionLongName_Dummy), 
                 nameof(DummyStrings.OptionDescription_Dummy))]
             public string DummyProperty { get; }
+            [Option()]
+            public string DummyNoNameProperty { get; }
             public string DummyNoAttributeProperty { get; }
 
             public string Name => throw new System.NotImplementedException();

@@ -99,6 +99,15 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to OptionAttribute for property &quot;{0}&quot; must have either a short or long name..
+        /// </summary>
+        public static string Exception_OptionAttributeMustHaveName {
+            get {
+                return ResourceManager.GetString("Exception_OptionAttributeMustHaveName", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
         /// </summary>
         public static string ParseException_CommandDoesNotExist {
