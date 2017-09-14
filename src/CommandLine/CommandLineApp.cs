@@ -32,8 +32,8 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// Parses <paramref name="args"/>, creating a <see cref="ParseResult"/> instance. 
-        /// If <see cref="ParseResult"/> instance has an <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> and returns its return value.
-        /// Otherwise, calls <see cref="ICommand.Run(ParseResult, IPrinter)"/> on the default command and returns its return value.
+        /// If <see cref="ParseResult"/> instance has an <see cref="ICommand"/> instance, calls <see cref="ICommand.Run(ParseResult, IAppPrinter)"/> and returns its return value.
+        /// Otherwise, calls <see cref="ICommand.Run(ParseResult, IAppPrinter)"/> on the default command and returns its return value.
         /// </summary>
         /// <param name="args"></param>
         /// <param name="printerOptions"></param>

@@ -22,7 +22,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
             Assert.Contains(ServiceDescriptor.Singleton<ICommandLineApp, CommandLineApp>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IParser, Parser>(), services, comparer);
-            Assert.Contains(ServiceDescriptor.Singleton<IPrinter, Printer>(), services, comparer);
+            Assert.Contains(ServiceDescriptor.Singleton<IAppPrinter, AppPrinter>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<ICommandMapper, CommandMapper>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IOptionsFactory, OptionsFactory>(), services, comparer);
             Assert.Contains(ServiceDescriptor.Singleton<IArgumentsFactory, ArgumentsFactory>(), services, comparer);
