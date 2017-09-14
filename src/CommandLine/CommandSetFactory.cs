@@ -36,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 {
                     if (defaultCommand != null)
                     {
-                        throw new InvalidOperationException(string.Format(Strings.Exception_MultipleDefaultCommands, 
+                        throw new InvalidOperationException(string.Format(Strings.Exception_MultipleDefaultCommands,
                             $"\t{defaultCommand.Name}{Environment.NewLine}\t{command.Name}"));
                     }
                     else
@@ -45,22 +45,23 @@ namespace JeremyTCD.DotNet.CommandLine
                     }
                 }
 
-                if(command.Name == null)
+                if (command.Name == null)
                 {
                     throw new InvalidOperationException(Strings.Exception_CommandsMustHaveNames);
                 }
 
                 try
                 {
-                    result.Add(command.Name, command); // Weed out commands with the same name
+                    result.Add(command.Name, command);
                 }
-                catch(ArgumentException exception)
+                catch (ArgumentException exception)
                 {
+                    // Weed out commands with the same name
                     throw new InvalidOperationException(string.Format(Strings.Exception_MultipleCommandsWithSameName, command.Name), exception);
                 }
-            }
+            } 
 
-            if(defaultCommand == null)
+            if (defaultCommand == null)
             {
                 throw new InvalidOperationException(Strings.Exception_DefaultCommandRequired);
             }

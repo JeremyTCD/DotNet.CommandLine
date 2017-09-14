@@ -74,7 +74,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         }
 
         [Fact]
-        public void CreateFromCommands_CreatesCommandSetFromTypes()
+        public void CreateFromCommands_CreatesCommandSet()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
