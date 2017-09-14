@@ -12,17 +12,11 @@ namespace JeremyTCD.DotNet.CommandLine
             _resourceType = resourceType;
         }
 
-        public string GetResource(string resourceName)
+        public string TryGetResource(string resourceName)
         {
-            if (_resourceType == null)
+            if (_resourceType == null || resourceName == null)
             {
-                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
-            }
-
-            if (resourceName == null)
-            {
-                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
-
+                return null;
             }
 
             PropertyInfo propertyInfo = _resourceType.GetTypeInfo().GetDeclaredProperty(resourceName);

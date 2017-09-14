@@ -16,7 +16,7 @@ namespace JeremyTCD.DotNet.CommandLine
         {
             get
             {
-                return _shortName ?? (_shortName = GetResource(_shortNameResourceName));
+                return _shortName ?? (_shortName = TryGetResource(_shortNameResourceName));
             }
             set
             {
@@ -27,7 +27,7 @@ namespace JeremyTCD.DotNet.CommandLine
         {
             get
             {
-                return _longName ?? (_longName = GetResource(_longNameResourceName));
+                return _longName ?? (_longName = TryGetResource(_longNameResourceName));
             }
             set
             {
@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine
         {
             get
             {
-                return _description ?? (_description = GetResource(_descriptionResourceName));
+                return _description ?? (_description = TryGetResource(_descriptionResourceName));
             }
             set
             {
@@ -51,7 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null):
+        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null) :
             base(resourceType)
         {
             _shortNameResourceName = shortNameResourceName;
