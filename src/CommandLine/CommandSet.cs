@@ -1,19 +1,23 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
     public class CommandSet : IDictionary<string, ICommand>
     {
-        public IDictionary<string, ICommand> Commands { get; }
+        private readonly IDictionary<string, ICommand> _commands;
+        private ICommand _defaultCommand;
 
-        /// <summary>
-        /// Creates a <see cref="CommandSet"/> instance.
-        /// </summary>
-        internal CommandSet()
+        public virtual ICommand DefaultCommand
         {
-            Commands = new Dictionary<string, ICommand>();
+            get
+            {
+                return _defaultCommand ?? (_defaultCommand = _commands.Values.Single(c => c.IsDefault));
+            }
         }
+
+        internal CommandSet() : this(null) { }
 
         /// <summary>
         /// Creates a <see cref="CommandSet"/> instance. 
@@ -21,74 +25,74 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="commands">Cannot contain more than 1 default command.</param>
         internal CommandSet(IDictionary<string, ICommand> commands)
         {
-            Commands = commands;
+            _commands = commands == null ? new Dictionary<string, ICommand>() : new Dictionary<string, ICommand>(commands);
         }
 
-        #region IDictionary<string, Command> member implementations
-        public ICollection<string> Keys => Commands.Keys;
+        #region IDictionary<string, ICommand> member implementations
+        public ICollection<string> Keys => _commands.Keys;
 
-        public ICollection<ICommand> Values => Commands.Values;
+        public ICollection<ICommand> Values => _commands.Values;
 
-        public int Count => Commands.Count;
+        public int Count => _commands.Count;
 
-        public bool IsReadOnly => Commands.IsReadOnly;
+        public bool IsReadOnly => _commands.IsReadOnly;
 
-        public ICommand this[string key] { get => Commands[key]; set => Commands[key] = value; }
+        public ICommand this[string key] { get => _commands[key]; set => _commands[key] = value; }
 
-        public void Add(string key, ICommand value)
+        public virtual void Add(string key, ICommand value)
         {
-            Commands.Add(key, value);
+            _commands.Add(key, value);
         }
 
-        public bool ContainsKey(string key)
+        public virtual bool ContainsKey(string key)
         {
-            return Commands.ContainsKey(key);
+            return _commands.ContainsKey(key);
         }
 
-        public bool Remove(string key)
+        public virtual bool Remove(string key)
         {
-            return Commands.Remove(key);
+            return _commands.Remove(key);
         }
 
-        public bool TryGetValue(string key, out ICommand value)
+        public virtual bool TryGetValue(string key, out ICommand value)
         {
-            return Commands.TryGetValue(key, out value);
+            return _commands.TryGetValue(key, out value);
         }
 
         public void Add(KeyValuePair<string, ICommand> item)
         {
-            Commands.Add(item);
+            _commands.Add(item);
         }
 
-        public void Clear()
+        public virtual void Clear()
         {
-            Commands.Clear();
+            _commands.Clear();
         }
 
-        public bool Contains(KeyValuePair<string, ICommand> item)
+        public virtual bool Contains(KeyValuePair<string, ICommand> item)
         {
-            return Commands.Contains(item);
+            return _commands.Contains(item);
         }
 
-        public void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
+        public virtual void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
         {
-            Commands.CopyTo(array, arrayIndex);
+            _commands.CopyTo(array, arrayIndex);
         }
 
-        public bool Remove(KeyValuePair<string, ICommand> item)
+        public virtual bool Remove(KeyValuePair<string, ICommand> item)
         {
-            return Commands.Remove(item);
+            return _commands.Remove(item);
         }
 
-        public IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
+        public virtual IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
         {
-            return Commands.GetEnumerator();
+            return _commands.GetEnumerator();
         }
 
         IEnumerator IEnumerable.GetEnumerator()
         {
-            return Commands.GetEnumerator();
+            return _commands.GetEnumerator();
         }
-        #endregion
+#endregion
     }
 }
