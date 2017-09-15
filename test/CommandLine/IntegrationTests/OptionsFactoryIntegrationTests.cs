@@ -48,7 +48,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryCreateFromPropertyInfo_CreatesOptionIfSuccessful()
         {
             // Arrange
-            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyProperty));
+            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyOptionProperty));
 
             OptionsFactory optionFactory = new OptionsFactory();
 
@@ -66,13 +66,28 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryCreateFromPropertyInfo_ThrowsInvalidOperationExceptionIfOptionAttributeHasNeitherALongNameOrAShortName()
         {
             // Arrange
-            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyNoNameProperty));
+            PropertyInfo dummyPropertyInfo = typeof(DummyCommandWithNamelessProperty).GetProperty(nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty));
 
             OptionsFactory optionFactory = new OptionsFactory();
 
             // Act and Assert
             Exception exception = Assert.Throws<InvalidOperationException>(() => optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo));
-            Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommand.DummyNoNameProperty)), exception.Message);
+            Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty)), exception.Message);
+        }
+
+        private class DummyCommandWithNamelessProperty : ICommand
+        {
+            [Option()]
+            public string DummyNamelessOptionProperty { get; }
+
+            public string Name => throw new NotImplementedException();
+            public string Description => throw new NotImplementedException();
+            public bool IsDefault => throw new NotImplementedException();
+
+            public int Run(ParseResult parseResult, AppContext appContext)
+            {
+                throw new NotImplementedException();
+            }
         }
 
         private class DummyCommand : ICommand
@@ -81,9 +96,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 nameof(DummyStrings.OptionShortName_Dummy), 
                 nameof(DummyStrings.OptionLongName_Dummy), 
                 nameof(DummyStrings.OptionDescription_Dummy))]
-            public string DummyProperty { get; }
-            [Option()]
-            public string DummyNoNameProperty { get; }
+            public string DummyOptionProperty { get; }
+
             public string DummyNoAttributeProperty { get; }
 
             public string Name => throw new System.NotImplementedException();
