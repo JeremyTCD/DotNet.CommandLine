@@ -156,12 +156,6 @@
   <data name="Printer_ParseException" xml:space="preserve">
     <value>Error: {0}</value>
   </data>
-  <data name="PrintException_NoSuchCommand" xml:space="preserve">
-    <value>No command with name "{0}" exists</value>
-  </data>
-  <data name="PrintException_PrintFailed" xml:space="preserve">
-    <value>Print failed</value>
-  </data>
   <data name="Exception_CommandsMustHaveNames" xml:space="preserve">
     <value>Commands must have names</value>
   </data>
@@ -170,5 +164,17 @@
   </data>
   <data name="Exception_OptionAttributeMustHaveName" xml:space="preserve">
     <value>OptionAttribute for property "{0}" must have either a short or long name.</value>
+  </data>
+  <data name="Printer_GetHelpTip" xml:space="preserve">
+    <value>Run '{0} {1}-help' for more information about {2}.</value>
+  </data>
+  <data name="Printer_Usage" xml:space="preserve">
+    <value>Usage: '{0} {1}{2}'</value>
+  </data>
+  <data name="Exception_CommandDoesNotExist" xml:space="preserve">
+    <value>Command "{0}" does not exist</value>
+  </data>
+  <data name="Printer_Description" xml:space="preserve">
+    <value>Description: {0}</value>
   </data>
 </root>

@@ -62,6 +62,15 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
+        /// </summary>
+        public static string Exception_CommandDoesNotExist {
+            get {
+                return ResourceManager.GetString("Exception_CommandDoesNotExist", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Commands must have names.
         /// </summary>
         public static string Exception_CommandsMustHaveNames {
@@ -180,6 +189,24 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Description: {0}.
+        /// </summary>
+        public static string Printer_Description {
+            get {
+                return ResourceManager.GetString("Printer_Description", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Run &apos;{0} {1}-help&apos; for more information about {2}..
+        /// </summary>
+        public static string Printer_GetHelpTip {
+            get {
+                return ResourceManager.GetString("Printer_GetHelpTip", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to {0}
         ///{1}
         ///.
@@ -200,20 +227,11 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
-        ///   Looks up a localized string similar to No command with name &quot;{0}&quot; exists.
+        ///   Looks up a localized string similar to Usage: &apos;{0} {1}{2}&apos;.
         /// </summary>
-        public static string PrintException_NoSuchCommand {
+        public static string Printer_Usage {
             get {
-                return ResourceManager.GetString("PrintException_NoSuchCommand", resourceCulture);
-            }
-        }
-        
-        /// <summary>
-        ///   Looks up a localized string similar to Print failed.
-        /// </summary>
-        public static string PrintException_PrintFailed {
-            get {
-                return ResourceManager.GetString("PrintException_PrintFailed", resourceCulture);
+                return ResourceManager.GetString("Printer_Usage", resourceCulture);
             }
         }
     }
