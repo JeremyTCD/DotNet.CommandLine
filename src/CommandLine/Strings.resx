@@ -177,4 +177,13 @@
   <data name="Printer_Description" xml:space="preserve">
     <value>Description: {0}</value>
   </data>
+  <data name="OptionDescription_Help" xml:space="preserve">
+    <value>More information</value>
+  </data>
+  <data name="OptionLongName_Help" xml:space="preserve">
+    <value>help</value>
+  </data>
+  <data name="OptionShortName_Help" xml:space="preserve">
+    <value>h</value>
+  </data>
 </root>

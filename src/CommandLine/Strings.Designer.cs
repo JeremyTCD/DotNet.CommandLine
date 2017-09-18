@@ -117,6 +117,33 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to More information.
+        /// </summary>
+        public static string OptionDescription_Help {
+            get {
+                return ResourceManager.GetString("OptionDescription_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to help.
+        /// </summary>
+        public static string OptionLongName_Help {
+            get {
+                return ResourceManager.GetString("OptionLongName_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to h.
+        /// </summary>
+        public static string OptionShortName_Help {
+            get {
+                return ResourceManager.GetString("OptionShortName_Help", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
         /// </summary>
         public static string ParseException_CommandDoesNotExist {

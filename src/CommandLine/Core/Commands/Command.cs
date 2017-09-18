@@ -10,6 +10,15 @@ namespace JeremyTCD.DotNet.CommandLine
         public abstract string Description { get; }
         public abstract bool IsDefault { get; }
 
-        public abstract int Run(ParseResult parseResult, AppContext appContext);
+        [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
+        public bool Help { get; }
+
+        // TODO no choice, have to inject printer, if constructor requires it itll be confusing for implementors
+        public int Run(ParseResult parseResult, AppContext appContext)
+        {
+
+
+            return 0;
+        }
     }
 }
