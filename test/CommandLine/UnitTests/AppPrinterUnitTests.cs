@@ -16,9 +16,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyFullName = "dummyFullName";
             string dummyVersion = "dummyVersion";
             AppOptions dummyAppOptions = new AppOptions() { FullName = dummyFullName, Version = dummyVersion };
-            AppContext dummyAppContext = new AppContext(null, dummyAppOptions);
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, null);
+            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendHeader();
@@ -47,7 +46,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Dummy context
             string dummyExecutableName = "dummyExecutableName";
             AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
-            AppContext dummyAppContext = new AppContext(dummyCommandSet, dummyAppOptions);
             // Dummy options
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
@@ -56,7 +54,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyDefaultCommand)).Returns(new List<Option> { dummyOption });
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, mockOptionsFactory.Object);
+            AppPrinter printer = new AppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendAppHelp(rowPrefix, columnGap);
@@ -82,9 +80,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
-            AppContext dummyAppContext = new AppContext(null, dummyAppOptions);
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, null);
+            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendGetHelpTip(dummyTargetPosValue, dummyCommandPosValue);
@@ -118,9 +115,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
-            AppContext dummyAppContext = new AppContext(null, dummyAppOptions);
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, null);
+            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendUsage(dummyOptionsPosValue, dummyCommandPosValue);
@@ -155,7 +151,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(description: dummyDescription);
 
-            AppPrinter printer = new AppPrinter(null, null);
+            AppPrinter printer = new AppPrinter(null, null, null);
 
             // Act
             printer.AppendDescription(dummyDescription);
@@ -182,7 +178,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Dummy context
             string dummyExecutableName = "dummyExecutableName";
             AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
-            AppContext dummyAppContext = new AppContext(dummyCommandSet, dummyAppOptions);
             // Dummy options
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
@@ -191,7 +186,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(new List<Option> { dummyOption });
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, mockOptionsFactory.Object);
+            AppPrinter printer = new AppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
@@ -212,7 +207,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)
         {
             // Arrange
-            AppPrinter printer = new AppPrinter(null, null);
+            AppPrinter printer = new AppPrinter(null, null, null);
 
             // Act
             printer.AppendParseException(parseException);
@@ -236,7 +231,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             Option dummyOption = new Option(null, dummyShortName, dummyLongName, null);
-            AppPrinter printer = new AppPrinter(null, null);
+            AppPrinter printer = new AppPrinter(null, null, null);
 
             // Act
             string result = printer.GetOptionNames(dummyOption);
@@ -262,7 +257,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void GetNormalizedPosValue_GetsNormalizedPosValue(string dummyPosValue, string expected)
         {
             // Arrange
-            AppPrinter printer = new AppPrinter(null, null);
+            AppPrinter printer = new AppPrinter(null, null, null);
 
             // Act
             string result = printer.GetNormalizedPosValue(dummyPosValue);
@@ -293,9 +288,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 new string[] { "1", "12", "12"},
                 new string[] { "12", "1", "1"}
             };
-            AppContext dummyAppContext = new AppContext(null, null);
 
-            AppPrinter printer = new AppPrinter(dummyAppContext, null);
+            AppPrinter printer = new AppPrinter(null, null, null);
 
             // Act
             printer.AppendRows(rows, dummyColumnGap, dummyRowPrefix);

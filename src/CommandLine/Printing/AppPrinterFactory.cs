@@ -9,9 +9,9 @@
             _optionsFactory = optionsFactory;
         }
 
-        public IAppPrinter Create(AppContext appContext)
+        public IAppPrinter Create(CommandSet commandSet, AppOptions appOptions)
         {
-            return new AppPrinter(appContext, _optionsFactory);
+            return new AppPrinter(commandSet, appOptions, _optionsFactory);
         }
     }
 }

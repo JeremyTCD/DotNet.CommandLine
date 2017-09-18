@@ -21,10 +21,10 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="appContext"></param>
         /// <param name="optionsFactory"></param>
-        public AppPrinter(AppContext appContext, IOptionsFactory optionsFactory)
+        public AppPrinter(CommandSet commandSet, AppOptions appOptions, IOptionsFactory optionsFactory)
         {
-            _commandSet = appContext?.CommandSet;
-            _appOptions = appContext?.AppOptions;
+            _commandSet = commandSet;
+            _appOptions = appOptions;
             _optionsFactory = optionsFactory;
             _stringBuilder = new StringBuilder();
         }

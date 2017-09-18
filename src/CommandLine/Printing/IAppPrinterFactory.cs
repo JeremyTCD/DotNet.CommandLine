@@ -2,6 +2,6 @@
 {
     public interface IAppPrinterFactory
     {
-        IAppPrinter Create(AppContext appContext);
+        IAppPrinter Create(CommandSet commandSet, AppOptions appOptions);
     }
 }
