@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Reflection;
-
-namespace JeremyTCD.DotNet.CommandLine
+﻿namespace JeremyTCD.DotNet.CommandLine
 {
     public abstract class Command : ICommand
     {
@@ -13,12 +9,43 @@ namespace JeremyTCD.DotNet.CommandLine
         [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
         public bool Help { get; }
 
-        // TODO no choice, have to inject printer, if constructor requires it itll be confusing for implementors
-        public int Run(ParseResult parseResult, AppContext appContext)
+        public virtual int Run(ParseResult parseResult, AppContext appContext)
         {
+            if(parseResult.ParseException != null){
+                appContext.
+                    AppPrinter.
+                    AppendParseException(parseResult.ParseException).
+                    AppendGetHelpTip(IsDefault ? "this application" : "this command", IsDefault ? null : Name).
+                    Print();
 
+                return 0;
+            }
 
-            return 0;
+            if (Help)
+            {
+                if (IsDefault)
+                {
+                    appContext.
+                        AppPrinter.
+                        AppendAppHelp();
+                }
+                else
+                {
+                    appContext.
+                        AppPrinter.
+                        AppendCommandHelp(Name);
+                }
+
+                appContext.
+                    AppPrinter.
+                    Print();
+
+                return 1;
+            }
+
+            return RunCommand(parseResult, appContext);
         }
+
+        public abstract int RunCommand(ParseResult parseResult, AppContext appContext);
     }
 }
