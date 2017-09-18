@@ -17,7 +17,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string[] dummyArgs = new string[0];
             int dummyExitCode = 1;
             AppOptions dummyAppOptions = new AppOptions();
-            AppContext dummyAppContext = new AppContext(null, null);
+            AppContext dummyAppContext = new AppContext(null, null, null);
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             ParseResult dummyParseResult = new ParseResult(null, mockCommand.Object);
@@ -55,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             ParseResult dummyParseResult = new ParseResult(null, null);
             AppOptions dummyAppOptions = new AppOptions();
             int dummyExitCode = 1;
-            AppContext dummyAppContext = new AppContext(null, null);
+            AppContext dummyAppContext = new AppContext(null, null, null);
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             mockCommand.Setup(c => c.Run(dummyParseResult, dummyAppContext)).Returns(dummyExitCode);
