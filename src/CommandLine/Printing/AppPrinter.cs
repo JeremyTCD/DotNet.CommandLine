@@ -29,22 +29,28 @@ namespace JeremyTCD.DotNet.CommandLine
             _stringBuilder = new StringBuilder();
         }
 
-        public virtual void Clear()
+        public virtual IAppPrinter Clear()
         {
             _stringBuilder.Clear();
+
+            return this;
         }
 
-        public virtual void Print()
+        public virtual IAppPrinter Print()
         {
             Console.Write(_stringBuilder.ToString());
+
+            return this;
         }
 
-        public virtual void AppendHeader()
+        public virtual IAppPrinter AppendHeader()
         {
             _stringBuilder.Append(string.Format(Strings.Printer_Header, _appOptions.FullName, _appOptions.Version));
+
+            return this;
         }
 
-        public virtual void AppendAppHelp(string rowPrefix = null, int columnGap = 2)
+        public virtual IAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
         {
             // Usage
             AppendUsage("[command options]", "[command]");
@@ -90,30 +96,38 @@ namespace JeremyTCD.DotNet.CommandLine
                 AppendLine().
                 AppendLine();
             AppendGetHelpTip("a command", "[command]");
+
+            return this;
         }
 
-        public virtual void AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
+        public virtual IAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_GetHelpTip,
                     _appOptions.ExecutableName,
                     GetNormalizedPosValue(commandPosValue),
                     targetPosValue));
+
+            return this;
         }
 
-        public virtual void AppendUsage(string optionsPosValue, string commandPosValue = null)
+        public virtual IAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_Usage,
                     _appOptions.ExecutableName,
                     GetNormalizedPosValue(commandPosValue),
                     optionsPosValue));
+
+            return this;
         }
 
-        public virtual void AppendDescription(string description)
+        public virtual IAppPrinter AppendDescription(string description)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_Description, description));
+
+            return this;
         }
 
         /// <summary>
@@ -125,7 +139,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        public virtual void AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
+        public virtual IAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
         {
             if (!_commandSet.TryGetValue(commandName, out ICommand command))
             {
@@ -159,9 +173,11 @@ namespace JeremyTCD.DotNet.CommandLine
                     AppendLine();
                 AppendRows(optionDescriptions, columnGap, "    ");
             }
+
+            return this;
         }
 
-        public virtual void AppendParseException(ParseException parseException)
+        public virtual IAppPrinter AppendParseException(ParseException parseException)
         {
             string innerMostMessage = parseException.Message;
             Exception innerException = parseException.InnerException;
@@ -177,6 +193,8 @@ namespace JeremyTCD.DotNet.CommandLine
             }
 
             _stringBuilder.Append(innerMostMessage);
+
+            return this;
         }
 
         public override string ToString()
