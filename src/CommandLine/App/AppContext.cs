@@ -5,9 +5,9 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class AppContext
     {
-        public readonly CommandSet CommandSet;
-        public readonly AppOptions AppOptions;
-        public readonly IAppPrinter AppPrinter;
+        public CommandSet CommandSet { get; }
+        public AppOptions AppOptions { get; }
+        public IAppPrinter AppPrinter { get; }
 
         public AppContext(CommandSet commandSet, AppOptions appOptions, IAppPrinter appPrinter)
         {

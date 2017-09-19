@@ -5,8 +5,8 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class ParseResult
     {
-        public readonly ParseException ParseException;
-        public readonly ICommand Command;
+        public ParseException ParseException { get; }
+        public ICommand Command { get; }
 
         public ParseResult(ParseException parseException, ICommand command)
         {
