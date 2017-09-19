@@ -18,10 +18,16 @@
         /// <returns></returns>
         public virtual int Run(ParseResult parseResult, AppContext appContext)
         {
+            appContext.
+                AppPrinter.
+                AppendHeader().
+                AppendLine();
+
             if(parseResult.ParseException != null){
                 appContext.
                     AppPrinter.
                     AppendParseException(parseResult.ParseException).
+                    AppendLine().
                     AppendGetHelpTip(IsDefault ? "this application" : "this command", IsDefault ? null : Name).
                     Print();
 
@@ -49,6 +55,10 @@
 
                 return 1;
             }
+
+            appContext.
+                AppPrinter.
+                Print();
 
             return RunCommand(parseResult, appContext);
         }

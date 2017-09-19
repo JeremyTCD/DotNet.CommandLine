@@ -19,6 +19,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             ParseResult dummyParseResult = new ParseResult(dummyParseException, null);
 
             Mock<IAppPrinter> mockAppPrinter = _mockRepository.Create<IAppPrinter>();
+            mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendParseException(dummyParseException)).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendGetHelpTip(expectedTargetPosValue, dummyAndExpectedName)).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.Print());
@@ -50,6 +52,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             ParseResult dummyParseResult = new ParseResult(null, null);
 
             Mock<IAppPrinter> mockAppPrinter = _mockRepository.Create<IAppPrinter>();
+            mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendAppHelp(null, 2)).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.Print());
 
@@ -73,6 +77,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             ParseResult dummyParseResult = new ParseResult(null, null);
 
             Mock<IAppPrinter> mockAppPrinter = _mockRepository.Create<IAppPrinter>();
+            mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendCommandHelp(dummyName, null, 2)).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.Print());
 
@@ -89,13 +95,18 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         }
 
         [Fact]
-        public void Run_CallsRunCommand() 
+        public void Run_CallsRunCommand()
         {
             // Arrange
             int exitCode = 1;
 
+            Mock<IAppPrinter> mockAppPrinter = _mockRepository.Create<IAppPrinter>();
+            mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.Print());
+
             ParseResult dummyParseResult = new ParseResult(null, null);
-            AppContext dummyAppContext = new AppContext(null, null, null);
+            AppContext dummyAppContext = new AppContext(null, null, mockAppPrinter.Object);
 
             Mock<DummyCommand> dummyCommand = _mockRepository.Create<DummyCommand>();
             dummyCommand.Setup(c => c.RunCommand(dummyParseResult, dummyAppContext)).Returns(exitCode);
