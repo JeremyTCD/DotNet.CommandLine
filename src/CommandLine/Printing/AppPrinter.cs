@@ -43,6 +43,13 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
+        public virtual IAppPrinter AppendLine()
+        {
+            _stringBuilder.AppendLine();
+
+            return this;
+        }
+
         public virtual IAppPrinter AppendHeader()
         {
             _stringBuilder.Append(string.Format(Strings.Printer_Header, _appOptions.FullName, _appOptions.Version));

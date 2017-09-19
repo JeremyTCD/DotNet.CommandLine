@@ -4,6 +4,7 @@
     {
         IAppPrinter Clear();
         IAppPrinter Print();
+        IAppPrinter AppendLine();
         IAppPrinter AppendHeader();
         IAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2);
         IAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2);
