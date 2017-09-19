@@ -1,4 +1,7 @@
-﻿using JeremyTCD.DotNetCore.Utils;
+﻿// Copyright (c) JeremyTCD. All rights reserved.
+// Licensed under the MIT license. See LICENSE file in the project root for full license information.
+
+using JeremyTCD.DotNetCore.Utils;
 using Moq;
 using System.Collections.Generic;
 using System.Reflection;
