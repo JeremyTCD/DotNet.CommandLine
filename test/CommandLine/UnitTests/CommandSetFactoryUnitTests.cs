@@ -1,5 +1,6 @@
 ﻿using Moq;
 using System;
+using System.Collections.Generic;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
@@ -26,11 +27,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 exception.Message);
         }
 
-        [Fact]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandHasNoName()
+        [Theory]
+        [MemberData(nameof(ThrowsInvalidOperationExceptionIfACommandNameIsNullOrWhitespaceData))]
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace(string dummyName)
         {
             // Arrange
-            DummyCommand dummyCommand = new DummyCommand(null, true);
+            DummyCommand dummyCommand = new DummyCommand(dummyName, true);
             DummyCommand[] dummyCommands = new[] { dummyCommand };
 
             CommandSetFactory commandSetFactory = new CommandSetFactory();
@@ -38,6 +40,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
+        }
+
+        public static IEnumerable<object[]> ThrowsInvalidOperationExceptionIfACommandNameIsNullOrWhitespaceData()
+        {
+            yield return new object[] { null };
+            yield return new object[] { " " };
+            yield return new object[] { string.Empty };
         }
 
         [Fact]
