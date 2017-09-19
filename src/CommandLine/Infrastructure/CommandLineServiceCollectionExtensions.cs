@@ -8,6 +8,8 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         public static IServiceCollection AddCommandLine(this IServiceCollection serviceCollection)
         {
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<IAppPrinterFactory, AppPrinterFactory>());
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<IAppContextFactory, AppContextFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineApp, CommandLineApp>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IParser, Parser>());
@@ -22,6 +24,7 @@ namespace JeremyTCD.DotNet.CommandLine
             serviceCollection.AddSingleton<IMapper, StringConvertibleMapper>();
 
             serviceCollection.AddUtils();
+            serviceCollection.AddOptions();
 
             return serviceCollection;
         }
