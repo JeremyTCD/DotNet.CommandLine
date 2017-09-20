@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(dummyCommandSet, dummyAppOptions)).Returns(dummyAppContext);
 
-            CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockAppContextFactory.Object, dummyCommands,
+            CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, dummyCommands, mockAppContextFactory.Object,
                 mockOptionsAccessor.Object);
 
             // Act
@@ -78,8 +78,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(mockCommandSet.Object, dummyAppOptions)).Returns(dummyAppContext);
 
-            CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockAppContextFactory.Object,
-                dummyCommands, mockOptionsAccessor.Object);
+            CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, dummyCommands,
+                mockAppContextFactory.Object, mockOptionsAccessor.Object);
 
             // Act
             int result = commandLineApp.Run(dummyArgs);

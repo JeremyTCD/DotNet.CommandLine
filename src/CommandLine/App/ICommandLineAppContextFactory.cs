@@ -3,8 +3,17 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
+    /// <summary>
+    /// Represents a factory that creates <see cref="CommandLineAppContext"/> instances.
+    /// </summary>
     public interface ICommandLineAppContextFactory
     {
+        /// <summary>
+        /// Creates a new instance of the <see cref="CommandLineAppContext"/> class.
+        /// </summary>
+        /// <param name="commandSet">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandSet"/></param>
+        /// <param name="appOptions">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandLineAppOptions"/></param>
+        /// <returns><see cref="CommandLineAppContext"/></returns>
         CommandLineAppContext Create(CommandSet commandSet, CommandLineAppOptions appOptions);
     }
 }

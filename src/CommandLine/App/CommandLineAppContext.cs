@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="commandSet">The command line application's <see cref="CommandLine.CommandSet"/>.</param>
         /// <param name="commandLineAppOptions">The command line application's <see cref="CommandLine.CommandLineAppOptions"/>.</param>
-        /// <param name="commandLineAppPrinter">The command line application's <see cref="ICommandLineAppPrinter"/></param>
+        /// <param name="commandLineAppPrinter">The command line application's <see cref="ICommandLineAppPrinter"/>.</param>
         public CommandLineAppContext(CommandSet commandSet, CommandLineAppOptions commandLineAppOptions, ICommandLineAppPrinter commandLineAppPrinter)
         {
             CommandLineAppPrinter = commandLineAppPrinter;
