@@ -7,11 +7,34 @@ using System.Linq;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class CommandSet : IDictionary<string, ICommand>
+    /// <summary>
+    /// Represents a command line application's commands. Provides ease of access to commands given command names.
+    /// </summary>
+    public class CommandDictionary : IDictionary<string, ICommand>
     {
         private readonly IDictionary<string, ICommand> _commands;
         private ICommand _defaultCommand;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandDictionary"/> class.
+        /// </summary>
+        internal CommandDictionary()
+            : this(null)
+        {
+        }
+
+        /// <summary>
+        /// Initializes a new instance of the <see cref="CommandDictionary"/> class.
+        /// </summary>
+        /// <param name="commands">The dictionary whose elements are used to populate the new <see cref="CommandDictionary"/>.</param>
+        internal CommandDictionary(IDictionary<string, ICommand> commands)
+        {
+            _commands = commands == null ? new Dictionary<string, ICommand>() : new Dictionary<string, ICommand>(commands);
+        }
+
+        /// <summary>
+        /// Gets the command dictionary's default command.
+        /// </summary>
         public virtual ICommand DefaultCommand
         {
             get
@@ -20,85 +43,88 @@ namespace JeremyTCD.DotNet.CommandLine
             }
         }
 
-        internal CommandSet()
-            : this(null)
-        {
-        }
-
-        /// <summary>
-        /// Creates a <see cref="CommandSet"/> instance.
-        /// </summary>
-        /// <param name="commands">Cannot contain more than 1 default command.</param>
-        internal CommandSet(IDictionary<string, ICommand> commands)
-        {
-            _commands = commands == null ? new Dictionary<string, ICommand>() : new Dictionary<string, ICommand>(commands);
-        }
-
         #region IDictionary<string, ICommand> member implementations
+
+        /// <inheritdoc/>
         public ICollection<string> Keys => _commands.Keys;
 
+        /// <inheritdoc/>
         public ICollection<ICommand> Values => _commands.Values;
 
+        /// <inheritdoc/>
         public int Count => _commands.Count;
 
+        /// <inheritdoc/>
         public bool IsReadOnly => _commands.IsReadOnly;
 
+        /// <inheritdoc/>
         public ICommand this[string key] { get => _commands[key]; set => _commands[key] = value; }
 
+        /// <inheritdoc/>
         public virtual void Add(string key, ICommand value)
         {
             _commands.Add(key, value);
         }
 
+        /// <inheritdoc/>
         public virtual bool ContainsKey(string key)
         {
             return _commands.ContainsKey(key);
         }
 
+        /// <inheritdoc/>
         public virtual bool Remove(string key)
         {
             return _commands.Remove(key);
         }
 
+        /// <inheritdoc/>
         public virtual bool TryGetValue(string key, out ICommand value)
         {
             return _commands.TryGetValue(key, out value);
         }
 
+        /// <inheritdoc/>
         public void Add(KeyValuePair<string, ICommand> item)
         {
             _commands.Add(item);
         }
 
+        /// <inheritdoc/>
         public virtual void Clear()
         {
             _commands.Clear();
         }
 
+        /// <inheritdoc/>
         public virtual bool Contains(KeyValuePair<string, ICommand> item)
         {
             return _commands.Contains(item);
         }
 
+        /// <inheritdoc/>
         public virtual void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
         {
             _commands.CopyTo(array, arrayIndex);
         }
 
+        /// <inheritdoc/>
         public virtual bool Remove(KeyValuePair<string, ICommand> item)
         {
             return _commands.Remove(item);
         }
 
+        /// <inheritdoc/>
         public virtual IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
         {
             return _commands.GetEnumerator();
         }
 
+        /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
             return _commands.GetEnumerator();
         }
-#endregion
+        #endregion
     }
 }

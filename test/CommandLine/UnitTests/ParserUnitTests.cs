@@ -18,13 +18,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
 
             ICommand dummyCommand = null;
-            Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
-            mockCommandSet.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
             Parser parser = new Parser(null, null);
 
             // Act and Assert
-            ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommand(dummyCommandName, mockCommandSet.Object));
+            ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommand(dummyCommandName, mockCommandDictionary.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_CommandDoesNotExist, dummyCommandName), exception.Message);
         }
@@ -36,13 +36,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             ICommand dummyCommand = new DummyCommand();
 
-            Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
-            mockCommandSet.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
             Parser parser = new Parser(null, null);
 
             // Act
-            ICommand result = parser.GetCommand(dummyCommandName, mockCommandSet.Object);
+            ICommand result = parser.GetCommand(dummyCommandName, mockCommandDictionary.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -55,13 +55,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Arrange
             DummyCommand dummyCommand = new DummyCommand();
 
-            Mock<CommandSet> mockCommandSet = _mockRepository.Create<CommandSet>();
-            mockCommandSet.Setup(c => c.DefaultCommand).Returns(dummyCommand);
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand);
 
             Parser parser = new Parser(null, null);
 
             // Act
-            ICommand result = parser.GetCommand(null, mockCommandSet.Object);
+            ICommand result = parser.GetCommand(null, mockCommandDictionary.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -76,7 +76,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             Arguments dummyArguments = new Arguments(dummyCommandName, null);
             DummyCommand dummyCommand = new DummyCommand();
-            CommandSet dummyCommandSet = new CommandSet();
+            CommandDictionary dummyCommandDictionary = new CommandDictionary();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
@@ -86,11 +86,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             Mock<Parser> mockParser = _mockRepository.
                 Create<Parser>(mockArgumentsFactory.Object, mockCommandMapper.Object);
-            mockParser.Setup(p => p.GetCommand(dummyCommandName, dummyCommandSet)).Returns(dummyCommand);
+            mockParser.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary)).Returns(dummyCommand);
             mockParser.CallBase = true;
 
             // Act
-            ParseResult result = mockParser.Object.Parse(dummyArgs, dummyCommandSet);
+            ParseResult result = mockParser.Object.Parse(dummyArgs, dummyCommandDictionary);
 
             // Assert
             _mockRepository.VerifyAll();

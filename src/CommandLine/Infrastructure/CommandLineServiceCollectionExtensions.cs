@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppPrinterFactory, CommandLineAppPrinterFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppContextFactory, CommandLineAppContextFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineApp, CommandLineApp>());
-            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandSetFactory, CommandSetFactory>());
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandDictionaryFactory, CommandDictionaryFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IParser, Parser>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppPrinter, CommandLineAppPrinter>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandMapper, CommandMapper>());

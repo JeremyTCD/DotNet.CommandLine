@@ -15,7 +15,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly CommandLineAppOptions _appOptions;
         private readonly IOptionsFactory _optionsFactory;
-        private readonly CommandSet _commandSet;
+        private readonly CommandDictionary _commandDictionary;
         private readonly StringBuilder _stringBuilder;
 
         /// <summary>
@@ -23,9 +23,9 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="appContext"></param>
         /// <param name="optionsFactory"></param>
-        public CommandLineAppPrinter(CommandSet commandSet, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
+        public CommandLineAppPrinter(CommandDictionary commandDictionary, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
         {
-            _commandSet = commandSet;
+            _commandDictionary = commandDictionary;
             _appOptions = appOptions;
             _optionsFactory = optionsFactory;
             _stringBuilder = new StringBuilder();
@@ -67,7 +67,7 @@ namespace JeremyTCD.DotNet.CommandLine
             AppendUsage("[options]", string.Empty);
 
             // Commands
-            IEnumerable<ICommand> nonDefaultCommands = _commandSet.
+            IEnumerable<ICommand> nonDefaultCommands = _commandDictionary.
                 Values.
                 Where(c => !c.IsDefault);
             if (nonDefaultCommands.Count() > 0)
@@ -85,7 +85,7 @@ namespace JeremyTCD.DotNet.CommandLine
             }
 
             // Default command options
-            IEnumerable<Option> defaultCommandOptions = _optionsFactory.CreateFromCommand(_commandSet.DefaultCommand);
+            IEnumerable<Option> defaultCommandOptions = _optionsFactory.CreateFromCommand(_commandDictionary.DefaultCommand);
             if (defaultCommandOptions.Count() > 0)
             {
                 string[][] optionDescriptions = defaultCommandOptions.
@@ -152,7 +152,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </exception>
         public virtual ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
         {
-            if (!_commandSet.TryGetValue(commandName, out ICommand command))
+            if (!_commandDictionary.TryGetValue(commandName, out ICommand command))
             {
                 throw new InvalidOperationException(string.Format(Strings.Exception_CommandDoesNotExist, commandName));
             }

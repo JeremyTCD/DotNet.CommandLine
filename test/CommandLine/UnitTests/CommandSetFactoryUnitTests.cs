@@ -8,7 +8,7 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
-    public class CommandSetFactoryUnitTests
+    public class CommandDictionaryFactoryUnitTests
     {
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
@@ -22,10 +22,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, true);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory();
+            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(
                 string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
                 exception.Message);
@@ -39,10 +39,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand = new DummyCommand(dummyName, true);
             DummyCommand[] dummyCommands = new[] { dummyCommand };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory();
+            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
         }
 
@@ -62,10 +62,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommandName, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory();
+            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName), exception.Message);
         }
 
@@ -79,15 +79,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory();
+            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_DefaultCommandRequired, exception.Message);
         }
 
         [Fact]
-        public void CreateFromCommands_CreatesCommandSet()
+        public void CreateFromCommands_CreatesCommandDictionary()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
@@ -96,10 +96,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandSetFactory commandSetFactory = new CommandSetFactory();
+            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act
-            CommandSet result = commandSetFactory.CreateFromCommands(dummyCommands);
+            CommandDictionary result = commandDictionaryFactory.CreateFromCommands(dummyCommands);
 
             // Assert
             Assert.Equal(2, result.Count);

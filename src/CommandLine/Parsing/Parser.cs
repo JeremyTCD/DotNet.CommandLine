@@ -25,11 +25,11 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Parses <paramref name="args"/>.
         /// </summary>
         /// <param name="args"></param>
-        /// <param name="commandSet"></param>
+        /// <param name="commandDictionary"></param>
         /// <returns>
         /// <see cref="ParseResult"/>
         /// </returns>
-        public ParseResult Parse(string[] args, CommandSet commandSet)
+        public ParseResult Parse(string[] args, CommandDictionary commandDictionary)
         {
             ICommand command = null;
             ParseException parseException = null;
@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine
             try
             {
                 Arguments arguments = _argumentsFactory.CreateFromArray(args);
-                command = GetCommand(arguments.CommandName, commandSet);
+                command = GetCommand(arguments.CommandName, commandDictionary);
 
                 _commandMapper.Map(arguments, command);
             }
@@ -50,10 +50,10 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Gets <see cref="ICommand"/> with name <paramref name="commandName"/> from <paramref name="commandSet"/>.
+        /// Gets <see cref="ICommand"/> with name <paramref name="commandName"/> from <paramref name="commandDictionary"/>.
         /// </summary>
         /// <param name="commandName"></param>
-        /// <param name="commandSet"></param>
+        /// <param name="commandDictionary"></param>
         /// <returns>
         /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null, default
         /// <see cref="ICommand"/> otherwise.
@@ -61,17 +61,17 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="ParseException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        internal virtual ICommand GetCommand(string commandName, CommandSet commandSet)
+        internal virtual ICommand GetCommand(string commandName, CommandDictionary commandDictionary)
         {
             ICommand result;
 
             if (commandName == null)
             {
-                result = commandSet.DefaultCommand;
+                result = commandDictionary.DefaultCommand;
             }
             else
             {
-                commandSet.TryGetValue(commandName, out result);
+                commandDictionary.TryGetValue(commandName, out result);
 
                 if (result == null)
                 {

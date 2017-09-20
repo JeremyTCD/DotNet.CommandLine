@@ -6,16 +6,15 @@ using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class CommandSetFactory : ICommandSetFactory
+    /// <summary>
+    /// Represents a default <see cref="ICommandDictionaryFactory"/>.
+    /// </summary>
+    public class CommandDictionaryFactory : ICommandDictionaryFactory
     {
+        /// <inheritdoc/>
         /// <summary>
-        /// Creates a <see cref="CommandSet"/> instance from <paramref name="commands"/>. This function serves as an early filter for
-        /// incompatible/invalid commands.
+        /// This function serves as an early filter for incompatible/invalid commands.
         /// </summary>
-        /// <param name="commands"></param>
-        /// <returns>
-        /// <see cref="CommandSet"/>
-        /// </returns>
         /// <exception cref="InvalidOperationException">
         /// Thrown there are multiple default commands.
         /// </exception>
@@ -28,10 +27,10 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if there is no default command.
         /// </exception>
-        public CommandSet CreateFromCommands(IEnumerable<ICommand> commands)
+        public CommandDictionary CreateFromCommands(IEnumerable<ICommand> commands)
         {
             ICommand defaultCommand = null;
-            CommandSet result = new CommandSet();
+            CommandDictionary result = new CommandDictionary();
 
             foreach (ICommand command in commands)
             {

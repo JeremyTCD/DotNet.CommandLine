@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandLineApp : ICommandLineApp
     {
         private readonly IParser _parser;
-        private readonly ICommandSetFactory _commandSetFactory;
+        private readonly ICommandDictionaryFactory _commandDictionaryFactory;
         private readonly IEnumerable<ICommand> _commands;
         private readonly CommandLineAppOptions _appOptions;
         private readonly ICommandLineAppContextFactory _appContextFactory;
@@ -22,11 +22,11 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Initializes a new instance of the <see cref="CommandLineApp"/> class.
         /// </summary>
         /// <param name="parser">The command line application's <see cref="IParser"/>.</param>
-        /// <param name="commandSetFactory">
-        /// The <see cref="ICommandSetFactory"/> used to create the command line application's <see cref="CommandSet"/>.
+        /// <param name="commandDictionaryFactory">
+        /// The <see cref="ICommandDictionaryFactory"/> used to create the command line application's <see cref="CommandDictionary"/>.
         /// </param>
         /// <param name="commands">
-        /// The collection whose elements are used to populate the command line application's <see cref="CommandSet"/>.
+        /// The collection whose elements are used to populate the command line application's <see cref="CommandDictionary"/>.
         /// </param>
         /// <param name="commandLineAppContextFactory">
         /// The <see cref="ICommandLineAppContextFactory"/> used to create the command line application's <see cref="CommandLineAppContext"/>.
@@ -34,7 +34,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="optionsAccessor">The <see cref="CommandLineAppOptions"/> accessor.</param>
         public CommandLineApp(
             IParser parser,
-            ICommandSetFactory commandSetFactory,
+            ICommandDictionaryFactory commandDictionaryFactory,
             IEnumerable<ICommand> commands,
             ICommandLineAppContextFactory commandLineAppContextFactory,
             IOptions<CommandLineAppOptions> optionsAccessor)
@@ -43,7 +43,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _commands = commands;
             _parser = parser;
             _appContextFactory = commandLineAppContextFactory;
-            _commandSetFactory = commandSetFactory;
+            _commandDictionaryFactory = commandDictionaryFactory;
         }
 
         /// <summary>
@@ -57,13 +57,13 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         public int Run(string[] args)
         {
-            CommandSet commandSet = _commandSetFactory.CreateFromCommands(_commands);
-            CommandLineAppContext appContext = _appContextFactory.Create(commandSet, _appOptions);
-            ParseResult result = _parser.Parse(args, commandSet);
+            CommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
+            CommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);
+            ParseResult result = _parser.Parse(args, commandDictionary);
 
             if (result.Command == null)
             {
-                return commandSet.DefaultCommand.Run(result, appContext);
+                return commandDictionary.DefaultCommand.Run(result, appContext);
             }
 
             return result.Command.Run(result, appContext);

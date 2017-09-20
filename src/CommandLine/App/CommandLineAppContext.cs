@@ -11,20 +11,20 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandLineAppContext"/> class for a command line application.
         /// </summary>
-        /// <param name="commandSet">The command line application's <see cref="CommandLine.CommandSet"/>.</param>
+        /// <param name="commandDictionary">The command line application's <see cref="CommandLine.CommandDictionary"/>.</param>
         /// <param name="commandLineAppOptions">The command line application's <see cref="CommandLine.CommandLineAppOptions"/>.</param>
         /// <param name="commandLineAppPrinter">The command line application's <see cref="ICommandLineAppPrinter"/>.</param>
-        public CommandLineAppContext(CommandSet commandSet, CommandLineAppOptions commandLineAppOptions, ICommandLineAppPrinter commandLineAppPrinter)
+        public CommandLineAppContext(CommandDictionary commandDictionary, CommandLineAppOptions commandLineAppOptions, ICommandLineAppPrinter commandLineAppPrinter)
         {
             CommandLineAppPrinter = commandLineAppPrinter;
-            CommandSet = commandSet;
+            CommandDictionary = commandDictionary;
             CommandLineAppOptions = commandLineAppOptions;
         }
 
         /// <summary>
-        /// Gets the command line application context's <see cref="CommandLine.CommandSet"/>.
+        /// Gets the command line application context's <see cref="CommandLine.CommandDictionary"/>.
         /// </summary>
-        public CommandSet CommandSet { get; }
+        public CommandDictionary CommandDictionary { get; }
 
         /// <summary>
         /// Gets the command line application context's <see cref="CommandLine.CommandLineAppOptions"/>.

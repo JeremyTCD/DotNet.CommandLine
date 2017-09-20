@@ -11,9 +11,9 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Creates a new instance of the <see cref="CommandLineAppContext"/> class.
         /// </summary>
-        /// <param name="commandSet">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandSet"/></param>
+        /// <param name="commandDictionary">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandDictionary"/></param>
         /// <param name="appOptions">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandLineAppOptions"/></param>
         /// <returns><see cref="CommandLineAppContext"/></returns>
-        CommandLineAppContext Create(CommandSet commandSet, CommandLineAppOptions appOptions);
+        CommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions);
     }
 }

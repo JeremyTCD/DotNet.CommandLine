@@ -23,11 +23,11 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <inheritdoc/>
-        public CommandLineAppContext Create(CommandSet commandSet, CommandLineAppOptions appOptions)
+        public CommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions)
         {
-            ICommandLineAppPrinter appPrinter = _appPrinterFactory.Create(commandSet, appOptions);
+            ICommandLineAppPrinter appPrinter = _appPrinterFactory.Create(commandDictionary, appOptions);
 
-            return new CommandLineAppContext(commandSet, appOptions, appPrinter);
+            return new CommandLineAppContext(commandDictionary, appOptions, appPrinter);
         }
     }
 }

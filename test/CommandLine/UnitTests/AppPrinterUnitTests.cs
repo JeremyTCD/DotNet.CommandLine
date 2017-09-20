@@ -42,7 +42,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             string dummyCommandDescription = "dummyCommandDescription";
             DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyCommandDescription);
-            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>()
+            CommandDictionary dummyCommandDictionary = new CommandDictionary(new Dictionary<string, ICommand>()
             {
                 { dummyCommandName, dummyCommand },
                 { string.Empty, dummyDefaultCommand }
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyDefaultCommand)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendAppHelp(rowPrefix, columnGap);
@@ -184,7 +184,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyDescription);
-            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>()
+            CommandDictionary dummyCommandDictionary = new CommandDictionary(new Dictionary<string, ICommand>()
             {
                 { dummyCommandName, dummyCommand },
             });
@@ -199,7 +199,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
