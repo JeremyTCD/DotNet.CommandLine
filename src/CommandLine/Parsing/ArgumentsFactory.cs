@@ -9,14 +9,14 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// Creates an <see cref="Arguments"/> instance from a string array. This function serves as an early filter for
-        /// malformed arguments. 
+        /// malformed arguments.
         /// </summary>
         /// <param name="args"></param>
         /// <returns>
         /// <see cref="Arguments"/>
         /// </returns>
         /// <exception cref="ParseException">
-        /// Thrown if array contains null or whitespace elements. 
+        /// Thrown if array contains null or whitespace elements.
         /// </exception>
         /// <exception cref="ParseException">
         /// Thrown if an element in <paramref name="args"/> other than the first element has the format of a command.

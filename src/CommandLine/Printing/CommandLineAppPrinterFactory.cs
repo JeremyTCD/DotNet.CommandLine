@@ -3,18 +3,18 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class AppPrinterFactory : IAppPrinterFactory
+    public class CommandLineAppPrinterFactory : ICommandLineAppPrinterFactory
     {
         private readonly IOptionsFactory _optionsFactory;
 
-        public AppPrinterFactory(IOptionsFactory optionsFactory)
+        public CommandLineAppPrinterFactory(IOptionsFactory optionsFactory)
         {
             _optionsFactory = optionsFactory;
         }
 
-        public IAppPrinter Create(CommandSet commandSet, AppOptions appOptions)
+        public ICommandLineAppPrinter Create(CommandSet commandSet, CommandLineAppOptions appOptions)
         {
-            return new AppPrinter(commandSet, appOptions, _optionsFactory);
+            return new CommandLineAppPrinter(commandSet, appOptions, _optionsFactory);
         }
     }
 }

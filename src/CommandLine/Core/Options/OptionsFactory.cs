@@ -34,8 +34,10 @@ namespace JeremyTCD.DotNet.CommandLine
                         result.Add(option);
                     }
                 }
+
                 _optionsCache.Add(command, result);
             }
+
             return result;
         }
 
@@ -60,7 +62,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 return null;
             }
 
-            if(string.IsNullOrWhiteSpace(optionAttribute.ShortName) && string.IsNullOrWhiteSpace(optionAttribute.LongName))
+            if (string.IsNullOrWhiteSpace(optionAttribute.ShortName) && string.IsNullOrWhiteSpace(optionAttribute.LongName))
             {
                 throw new InvalidOperationException(string.Format(Strings.Exception_OptionAttributeMustHaveName, propertyInfo.Name));
             }

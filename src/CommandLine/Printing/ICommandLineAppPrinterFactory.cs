@@ -3,10 +3,8 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class AppOptions
+    public interface ICommandLineAppPrinterFactory
     {
-        public string ExecutableName { get; set; }
-        public string FullName { get; set; }
-        public string Version { get; set; }
+        ICommandLineAppPrinter Create(CommandSet commandSet, CommandLineAppOptions appOptions);
     }
 }

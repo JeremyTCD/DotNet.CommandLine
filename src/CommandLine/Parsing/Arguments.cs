@@ -11,8 +11,9 @@ namespace JeremyTCD.DotNet.CommandLine
     public class Arguments
     {
         public string CommandName { get; }
+
         public Dictionary<string, string> OptionArgs { get; }
-        
+
         /// <summary>
         /// Creates an <see cref="Arguments"/> instance.
         /// </summary>

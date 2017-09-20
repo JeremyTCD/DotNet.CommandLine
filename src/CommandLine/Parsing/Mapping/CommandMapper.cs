@@ -77,7 +77,8 @@ namespace JeremyTCD.DotNet.CommandLine
 
                 if (!propertySet || innerException != null)
                 {
-                    throw new ParseException(string.Format(Strings.ParseException_InvalidOptionValue, optionArg.Value, optionArg.Key), 
+                    throw new ParseException(
+                        string.Format(Strings.ParseException_InvalidOptionValue, optionArg.Value, optionArg.Key),
                         innerException);
                 }
             }

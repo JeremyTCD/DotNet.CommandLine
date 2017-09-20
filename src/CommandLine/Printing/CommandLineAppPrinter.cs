@@ -9,21 +9,21 @@ using System.Text;
 namespace JeremyTCD.DotNet.CommandLine
 {
     /// <summary>
-    /// App context aware command line printer. 
+    /// App context aware command line printer.
     /// </summary>
-    public class AppPrinter : IAppPrinter
+    public class CommandLineAppPrinter : ICommandLineAppPrinter
     {
-        private readonly AppOptions _appOptions;
+        private readonly CommandLineAppOptions _appOptions;
         private readonly IOptionsFactory _optionsFactory;
         private readonly CommandSet _commandSet;
         private readonly StringBuilder _stringBuilder;
 
         /// <summary>
-        /// Creates an <see cref="AppPrinter"/> instance.
+        /// Creates an <see cref="CommandLineAppPrinter"/> instance.
         /// </summary>
         /// <param name="appContext"></param>
         /// <param name="optionsFactory"></param>
-        public AppPrinter(CommandSet commandSet, AppOptions appOptions, IOptionsFactory optionsFactory)
+        public CommandLineAppPrinter(CommandSet commandSet, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
         {
             _commandSet = commandSet;
             _appOptions = appOptions;
@@ -31,35 +31,35 @@ namespace JeremyTCD.DotNet.CommandLine
             _stringBuilder = new StringBuilder();
         }
 
-        public virtual IAppPrinter Clear()
+        public virtual ICommandLineAppPrinter Clear()
         {
             _stringBuilder.Clear();
 
             return this;
         }
 
-        public virtual IAppPrinter Print()
+        public virtual ICommandLineAppPrinter Print()
         {
             Console.Write(_stringBuilder.ToString());
 
             return this;
         }
 
-        public virtual IAppPrinter AppendLine()
+        public virtual ICommandLineAppPrinter AppendLine()
         {
             _stringBuilder.AppendLine();
 
             return this;
         }
 
-        public virtual IAppPrinter AppendHeader()
+        public virtual ICommandLineAppPrinter AppendHeader()
         {
             _stringBuilder.Append(string.Format(Strings.Printer_Header, _appOptions.FullName, _appOptions.Version));
 
             return this;
         }
 
-        public virtual IAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
+        public virtual ICommandLineAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
         {
             // Usage
             AppendUsage("[command options]", "[command]");
@@ -84,7 +84,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 AppendRows(commandDescriptions, columnGap, "    ");
             }
 
-            // Default command options 
+            // Default command options
             IEnumerable<Option> defaultCommandOptions = _optionsFactory.CreateFromCommand(_commandSet.DefaultCommand);
             if (defaultCommandOptions.Count() > 0)
             {
@@ -109,10 +109,11 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual IAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
+        public virtual ICommandLineAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
         {
             _stringBuilder.
-                Append(string.Format(Strings.Printer_GetHelpTip,
+                Append(string.Format(
+                    Strings.Printer_GetHelpTip,
                     _appOptions.ExecutableName,
                     GetNormalizedPosValue(commandPosValue),
                     targetPosValue));
@@ -120,10 +121,11 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual IAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
+        public virtual ICommandLineAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
         {
             _stringBuilder.
-                Append(string.Format(Strings.Printer_Usage,
+                Append(string.Format(
+                    Strings.Printer_Usage,
                     _appOptions.ExecutableName,
                     GetNormalizedPosValue(commandPosValue),
                     optionsPosValue));
@@ -131,7 +133,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual IAppPrinter AppendDescription(string description)
+        public virtual ICommandLineAppPrinter AppendDescription(string description)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_Description, description));
@@ -148,7 +150,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        public virtual IAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
+        public virtual ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
         {
             if (!_commandSet.TryGetValue(commandName, out ICommand command))
             {
@@ -186,7 +188,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual IAppPrinter AppendParseException(ParseException parseException)
+        public virtual ICommandLineAppPrinter AppendParseException(ParseException parseException)
         {
             string innerMostMessage = parseException.Message;
             Exception innerException = parseException.InnerException;
@@ -226,6 +228,7 @@ namespace JeremyTCD.DotNet.CommandLine
             {
                 names.Add($"-{option.ShortName}");
             }
+
             if (!string.IsNullOrWhiteSpace(option.LongName))
             {
                 names.Add($"-{option.LongName}");
@@ -256,7 +259,8 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="rows">Array of rows where each row is a <see cref="string[]"/>. All rows are assumed to have the same number of
         /// columns as the first row.</param>
-        /// <param name="stringBuilder"></param>
+        /// <param name="columnGap"></param>
+        /// <param name="rowPrefix"></param>
         internal void AppendRows(string[][] rows, int columnGap, string rowPrefix)
         {
             int numRows = rows.Length;

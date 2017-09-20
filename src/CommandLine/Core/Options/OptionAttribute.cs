@@ -21,28 +21,33 @@ namespace JeremyTCD.DotNet.CommandLine
             {
                 return _shortName ?? (_shortName = TryGetResource(_shortNameResourceName));
             }
+
             set
             {
                 _shortName = value;
             }
         }
+
         public string LongName
         {
             get
             {
                 return _longName ?? (_longName = TryGetResource(_longNameResourceName));
             }
+
             set
             {
                 _longName = value;
             }
         }
+
         public string Description
         {
             get
             {
                 return _description ?? (_description = TryGetResource(_descriptionResourceName));
             }
+
             set
             {
                 _description = value;
@@ -54,8 +59,8 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="name"></param>
         /// <param name="description"></param>
-        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null) :
-            base(resourceType)
+        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null)
+            : base(resourceType)
         {
             _shortNameResourceName = shortNameResourceName;
             _longNameResourceName = longNameResourceName;

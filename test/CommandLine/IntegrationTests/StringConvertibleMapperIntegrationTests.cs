@@ -111,13 +111,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private class DummyCommand : ICommand
         {
             public List<int> NotConvertible { get; set; }
+
             public int Convertible { get; set; }
 
             public string Name => throw new NotImplementedException();
+
             public string Description => throw new NotImplementedException();
+
             public bool IsDefault => throw new NotImplementedException();
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

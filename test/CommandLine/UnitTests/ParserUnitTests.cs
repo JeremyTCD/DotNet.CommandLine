@@ -1,8 +1,8 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Moq;
 using System;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
@@ -23,7 +23,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             Parser parser = new Parser(null, null);
 
-            // Act and Assert                                   
+            // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommand(dummyCommandName, mockCommandSet.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_CommandDoesNotExist, dummyCommandName), exception.Message);
@@ -41,7 +41,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             Parser parser = new Parser(null, null);
 
-            // Act 
+            // Act
             ICommand result = parser.GetCommand(dummyCommandName, mockCommandSet.Object);
 
             // Assert
@@ -60,7 +60,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             Parser parser = new Parser(null, null);
 
-            // Act 
+            // Act
             ICommand result = parser.GetCommand(null, mockCommandSet.Object);
 
             // Assert
@@ -141,15 +141,17 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private class DummyCommand : ICommand
         {
             public string Name => throw new NotImplementedException();
+
             public string Description => throw new NotImplementedException();
+
             public bool IsDefault { get; }
 
-            public DummyCommand(bool isDefault = false) 
+            public DummyCommand(bool isDefault = false)
             {
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

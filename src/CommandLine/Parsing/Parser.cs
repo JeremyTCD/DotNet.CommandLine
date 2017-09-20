@@ -27,7 +27,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="args"></param>
         /// <param name="commandSet"></param>
         /// <returns>
-        /// <see cref="ParseResult"/> 
+        /// <see cref="ParseResult"/>
         /// </returns>
         public ParseResult Parse(string[] args, CommandSet commandSet)
         {
@@ -55,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="commandName"></param>
         /// <param name="commandSet"></param>
         /// <returns>
-        /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null, default 
+        /// <see cref="ICommand"/> with name <paramref name="commandName"/> if <paramref name="commandName"/> is not null, default
         /// <see cref="ICommand"/> otherwise.
         /// </returns>
         /// <exception cref="ParseException">
@@ -65,7 +65,7 @@ namespace JeremyTCD.DotNet.CommandLine
         {
             ICommand result;
 
-            if(commandName == null)
+            if (commandName == null)
             {
                 result = commandSet.DefaultCommand;
             }

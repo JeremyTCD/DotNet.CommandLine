@@ -54,13 +54,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private class DummyCommand : ICommand
         {
             public bool Bool { get; set; }
+
             public string NotBool { get; set; }
 
             public string Name => throw new System.NotImplementedException();
+
             public string Description => throw new System.NotImplementedException();
+
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new System.NotImplementedException();
             }

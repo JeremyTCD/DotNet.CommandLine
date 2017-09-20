@@ -1,9 +1,9 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Moq;
 using System;
 using System.Collections.Generic;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
@@ -18,9 +18,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Arrange
             string dummyFullName = "dummyFullName";
             string dummyVersion = "dummyVersion";
-            AppOptions dummyAppOptions = new AppOptions() { FullName = dummyFullName, Version = dummyVersion };
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { FullName = dummyFullName, Version = dummyVersion };
 
-            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendHeader();
@@ -42,13 +42,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             string dummyCommandDescription = "dummyCommandDescription";
             DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyCommandDescription);
-            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>(){
+            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>()
+            {
                 { dummyCommandName, dummyCommand },
-                { "", dummyDefaultCommand }
+                { string.Empty, dummyDefaultCommand }
             });
             // Dummy context
             string dummyExecutableName = "dummyExecutableName";
-            AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
             // Dummy options
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
@@ -57,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyDefaultCommand)).Returns(new List<Option> { dummyOption });
 
-            AppPrinter printer = new AppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendAppHelp(rowPrefix, columnGap);
@@ -82,9 +83,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void AppendGetHelpTip_AppendsGetHelpTip(string dummyCommandPosValue, string dummyTargetPosValue, string dummyExecutableName, string expected)
         {
             // Arrange
-            AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendGetHelpTip(dummyTargetPosValue, dummyCommandPosValue);
@@ -100,15 +101,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyTargetPosValue = "dummyTargetPosValue";
             string dummyExecutableName = "dummyExecutableName";
 
-            yield return new object[] { dummyCommandPosValue,
+            yield return new object[]
+            {
+                dummyCommandPosValue,
                 dummyTargetPosValue,
                 dummyExecutableName,
                 string.Format(Strings.Printer_GetHelpTip, dummyExecutableName, dummyCommandPosValue + " ", dummyTargetPosValue)
             };
-            yield return new object[] { null,
+            yield return new object[]
+            {
+                null,
                 dummyTargetPosValue,
                 dummyExecutableName,
-                string.Format(Strings.Printer_GetHelpTip, dummyExecutableName, "", dummyTargetPosValue)
+                string.Format(Strings.Printer_GetHelpTip, dummyExecutableName, string.Empty, dummyTargetPosValue)
             };
         }
 
@@ -117,9 +122,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void AppendUsage_AppendsUsage(string dummyOptionsPosValue, string dummyCommandPosValue, string dummyExecutableName, string expected)
         {
             // Arrange
-            AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            AppPrinter printer = new AppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
 
             // Act
             printer.AppendUsage(dummyOptionsPosValue, dummyCommandPosValue);
@@ -135,15 +140,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyOptionsPosValue = "dummyOptionsPosValue";
             string dummyCommandPosValue = "dummyCommandPosValue";
 
-            yield return new object[] { dummyOptionsPosValue,
+            yield return new object[]
+            {
+                dummyOptionsPosValue,
                 dummyCommandPosValue,
                 dummyExecutableName,
                 string.Format(Strings.Printer_Usage, dummyExecutableName, dummyCommandPosValue + " ", dummyOptionsPosValue)
             };
-            yield return new object[] { dummyOptionsPosValue,
+            yield return new object[]
+            {
+                dummyOptionsPosValue,
                 null,
                 dummyExecutableName,
-                string.Format(Strings.Printer_Usage, dummyExecutableName, "", dummyOptionsPosValue)
+                string.Format(Strings.Printer_Usage, dummyExecutableName, string.Empty, dummyOptionsPosValue)
             };
         }
 
@@ -154,7 +163,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(description: dummyDescription);
 
-            AppPrinter printer = new AppPrinter(null, null, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
 
             // Act
             printer.AppendDescription(dummyDescription);
@@ -175,12 +184,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyCommandName = "dummyCommandName";
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyDescription);
-            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>(){
+            CommandSet dummyCommandSet = new CommandSet(new Dictionary<string, ICommand>()
+            {
                 { dummyCommandName, dummyCommand },
             });
             // Dummy context
             string dummyExecutableName = "dummyExecutableName";
-            AppOptions dummyAppOptions = new AppOptions() { ExecutableName = dummyExecutableName };
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
             // Dummy options
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
@@ -189,7 +199,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(new List<Option> { dummyOption });
 
-            AppPrinter printer = new AppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandSet, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
@@ -210,7 +220,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)
         {
             // Arrange
-            AppPrinter printer = new AppPrinter(null, null, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
 
             // Act
             printer.AppendParseException(parseException);
@@ -234,7 +244,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             Option dummyOption = new Option(null, dummyShortName, dummyLongName, null);
-            AppPrinter printer = new AppPrinter(null, null, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
 
             // Act
             string result = printer.GetOptionNames(dummyOption);
@@ -260,7 +270,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         public void GetNormalizedPosValue_GetsNormalizedPosValue(string dummyPosValue, string expected)
         {
             // Arrange
-            AppPrinter printer = new AppPrinter(null, null, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
 
             // Act
             string result = printer.GetNormalizedPosValue(dummyPosValue);
@@ -274,7 +284,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             string dummyPosValue = "dummyPosValue";
 
             yield return new object[] { dummyPosValue, $"{dummyPosValue} " };
-            yield return new object[] { null, "" };
+            yield return new object[] { null, string.Empty };
         }
 
         [Theory]
@@ -287,12 +297,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Column 3 - Strings with same length, increasing then decreasing length
             string[][] rows = new string[][]
             {
-                new string[] { "", "123", "1"},
-                new string[] { "1", "12", "12"},
-                new string[] { "12", "1", "1"}
+                new string[] { string.Empty, "123", "1" },
+                new string[] { "1", "12", "12" },
+                new string[] { "12", "1", "1" }
             };
 
-            AppPrinter printer = new AppPrinter(null, null, null);
+            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
 
             // Act
             printer.AppendRows(rows, dummyColumnGap, dummyRowPrefix);
@@ -308,16 +318,24 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             int dummyColumnGap = 2;
             string columnSeparator = new string(' ', dummyColumnGap);
 
-            yield return new object[] { dummyRowPrefix,
-                dummyColumnGap, $"{dummyRowPrefix}  {columnSeparator}123{columnSeparator}1 {Environment.NewLine}{dummyRowPrefix}1 {columnSeparator}12 {columnSeparator}12{Environment.NewLine}{dummyRowPrefix}12{columnSeparator}1  {columnSeparator}1 " };
-            yield return new object[] { null,
-                dummyColumnGap, $"  {columnSeparator}123{columnSeparator}1 {Environment.NewLine}1 {columnSeparator}12 {columnSeparator}12{Environment.NewLine}12{columnSeparator}1  {columnSeparator}1 " };
+            yield return new object[]
+            {
+                dummyRowPrefix,
+                dummyColumnGap, $"{dummyRowPrefix}  {columnSeparator}123{columnSeparator}1 {Environment.NewLine}{dummyRowPrefix}1 {columnSeparator}12 {columnSeparator}12{Environment.NewLine}{dummyRowPrefix}12{columnSeparator}1  {columnSeparator}1 "
+            };
+            yield return new object[]
+            {
+                null,
+                dummyColumnGap, $"  {columnSeparator}123{columnSeparator}1 {Environment.NewLine}1 {columnSeparator}12 {columnSeparator}12{Environment.NewLine}12{columnSeparator}1  {columnSeparator}1 "
+            };
         }
 
         private class DummyCommandWithOptions : ICommand
         {
             public string Name { get; }
+
             public string Description { get; }
+
             public bool IsDefault { get; }
 
             [Option(LongName = "DummyOptionLongName", Description = "DummyOptionDescription")]
@@ -330,7 +348,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
@@ -339,7 +357,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private class DummyCommand : ICommand
         {
             public string Name { get; }
+
             public string Description { get; }
+
             public bool IsDefault { get; }
 
             public DummyCommand(string name = null, string description = null, bool isDefault = false)
@@ -349,7 +369,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

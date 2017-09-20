@@ -8,8 +8,8 @@ namespace JeremyTCD.DotNet.CommandLine
     public class FlagMapper : IMapper
     {
         /// <summary>
-        /// If <paramref name="value"/> is null and the property represented by <paramref name="propertyInfo"/> is of type bool, 
-        /// sets the corresponding property in <paramref name="command"/> to true. 
+        /// If <paramref name="value"/> is null and the property represented by <paramref name="propertyInfo"/> is of type bool,
+        /// sets the corresponding property in <paramref name="command"/> to true.
         /// </summary>
         /// <param name="propertyInfo"></param>
         /// <param name="value"></param>
@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
-            if(value != null || propertyInfo.PropertyType != typeof(bool))
+            if (value != null || propertyInfo.PropertyType != typeof(bool))
             {
                 return false;
             }

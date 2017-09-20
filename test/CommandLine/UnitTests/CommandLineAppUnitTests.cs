@@ -19,8 +19,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             CommandSet dummyCommandSet = new CommandSet();
             string[] dummyArgs = new string[0];
             int dummyExitCode = 1;
-            AppOptions dummyAppOptions = new AppOptions();
-            AppContext dummyAppContext = new AppContext(null, null, null);
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions();
+            CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, null);
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             ParseResult dummyParseResult = new ParseResult(null, mockCommand.Object);
@@ -32,10 +32,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandSet)).Returns(dummyParseResult);
 
-            Mock<IOptions<AppOptions>> mockOptionsAccessor = _mockRepository.Create<IOptions<AppOptions>>();
+            Mock<IOptions<CommandLineAppOptions>> mockOptionsAccessor = _mockRepository.Create<IOptions<CommandLineAppOptions>>();
             mockOptionsAccessor.Setup(o => o.Value).Returns(dummyAppOptions);
 
-            Mock<IAppContextFactory> mockAppContextFactory = _mockRepository.Create<IAppContextFactory>();
+            Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(dummyCommandSet, dummyAppOptions)).Returns(dummyAppContext);
 
             CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockAppContextFactory.Object, dummyCommands,
@@ -56,9 +56,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             ICommand[] dummyCommands = new ICommand[0];
             string[] dummyArgs = new string[0];
             ParseResult dummyParseResult = new ParseResult(null, null);
-            AppOptions dummyAppOptions = new AppOptions();
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions();
             int dummyExitCode = 1;
-            AppContext dummyAppContext = new AppContext(null, null, null);
+            CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, null);
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             mockCommand.Setup(c => c.Run(dummyParseResult, dummyAppContext)).Returns(dummyExitCode);
@@ -72,10 +72,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, mockCommandSet.Object)).Returns(dummyParseResult);
 
-            Mock<IOptions<AppOptions>> mockOptionsAccessor = _mockRepository.Create<IOptions<AppOptions>>();
+            Mock<IOptions<CommandLineAppOptions>> mockOptionsAccessor = _mockRepository.Create<IOptions<CommandLineAppOptions>>();
             mockOptionsAccessor.Setup(o => o.Value).Returns(dummyAppOptions);
 
-            Mock<IAppContextFactory> mockAppContextFactory = _mockRepository.Create<IAppContextFactory>();
+            Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(mockCommandSet.Object, dummyAppOptions)).Returns(dummyAppContext);
 
             CommandLineApp commandLineApp = new CommandLineApp(mockParser.Object, mockCommandSetFactory.Object, mockAppContextFactory.Object,

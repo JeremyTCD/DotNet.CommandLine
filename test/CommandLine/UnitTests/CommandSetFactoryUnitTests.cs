@@ -1,16 +1,16 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Moq;
 using System;
 using System.Collections.Generic;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
     public class CommandSetFactoryUnitTests
     {
-        private MockRepository _mockRepository { get; } = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
+        private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
         public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
@@ -26,7 +26,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandSetFactory.CreateFromCommands(dummyCommands));
-            Assert.Equal(string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
+            Assert.Equal(
+                string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
                 exception.Message);
         }
 
@@ -97,7 +98,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             CommandSetFactory commandSetFactory = new CommandSetFactory();
 
-            // Act 
+            // Act
             CommandSet result = commandSetFactory.CreateFromCommands(dummyCommands);
 
             // Assert
@@ -109,7 +110,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private class DummyCommand : ICommand
         {
             public string Name { get; }
+
             public string Description => throw new NotImplementedException();
+
             public bool IsDefault { get; }
 
             public DummyCommand(string name, bool isDefault)
@@ -118,7 +121,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

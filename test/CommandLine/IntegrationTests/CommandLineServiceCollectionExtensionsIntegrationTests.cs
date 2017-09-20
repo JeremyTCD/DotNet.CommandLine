@@ -1,10 +1,10 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Extensions.DependencyInjection;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
         [Fact]
         public void AddCommandLine_ConfiguresServicesCorrectly()
         {
-            // Arrange 
+            // Arrange
             ServiceCollection services = new ServiceCollection();
 
             // Act

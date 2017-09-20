@@ -1,10 +1,10 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Microsoft.Extensions.DependencyInjection;
-using Moq;
 using System;
 using System.Collections.Generic;
+using Microsoft.Extensions.DependencyInjection;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
@@ -28,7 +28,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
                 AddSingleton<ICommand, DummyCommand>().
                 AddSingleton<ICommand, DummyDefaultCommand>().
                 // Configure app options
-                Configure<AppOptions>(a =>
+                Configure<CommandLineAppOptions>(a =>
                 {
                     a.ExecutableName = "dummyExecutableName";
                     a.FullName = "dummyFullName";
@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
 
             IServiceProvider serviceProvider = serviceCollection.BuildServiceProvider();
             ICommandLineApp commandLineApp = serviceProvider.GetService<ICommandLineApp>();
-            
+
             // Act
             int resultExitCode = commandLineApp.Run(dummyArguments.Split(' '));
 
@@ -61,13 +61,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
         private class DummyCommand : Command
         {
             public override string Name { get; } = DummyStrings.CommandName_Dummy;
+
             public override string Description { get; } = DummyStrings.CommandDescription_Dummy;
+
             public override bool IsDefault { get; } = false;
 
             [Option(typeof(DummyStrings), nameof(DummyStrings.OptionShortName_Dummy), nameof(DummyStrings.OptionLongName_Dummy), nameof(DummyStrings.OptionDescription_Dummy))]
             public bool DummyOption { get; set; }
 
-            public override int RunCommand(ParseResult parseResult, AppContext appContext)
+            public override int RunCommand(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 return 1;
             }
@@ -76,10 +78,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
         private class DummyDefaultCommand : Command
         {
             public override string Name { get; } = "Default";
+
             public override string Description { get; } = null;
+
             public override bool IsDefault { get; } = true;
 
-            public override int RunCommand(ParseResult parseResult, AppContext appContext)
+            public override int RunCommand(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 return 1;
             }

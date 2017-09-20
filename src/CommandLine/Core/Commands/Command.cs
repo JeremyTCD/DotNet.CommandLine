@@ -6,7 +6,9 @@ namespace JeremyTCD.DotNet.CommandLine
     public abstract class Command : ICommand
     {
         public abstract string Name { get; }
+
         public abstract string Description { get; }
+
         public abstract bool IsDefault { get; }
 
         [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
@@ -14,21 +16,22 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// If <paramref name="parseResult"/> contains a <see cref="ParseException"/> instance, prints exception and a get help tip before returning 0.
-        /// If <see cref="Help"/> is true, prints help and returns 1. Otherwise, calls <see cref="RunCommand(ParseResult, AppContext)"/>.
+        /// If <see cref="Help"/> is true, prints help and returns 1. Otherwise, calls <see cref="RunCommand(ParseResult, CommandLineAppContext)"/>.
         /// </summary>
         /// <param name="parseResult"></param>
         /// <param name="appContext"></param>
         /// <returns></returns>
-        public virtual int Run(ParseResult parseResult, AppContext appContext)
+        public virtual int Run(ParseResult parseResult, CommandLineAppContext appContext)
         {
             appContext.
-                AppPrinter.
+                CommandLineAppPrinter.
                 AppendHeader().
                 AppendLine();
 
-            if(parseResult.ParseException != null){
+            if (parseResult.ParseException != null)
+            {
                 appContext.
-                    AppPrinter.
+                    CommandLineAppPrinter.
                     AppendParseException(parseResult.ParseException).
                     AppendLine().
                     AppendGetHelpTip(IsDefault ? "this application" : "this command", IsDefault ? null : Name).
@@ -42,30 +45,30 @@ namespace JeremyTCD.DotNet.CommandLine
                 if (IsDefault)
                 {
                     appContext.
-                        AppPrinter.
+                        CommandLineAppPrinter.
                         AppendAppHelp();
                 }
                 else
                 {
                     appContext.
-                        AppPrinter.
+                        CommandLineAppPrinter.
                         AppendCommandHelp(Name);
                 }
 
                 appContext.
-                    AppPrinter.
+                    CommandLineAppPrinter.
                     Print();
 
                 return 1;
             }
 
             appContext.
-                AppPrinter.
+                CommandLineAppPrinter.
                 Print();
 
             return RunCommand(parseResult, appContext);
         }
 
-        public abstract int RunCommand(ParseResult parseResult, AppContext appContext);
+        public abstract int RunCommand(ParseResult parseResult, CommandLineAppContext appContext);
     }
 }

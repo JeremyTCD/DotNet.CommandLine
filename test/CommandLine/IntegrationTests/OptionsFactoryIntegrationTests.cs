@@ -1,10 +1,10 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
@@ -84,10 +84,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             public string DummyNamelessOptionProperty { get; }
 
             public string Name => throw new NotImplementedException();
+
             public string Description => throw new NotImplementedException();
+
             public bool IsDefault => throw new NotImplementedException();
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
@@ -95,19 +97,22 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
         private class DummyCommand : ICommand
         {
-            [Option(typeof(DummyStrings),
-                nameof(DummyStrings.OptionShortName_Dummy), 
-                nameof(DummyStrings.OptionLongName_Dummy), 
+            [Option(
+                typeof(DummyStrings),
+                nameof(DummyStrings.OptionShortName_Dummy),
+                nameof(DummyStrings.OptionLongName_Dummy),
                 nameof(DummyStrings.OptionDescription_Dummy))]
             public string DummyOptionProperty { get; }
 
             public string DummyNoAttributeProperty { get; }
 
             public string Name => throw new System.NotImplementedException();
+
             public string Description => throw new System.NotImplementedException();
+
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new System.NotImplementedException();
             }

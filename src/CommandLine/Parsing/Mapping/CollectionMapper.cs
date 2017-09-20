@@ -1,11 +1,11 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using JeremyTCD.DotNetCore.Utils;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Reflection;
+using JeremyTCD.DotNetCore.Utils;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
@@ -20,7 +20,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is assignable to
-        /// <see cref="ICollection{T}"/>, sets the corresponding property in <paramref name="command"/> to an <see cref="ICollection{T}"/> 
+        /// <see cref="ICollection{T}"/>, sets the corresponding property in <paramref name="command"/> to an <see cref="ICollection{T}"/>
         /// containing the result of splitting <paramref name="value"/> using ',' as separator.
         /// </summary>
         /// <param name="propertyInfo"></param>
@@ -34,7 +34,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="OverflowException"></exception>
         public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
-            if(value == null)
+            if (value == null)
             {
                 return false;
             }
@@ -45,7 +45,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 GetInterfaces().
                 Where(t => t.GetTypeInfo().IsGenericType == true && t.GetGenericTypeDefinition() == typeof(ICollection<>));
 
-            if(collectionTypes.Count() != 1)
+            if (collectionTypes.Count() != 1)
             {
                 return false;
             }

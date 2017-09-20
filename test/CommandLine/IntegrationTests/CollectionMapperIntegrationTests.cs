@@ -1,10 +1,10 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using JeremyTCD.DotNetCore.Utils;
-using Moq;
 using System.Collections.Generic;
 using System.Reflection;
+using JeremyTCD.DotNetCore.Utils;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
@@ -79,7 +79,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private class DummyCommand : ICommand
         {
             public List<string> StringCollection { get; set; }
+
             public List<int> IntCollection { get; set; }
+
             public string NotCollection { get; set; }
 
             public string Name => throw new System.NotImplementedException();
@@ -88,7 +90,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new System.NotImplementedException();
             }

@@ -20,10 +20,13 @@ namespace JeremyTCD.DotNet.CommandLine
             }
         }
 
-        internal CommandSet() : this(null) { }
+        internal CommandSet()
+            : this(null)
+        {
+        }
 
         /// <summary>
-        /// Creates a <see cref="CommandSet"/> instance. 
+        /// Creates a <see cref="CommandSet"/> instance.
         /// </summary>
         /// <param name="commands">Cannot contain more than 1 default command.</param>
         internal CommandSet(IDictionary<string, ICommand> commands)

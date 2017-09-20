@@ -9,7 +9,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public class StringConvertibleMapper : IMapper
     {
         /// <summary>
-        /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is of a type that 
+        /// If <paramref name="value"/> is not null and the property represented by <paramref name="propertyInfo"/> is of a type that
         /// can be converted to from <see cref="string"/>, sets corresponding property in <paramref name="command"/> to <paramref name="value"/>.
         /// </summary>
         /// <param name="propertyInfo"></param>
@@ -20,7 +20,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
-            if(value == null || !CanBeConvertedToFromString(propertyInfo.PropertyType))
+            if (value == null || !CanBeConvertedToFromString(propertyInfo.PropertyType))
             {
                 return false;
             }
@@ -31,7 +31,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
         /// <summary>
         /// Checks if <paramref name="type"/> can be converted to from <see cref="string"/>. All types that <see cref="string"/> has
-        /// an <see cref="IConvertible"/> member implementation for are included 
+        /// an <see cref="IConvertible"/> member implementation for are included
         /// (https://github.com/dotnet/coreclr/blob/master/src/mscorlib/src/System/String.cs).
         /// </summary>
         /// <param name="type"></param>

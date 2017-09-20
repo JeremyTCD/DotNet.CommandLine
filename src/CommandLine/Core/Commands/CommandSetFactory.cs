@@ -10,7 +10,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// Creates a <see cref="CommandSet"/> instance from <paramref name="commands"/>. This function serves as an early filter for
-        /// incompatible/invalid commands. 
+        /// incompatible/invalid commands.
         /// </summary>
         /// <param name="commands"></param>
         /// <returns>
@@ -39,7 +39,8 @@ namespace JeremyTCD.DotNet.CommandLine
                 {
                     if (defaultCommand != null)
                     {
-                        throw new InvalidOperationException(string.Format(Strings.Exception_MultipleDefaultCommands,
+                        throw new InvalidOperationException(string.Format(
+                            Strings.Exception_MultipleDefaultCommands,
                             $"\t{defaultCommand.Name}{Environment.NewLine}\t{command.Name}"));
                     }
                     else
@@ -62,7 +63,7 @@ namespace JeremyTCD.DotNet.CommandLine
                     // Weed out commands with the same name
                     throw new InvalidOperationException(string.Format(Strings.Exception_MultipleCommandsWithSameName, command.Name), exception);
                 }
-            } 
+            }
 
             if (defaultCommand == null)
             {

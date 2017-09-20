@@ -8,7 +8,7 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public abstract class ArgumentAttribute : Attribute
     {
-        protected Type _resourceType { get; set; }
+        private Type _resourceType { get; set; }
 
         public ArgumentAttribute(Type resourceType)
         {
@@ -31,10 +31,9 @@ namespace JeremyTCD.DotNet.CommandLine
 
             if (!propertyInfo.GetMethod.IsStatic)
             {
-
             }
 
-            return (string) propertyInfo.GetValue(null, null);
+            return (string)propertyInfo.GetValue(null, null);
         }
     }
 }

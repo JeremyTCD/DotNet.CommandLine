@@ -3,8 +3,8 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public interface IAppContextFactory
+    public interface ICommandLineAppContextFactory
     {
-        AppContext Create(CommandSet commandSet, AppOptions appOptions);
+        CommandLineAppContext Create(CommandSet commandSet, CommandLineAppOptions appOptions);
     }
 }

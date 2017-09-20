@@ -1,10 +1,10 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using Moq;
 using System;
 using System.Collections.Generic;
 using System.Reflection;
+using Moq;
 using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
@@ -106,7 +106,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             CommandMapper commandMapper = new CommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
-            // Act 
+            // Act
             commandMapper.Map(dummyArguments, dummyCommand);
 
             // Assert
@@ -116,13 +116,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         private class DummyCommand : ICommand
         {
             public string Name => throw new NotImplementedException();
+
             public string Description => throw new NotImplementedException();
+
             public bool IsDefault => throw new NotImplementedException();
 
             [Option()]
             public string DummyProperty { get; }
 
-            public int Run(ParseResult parseResult, AppContext appContext)
+            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
