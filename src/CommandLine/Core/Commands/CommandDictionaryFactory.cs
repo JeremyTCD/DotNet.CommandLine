@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Thrown there are multiple default commands.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if a <see cref="ICommand"/> instance's name property is null or whitespace.
+        /// Thrown if a <see cref="ICommand"/>'s name property is null or whitespace.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// Thrown if multiple commands have the same name.

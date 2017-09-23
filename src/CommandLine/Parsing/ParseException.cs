@@ -11,7 +11,8 @@ namespace JeremyTCD.DotNet.CommandLine
     public class ParseException : Exception
     {
         /// <summary>
-        /// Creates a <see cref="ParseException"/> instance with a default parse error message.
+        /// Initializes a new instance of the <see cref="ParseException"/> class with default parse
+        /// exception message.
         /// </summary>
         public ParseException()
             : base(Strings.ParseException_InvalidArguments)

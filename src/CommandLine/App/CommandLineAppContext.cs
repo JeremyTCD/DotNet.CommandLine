@@ -3,10 +3,8 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    /// <summary>
-    /// Represents a command line application's context.
-    /// </summary>
-    public class CommandLineAppContext
+    /// <inheritdoc/>
+    public class CommandLineAppContext : ICommandLineAppContext
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandLineAppContext"/> class for a command line application.
@@ -21,19 +19,13 @@ namespace JeremyTCD.DotNet.CommandLine
             CommandLineAppOptions = commandLineAppOptions;
         }
 
-        /// <summary>
-        /// Gets the command line application context's <see cref="CommandLine.CommandDictionary"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandDictionary CommandDictionary { get; }
 
-        /// <summary>
-        /// Gets the command line application context's <see cref="CommandLine.CommandLineAppOptions"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public CommandLineAppOptions CommandLineAppOptions { get; }
 
-        /// <summary>
-        /// Gets the command line application context's <see cref="ICommandLineAppPrinter"/>.
-        /// </summary>
+        /// <inheritdoc/>
         public ICommandLineAppPrinter CommandLineAppPrinter { get; }
     }
 }

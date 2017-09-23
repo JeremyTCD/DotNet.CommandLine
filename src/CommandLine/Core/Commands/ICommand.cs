@@ -9,31 +9,27 @@ namespace JeremyTCD.DotNet.CommandLine
     public interface ICommand
     {
         /// <summary>
-        /// Gets the command's name.
+        /// Gets the command's name. If the name matches the command name specified in the command line arguments, the command
+        /// is run. The name is also used when printing usage examples.
         /// </summary>
-        /// <value>
-        /// Compared with command line arguments to select the command to run.
-        /// </value>
         string Name { get; }
 
         /// <summary>
-        /// Gets the command's description.
+        /// Gets the command's description. The description used when printing help tips.
         /// </summary>
-        /// <value>Used in help tips</value>
         string Description { get; }
 
         /// <summary>
-        /// Gets a value indicating whether the command is the default command.
+        /// Gets a value indicating whether the command is the default command. True if the command is the default command; otherwise, false.
         /// </summary>
-        /// <value>True if it is the default command; otherwise, false.</value>
         bool IsDefault { get; }
 
         /// <summary>
-        /// Runs command.
+        /// Runs the command. Returns an exit code.
         /// </summary>
         /// <param name="parseResult">Result of parsing command line arguments.</param>
         /// <param name="commandLineAppContext">Context of executing command line application.</param>
         /// <returns>Exit code.</returns>
-        int Run(ParseResult parseResult, CommandLineAppContext commandLineAppContext);
+        int Run(ParseResult parseResult, ICommandLineAppContext commandLineAppContext);
     }
 }

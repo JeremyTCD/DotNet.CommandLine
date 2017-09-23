@@ -140,18 +140,18 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
         private class DummyCommand : ICommand
         {
+            public DummyCommand(bool isDefault = false)
+            {
+                IsDefault = isDefault;
+            }
+
             public string Name => throw new NotImplementedException();
 
             public string Description => throw new NotImplementedException();
 
             public bool IsDefault { get; }
 
-            public DummyCommand(bool isDefault = false)
-            {
-                IsDefault = isDefault;
-            }
-
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

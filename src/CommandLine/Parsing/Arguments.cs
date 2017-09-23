@@ -10,19 +10,25 @@ namespace JeremyTCD.DotNet.CommandLine
     /// </summary>
     public class Arguments
     {
-        public string CommandName { get; }
-
-        public Dictionary<string, string> OptionArgs { get; }
-
         /// <summary>
-        /// Creates an <see cref="Arguments"/> instance.
+        /// Initializes a new instance of the <see cref="Arguments"/> class.
         /// </summary>
-        /// <param name="commandName"></param>
-        /// <param name="options"></param>
+        /// <param name="commandName">test</param>
+        /// <param name="options">testa</param>
         public Arguments(string commandName, Dictionary<string, string> options)
         {
             OptionArgs = options;
             CommandName = commandName;
         }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public string CommandName { get; }
+
+        /// <summary>
+        /// 
+        /// </summary>
+        public Dictionary<string, string> OptionArgs { get; }
     }
 }

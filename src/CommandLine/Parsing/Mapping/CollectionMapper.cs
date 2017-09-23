@@ -11,7 +11,7 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class CollectionMapper : IMapper
     {
-        private IActivatorService _activatorService { get; }
+        private readonly IActivatorService _activatorService;
 
         public CollectionMapper(IActivatorService activatorService)
         {

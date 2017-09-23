@@ -18,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine
         public abstract bool IsDefault { get; }
 
         /// <summary>
-        /// Gets or sets a value indicating whether help should be printed by the command.
+        /// Gets or sets a value indicating whether help should be printed by the command. True if help should be printed; otherwise, false.
         /// </summary>
         [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
         public bool Help { get; set; }
@@ -26,12 +26,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <inheritdoc/>
         /// <summary>
         /// Contains logic for handling common scenarios:
-        /// If <paramref name="parseResult"/> contains a <see cref="ParseException"/> instance, prints exception and a get help tip before returning 0.
-        /// If <paramref name="parseResult"/> does not contain a <see cref="ParseException"/> and <see cref="Help"/> is true, prints help and returns 1.
+        /// If <paramref name="parseResult"/> contains a <see cref="ParseException"/>, prints exception and a get help tip before returning 0.
+        /// Otherwise, if <see cref="Help"/> is true, prints help and returns 1.
         /// <para/>
-        /// If the current scenario is not a common scenario, calls <see cref="RunCommand(ParseResult, CommandLineAppContext)"/>.
+        /// If the current scenario is not one of the above scenarios, calls <see cref="RunCommand(ParseResult, ICommandLineAppContext)"/>.
         /// </summary>
-        public virtual int Run(ParseResult parseResult, CommandLineAppContext appContext)
+        public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
         {
             appContext.
                 CommandLineAppPrinter.
@@ -80,12 +80,12 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Runs command. <see cref="Run(ParseResult, CommandLineAppContext)"/> attempts to handle common scenarios,
+        /// Runs logic specific to the command. <see cref="Run(ParseResult, ICommandLineAppContext)"/> attempts to handle common scenarios,
         /// it calls this method if it is unable to handle the current scenario.
         /// </summary>
         /// <param name="parseResult">Result of parsing command line arguments.</param>
         /// <param name="commandLineAppContext">Context of executing command line application.</param>
         /// <returns>Exit code.</returns>
-        public abstract int RunCommand(ParseResult parseResult, CommandLineAppContext commandLineAppContext);
+        public abstract int RunCommand(ParseResult parseResult, ICommandLineAppContext commandLineAppContext);
     }
 }

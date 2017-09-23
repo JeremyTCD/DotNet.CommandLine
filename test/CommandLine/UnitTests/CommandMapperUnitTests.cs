@@ -11,7 +11,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
     public class CommandMapperUnitTests
     {
-        private MockRepository _mockRepository { get; } = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
+        private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
         public void Map_ThrowsParseExceptionIfAnArgumentOptionDoesNotExist()
@@ -121,10 +121,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             public bool IsDefault => throw new NotImplementedException();
 
-            [Option()]
+            [Option]
             public string DummyProperty { get; }
 
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

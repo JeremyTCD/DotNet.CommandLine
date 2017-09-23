@@ -3,9 +3,7 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    /// <summary>
-    /// Represents a default <see cref="ICommandLineAppContextFactory"/>.
-    /// </summary>
+    /// <inheritdoc/>
     public class CommandLineAppContextFactory : ICommandLineAppContextFactory
     {
         private ICommandLineAppPrinterFactory _appPrinterFactory;
@@ -14,8 +12,8 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Initializes a new instance of the <see cref="CommandLineAppContextFactory"/> class.
         /// </summary>
         /// <param name="commandLineAppPrinterFactory">
-        /// The <see cref="ICommandLineAppPrinterFactory"/> used to create <see cref="ICommandLineAppPrinter"/> instances for
-        /// <see cref="CommandLineAppContext"/> instances.
+        /// The <see cref="ICommandLineAppPrinterFactory"/> used to create <see cref="ICommandLineAppPrinter"/>s for
+        /// <see cref="CommandLineAppContext"/>s.
         /// </param>
         public CommandLineAppContextFactory(ICommandLineAppPrinterFactory commandLineAppPrinterFactory)
         {
@@ -23,7 +21,7 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <inheritdoc/>
-        public CommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions)
+        public ICommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions)
         {
             ICommandLineAppPrinter appPrinter = _appPrinterFactory.Create(commandDictionary, appOptions);
 

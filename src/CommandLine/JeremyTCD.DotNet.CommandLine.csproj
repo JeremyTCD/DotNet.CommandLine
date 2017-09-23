@@ -2,14 +2,11 @@
 
   <PropertyGroup>
     <TargetFramework>netstandard1.6</TargetFramework>
-  </PropertyGroup>
-
-  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
-    <CodeAnalysisRuleSet>..\..\Shared.ruleset</CodeAnalysisRuleSet>
+    <CodeAnalysisRuleSet>..\..\ClassLibraryProject.ruleset</CodeAnalysisRuleSet>
   </PropertyGroup>
 
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
-    <CodeAnalysisRuleSet>..\..\Shared.ruleset</CodeAnalysisRuleSet>
+    <DocumentationFile>bin\Debug\netstandard1.6\JeremyTCD.DotNet.CommandLine.xml</DocumentationFile>
   </PropertyGroup>
 
   <ItemGroup>

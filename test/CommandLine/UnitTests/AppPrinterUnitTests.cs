@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             int columnGap = 2;
             string columnSeparator = new string(' ', columnGap);
             string rowPrefix = "    ";
-            // Dummy commands
+
             DummyCommand dummyDefaultCommand = new DummyCommand(isDefault: true);
             string dummyCommandName = "dummyCommandName";
             string dummyCommandDescription = "dummyCommandDescription";
@@ -47,10 +47,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 { dummyCommandName, dummyCommand },
                 { string.Empty, dummyDefaultCommand }
             });
-            // Dummy context
+
             string dummyExecutableName = "dummyExecutableName";
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
-            // Dummy options
+
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
             Option dummyOption = new Option(null, null, dummyOptionLongName, dummyOptionDescription);
@@ -180,7 +180,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             int columnGap = 2;
             string columnSeparator = new string(' ', columnGap);
             string rowPrefix = "    ";
-            // Dummy command
+
             string dummyCommandName = "dummyCommandName";
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyDescription);
@@ -188,10 +188,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             {
                 { dummyCommandName, dummyCommand },
             });
-            // Dummy context
+
             string dummyExecutableName = "dummyExecutableName";
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
-            // Dummy options
+
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
             Option dummyOption = new Option(null, null, dummyOptionLongName, dummyOptionDescription);
@@ -332,6 +332,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
         private class DummyCommandWithOptions : ICommand
         {
+            public DummyCommandWithOptions(string name = null, string description = null, bool isDefault = false)
+            {
+                Name = name;
+                Description = description;
+                IsDefault = isDefault;
+            }
+
             public string Name { get; }
 
             public string Description { get; }
@@ -341,14 +348,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             [Option(LongName = "DummyOptionLongName", Description = "DummyOptionDescription")]
             public string DummyOption { get; }
 
-            public DummyCommandWithOptions(string name = null, string description = null, bool isDefault = false)
-            {
-                Name = name;
-                Description = description;
-                IsDefault = isDefault;
-            }
-
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
@@ -356,12 +356,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
         private class DummyCommand : ICommand
         {
-            public string Name { get; }
-
-            public string Description { get; }
-
-            public bool IsDefault { get; }
-
             public DummyCommand(string name = null, string description = null, bool isDefault = false)
             {
                 Name = name;
@@ -369,7 +363,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 IsDefault = isDefault;
             }
 
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public string Name { get; }
+
+            public string Description { get; }
+
+            public bool IsDefault { get; }
+
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

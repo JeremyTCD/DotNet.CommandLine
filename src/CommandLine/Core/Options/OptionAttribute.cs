@@ -15,6 +15,21 @@ namespace JeremyTCD.DotNet.CommandLine
         private string _longName;
         private string _description;
 
+        /// <summary>
+        /// Initializes a new instance of the <see cref="OptionAttribute"/> class.
+        /// </summary>
+        /// <param name="resourceType"></param>
+        /// <param name="shortNameResourceName"></param>
+        /// <param name="longNameResourceName"></param>
+        /// <param name="descriptionResourceName"></param>
+        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null)
+            : base(resourceType)
+        {
+            _shortNameResourceName = shortNameResourceName;
+            _longNameResourceName = longNameResourceName;
+            _descriptionResourceName = descriptionResourceName;
+        }
+
         public string ShortName
         {
             get
@@ -52,19 +67,6 @@ namespace JeremyTCD.DotNet.CommandLine
             {
                 _description = value;
             }
-        }
-
-        /// <summary>
-        /// Creates a <see cref="CommandAttribute"/> instance.
-        /// </summary>
-        /// <param name="name"></param>
-        /// <param name="description"></param>
-        public OptionAttribute(Type resourceType = null, string shortNameResourceName = null, string longNameResourceName = null, string descriptionResourceName = null)
-            : base(resourceType)
-        {
-            _shortNameResourceName = shortNameResourceName;
-            _longNameResourceName = longNameResourceName;
-            _descriptionResourceName = descriptionResourceName;
         }
     }
 }

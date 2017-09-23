@@ -13,10 +13,10 @@ namespace JeremyTCD.DotNet.CommandLine
         private readonly IOptionsFactory _optionsFactory;
 
         /// <summary>
-        /// Creates a <see cref="CommandMapper"/> instance.
+        /// Initializes a new instance of the <see cref="CommandMapper"/> class.
         /// </summary>
         /// <param name="mappers"></param>
-        /// <param name="optionFactory"></param>
+        /// <param name="optionsFactory"></param>
         public CommandMapper(IEnumerable<IMapper> mappers, IOptionsFactory optionsFactory)
         {
             _mappers = mappers;
@@ -28,10 +28,6 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="arguments"></param>
         /// <param name="command"></param>
-        /// <param name="commandOptions"></param>
-        /// <returns>
-        /// object
-        /// </returns>
         /// <exception cref="ParseException">
         /// Thrown if <paramref name="arguments"/> contains an option that does not exist.
         /// </exception>

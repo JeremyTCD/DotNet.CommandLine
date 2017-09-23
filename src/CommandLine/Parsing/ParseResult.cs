@@ -5,14 +5,14 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class ParseResult
     {
-        public ParseException ParseException { get; }
-
-        public ICommand Command { get; }
-
         public ParseResult(ParseException parseException, ICommand command)
         {
             ParseException = parseException;
             Command = command;
         }
+
+        public ParseException ParseException { get; }
+
+        public ICommand Command { get; }
     }
 }

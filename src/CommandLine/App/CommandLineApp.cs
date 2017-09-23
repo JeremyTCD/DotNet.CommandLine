@@ -6,10 +6,7 @@ using Microsoft.Extensions.Options;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    /// <summary>
-    /// Represents a command line application. Exposes the entry method for running the command line application,
-    /// <see cref="Run(string[])"/>. Additionally, serves as the dependency injection root for the library.
-    /// </summary>
+    /// <inheritdoc/>
     public class CommandLineApp : ICommandLineApp
     {
         private readonly IParser _parser;
@@ -46,19 +43,11 @@ namespace JeremyTCD.DotNet.CommandLine
             _commandDictionaryFactory = commandDictionaryFactory;
         }
 
-        /// <summary>
-        /// Parses <paramref name="args"/>, creating a <see cref="ParseResult"/>.
-        /// If the <see cref="ParseResult"/> has an <see cref="ICommand"/>, calls <see cref="ICommand.Run(ParseResult, CommandLineAppContext)"/> and returns
-        /// its return value. Otherwise, calls the same method on the default command and returns its return value.
-        /// </summary>
-        /// <param name="args">Command line arguments.</param>
-        /// <returns>
-        /// <see cref="int"/>
-        /// </returns>
+        /// <inheritdoc/>
         public int Run(string[] args)
         {
             CommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
-            CommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);
+            ICommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);
             ParseResult result = _parser.Parse(args, commandDictionary);
 
             if (result.Command == null)
@@ -66,6 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 return commandDictionary.DefaultCommand.Run(result, appContext);
             }
 
+            ICommandLineApp test = (ICommandLineApp)this;
             return result.Command.Run(result, appContext);
         }
     }

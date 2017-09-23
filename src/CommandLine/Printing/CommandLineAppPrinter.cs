@@ -21,7 +21,8 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Creates an <see cref="CommandLineAppPrinter"/> instance.
         /// </summary>
-        /// <param name="appContext"></param>
+        /// <param name="commandDictionary"></param>
+        /// <param name="appOptions"></param>
         /// <param name="optionsFactory"></param>
         public CommandLineAppPrinter(CommandDictionary commandDictionary, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
         {
@@ -31,35 +32,35 @@ namespace JeremyTCD.DotNet.CommandLine
             _stringBuilder = new StringBuilder();
         }
 
-        public virtual ICommandLineAppPrinter Clear()
+        public ICommandLineAppPrinter Clear()
         {
             _stringBuilder.Clear();
 
             return this;
         }
 
-        public virtual ICommandLineAppPrinter Print()
+        public ICommandLineAppPrinter Print()
         {
             Console.Write(_stringBuilder.ToString());
 
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendLine()
+        public ICommandLineAppPrinter AppendLine()
         {
             _stringBuilder.AppendLine();
 
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendHeader()
+        public ICommandLineAppPrinter AppendHeader()
         {
             _stringBuilder.Append(string.Format(Strings.Printer_Header, _appOptions.FullName, _appOptions.Version));
 
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
+        public ICommandLineAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
         {
             // Usage
             AppendUsage("[command options]", "[command]");
@@ -109,7 +110,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
+        public ICommandLineAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(
@@ -121,7 +122,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
+        public ICommandLineAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(
@@ -133,7 +134,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendDescription(string description)
+        public ICommandLineAppPrinter AppendDescription(string description)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_Description, description));
@@ -150,7 +151,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        public virtual ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
+        public ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
         {
             if (!_commandDictionary.TryGetValue(commandName, out ICommand command))
             {
@@ -188,7 +189,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public virtual ICommandLineAppPrinter AppendParseException(ParseException parseException)
+        public ICommandLineAppPrinter AppendParseException(ParseException parseException)
         {
             string innerMostMessage = parseException.Message;
             Exception innerException = parseException.InnerException;
@@ -214,6 +215,7 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         #region Helpers
+
         /// <summary>
         /// Creates a string containing <paramref name="option"/>'s names. If it has more than one name, the names
         /// are separated by a |.
@@ -257,7 +259,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Identifies the longest value in each column. Then, iterates through rows, appending each row to <paramref name="stringBuilder"/>. While doing so,
         /// values are padded so that their padded widths are <paramref name="columnGap"/> greater than the width of the longest value in their columns.
         /// </summary>
-        /// <param name="rows">Array of rows where each row is a <see cref="string[]"/>. All rows are assumed to have the same number of
+        /// <param name="rows">Array of rows where each row is an array of strings. All rows are assumed to have the same number of
         /// columns as the first row.</param>
         /// <param name="columnGap"></param>
         /// <param name="rowPrefix"></param>

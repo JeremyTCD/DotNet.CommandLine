@@ -127,12 +127,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
         public class DummyCommand : Command
         {
-            public override string Name { get; }
-
-            public override string Description { get; }
-
-            public override bool IsDefault { get; }
-
             public DummyCommand()
                 : this(null, null, false, false)
             {
@@ -146,7 +140,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
                 Help = help;
             }
 
-            public override int RunCommand(ParseResult parseResult, CommandLineAppContext appContext)
+            public override string Name { get; }
+
+            public override string Description { get; }
+
+            public override bool IsDefault { get; }
+
+            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

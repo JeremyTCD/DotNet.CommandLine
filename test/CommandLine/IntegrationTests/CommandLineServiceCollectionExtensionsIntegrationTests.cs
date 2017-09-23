@@ -22,9 +22,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
 
             // Assert
             IServiceProvider serviceProvider = services.BuildServiceProvider();
-            // Root service
             ICommandLineApp commandLineApp = serviceProvider.GetService<ICommandLineApp>();
-            // Mappers are injected in an IEnumerable that can be empty, ensure that these are registered manually
+
+            // Mappers are injected in an IEnumerable that can be empty, manually assert that the expected mappers are registered
             IEnumerable<IMapper> mappers = services.BuildServiceProvider().GetService<IEnumerable<IMapper>>();
             Assert.Equal(3, mappers.Count());
             Assert.Contains(mappers, m => m.GetType() == typeof(CollectionMapper));

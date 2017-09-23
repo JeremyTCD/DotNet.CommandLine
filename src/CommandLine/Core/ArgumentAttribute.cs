@@ -8,7 +8,7 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public abstract class ArgumentAttribute : Attribute
     {
-        private Type _resourceType { get; set; }
+        private readonly Type _resourceType;
 
         public ArgumentAttribute(Type resourceType)
         {
@@ -26,7 +26,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
             if (propertyInfo == null)
             {
-                //throw new InvalidOperationException(Strings.Exception_, GetType().Name);
+                ////throw new InvalidOperationException(Strings.Exception_, GetType().Name);
             }
 
             if (!propertyInfo.GetMethod.IsStatic)

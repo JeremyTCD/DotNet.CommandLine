@@ -24,12 +24,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
             IServiceCollection serviceCollection = new ServiceCollection();
             serviceCollection.
                 AddCommandLine().
-                // Add commands
-                AddSingleton<ICommand, DummyCommand>().
+                AddSingleton<ICommand, DummyCommand>().// Add commands
                 AddSingleton<ICommand, DummyDefaultCommand>().
-                // Configure app options
                 Configure<CommandLineAppOptions>(a =>
                 {
+                    // Configure app options
                     a.ExecutableName = "dummyExecutableName";
                     a.FullName = "dummyFullName";
                     a.Version = "dummyVersion";
@@ -69,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
             [Option(typeof(DummyStrings), nameof(DummyStrings.OptionShortName_Dummy), nameof(DummyStrings.OptionLongName_Dummy), nameof(DummyStrings.OptionDescription_Dummy))]
             public bool DummyOption { get; set; }
 
-            public override int RunCommand(ParseResult parseResult, CommandLineAppContext appContext)
+            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 return 1;
             }
@@ -83,7 +82,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
 
             public override bool IsDefault { get; } = true;
 
-            public override int RunCommand(ParseResult parseResult, CommandLineAppContext appContext)
+            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 return 1;
             }

@@ -4,16 +4,16 @@
 namespace JeremyTCD.DotNet.CommandLine
 {
     /// <summary>
-    /// Represents a factory that creates <see cref="CommandLineAppContext"/> instances.
+    /// Represents a factory that creates <see cref="ICommandLineAppContext"/>s.
     /// </summary>
     public interface ICommandLineAppContextFactory
     {
         /// <summary>
-        /// Creates a new instance of the <see cref="CommandLineAppContext"/> class.
+        /// Creates an instance of a class that implements <see cref="ICommandLineAppContext"/>.
         /// </summary>
-        /// <param name="commandDictionary">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandDictionary"/></param>
-        /// <param name="appOptions">The <see cref="CommandLineAppContext"/> instance's <see cref="CommandLineAppOptions"/></param>
-        /// <returns><see cref="CommandLineAppContext"/></returns>
-        CommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions);
+        /// <param name="commandDictionary">The <see cref="ICommandLineAppContext"/>'s <see cref="CommandDictionary"/></param>
+        /// <param name="appOptions">The <see cref="ICommandLineAppContext"/>'s <see cref="CommandLineAppOptions"/></param>
+        /// <returns>A command line application context.</returns>
+        ICommandLineAppContext Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions);
     }
 }

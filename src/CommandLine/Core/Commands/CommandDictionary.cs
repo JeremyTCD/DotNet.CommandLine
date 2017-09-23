@@ -10,6 +10,7 @@ namespace JeremyTCD.DotNet.CommandLine
     /// <summary>
     /// Represents a command line application's commands. Provides ease of access to commands given command names.
     /// </summary>
+    // TODO create interface, factory should create interfaces
     public class CommandDictionary : IDictionary<string, ICommand>
     {
         private readonly IDictionary<string, ICommand> _commands;
@@ -35,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Gets the command dictionary's default command.
         /// </summary>
-        public virtual ICommand DefaultCommand
+        public ICommand DefaultCommand
         {
             get
             {
@@ -61,25 +62,25 @@ namespace JeremyTCD.DotNet.CommandLine
         public ICommand this[string key] { get => _commands[key]; set => _commands[key] = value; }
 
         /// <inheritdoc/>
-        public virtual void Add(string key, ICommand value)
+        public void Add(string key, ICommand value)
         {
             _commands.Add(key, value);
         }
 
         /// <inheritdoc/>
-        public virtual bool ContainsKey(string key)
+        public bool ContainsKey(string key)
         {
             return _commands.ContainsKey(key);
         }
 
         /// <inheritdoc/>
-        public virtual bool Remove(string key)
+        public bool Remove(string key)
         {
             return _commands.Remove(key);
         }
 
         /// <inheritdoc/>
-        public virtual bool TryGetValue(string key, out ICommand value)
+        public bool TryGetValue(string key, out ICommand value)
         {
             return _commands.TryGetValue(key, out value);
         }
@@ -91,31 +92,31 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <inheritdoc/>
-        public virtual void Clear()
+        public void Clear()
         {
             _commands.Clear();
         }
 
         /// <inheritdoc/>
-        public virtual bool Contains(KeyValuePair<string, ICommand> item)
+        public bool Contains(KeyValuePair<string, ICommand> item)
         {
             return _commands.Contains(item);
         }
 
         /// <inheritdoc/>
-        public virtual void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
+        public void CopyTo(KeyValuePair<string, ICommand>[] array, int arrayIndex)
         {
             _commands.CopyTo(array, arrayIndex);
         }
 
         /// <inheritdoc/>
-        public virtual bool Remove(KeyValuePair<string, ICommand> item)
+        public bool Remove(KeyValuePair<string, ICommand> item)
         {
             return _commands.Remove(item);
         }
 
         /// <inheritdoc/>
-        public virtual IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
+        public IEnumerator<KeyValuePair<string, ICommand>> GetEnumerator()
         {
             return _commands.GetEnumerator();
         }

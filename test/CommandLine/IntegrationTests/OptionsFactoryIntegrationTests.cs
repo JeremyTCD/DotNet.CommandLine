@@ -80,7 +80,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
         private class DummyCommandWithNamelessProperty : ICommand
         {
-            [Option()]
+            [Option]
             public string DummyNamelessOptionProperty { get; }
 
             public string Name => throw new NotImplementedException();
@@ -89,7 +89,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public bool IsDefault => throw new NotImplementedException();
 
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
@@ -112,7 +112,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, CommandLineAppContext appContext)
+            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new System.NotImplementedException();
             }
