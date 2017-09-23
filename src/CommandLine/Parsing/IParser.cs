@@ -5,6 +5,6 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public interface IParser
     {
-        ParseResult Parse(string[] args, CommandDictionary commandDictionary);
+        ParseResult Parse(string[] args, ICommandDictionary commandDictionary);
     }
 }

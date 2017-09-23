@@ -20,10 +20,10 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="parser">The command line application's <see cref="IParser"/>.</param>
         /// <param name="commandDictionaryFactory">
-        /// The <see cref="ICommandDictionaryFactory"/> used to create the command line application's <see cref="CommandDictionary"/>.
+        /// The <see cref="ICommandDictionaryFactory"/> used to create the command line application's <see cref="ICommandDictionary"/>.
         /// </param>
         /// <param name="commands">
-        /// The collection whose elements are used to populate the command line application's <see cref="CommandDictionary"/>.
+        /// The collection whose elements are used to populate the command line application's <see cref="ICommandDictionary"/>.
         /// </param>
         /// <param name="commandLineAppContextFactory">
         /// The <see cref="ICommandLineAppContextFactory"/> used to create the command line application's <see cref="CommandLineAppContext"/>.
@@ -46,7 +46,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <inheritdoc/>
         public int Run(string[] args)
         {
-            CommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
+            ICommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
             ICommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);
             ParseResult result = _parser.Parse(args, commandDictionary);
 
@@ -55,7 +55,6 @@ namespace JeremyTCD.DotNet.CommandLine
                 return commandDictionary.DefaultCommand.Run(result, appContext);
             }
 
-            ICommandLineApp test = (ICommandLineApp)this;
             return result.Command.Run(result, appContext);
         }
     }

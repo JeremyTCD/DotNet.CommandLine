@@ -12,22 +12,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandDictionaryFactory : ICommandDictionaryFactory
     {
         /// <inheritdoc/>
-        /// <summary>
-        /// This function serves as an early filter for incompatible/invalid commands.
-        /// </summary>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown there are multiple default commands.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if a <see cref="ICommand"/>'s name property is null or whitespace.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if multiple commands have the same name.
-        /// </exception>
-        /// <exception cref="InvalidOperationException">
-        /// Thrown if there is no default command.
-        /// </exception>
-        public CommandDictionary CreateFromCommands(IEnumerable<ICommand> commands)
+        public ICommandDictionary CreateFromCommands(IEnumerable<ICommand> commands)
         {
             ICommand defaultCommand = null;
             CommandDictionary result = new CommandDictionary();

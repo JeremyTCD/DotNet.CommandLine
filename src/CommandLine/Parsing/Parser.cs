@@ -29,7 +29,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="ParseResult"/>
         /// </returns>
-        public ParseResult Parse(string[] args, CommandDictionary commandDictionary)
+        public ParseResult Parse(string[] args, ICommandDictionary commandDictionary)
         {
             ICommand command = null;
             ParseException parseException = null;
@@ -61,7 +61,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="ParseException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        internal virtual ICommand GetCommand(string commandName, CommandDictionary commandDictionary)
+        internal virtual ICommand GetCommand(string commandName, ICommandDictionary commandDictionary)
         {
             ICommand result;
 

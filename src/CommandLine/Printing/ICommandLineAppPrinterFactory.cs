@@ -5,6 +5,6 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public interface ICommandLineAppPrinterFactory
     {
-        ICommandLineAppPrinter Create(CommandDictionary commandDictionary, CommandLineAppOptions appOptions);
+        ICommandLineAppPrinter Create(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions);
     }
 }

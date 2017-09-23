@@ -15,7 +15,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         private readonly CommandLineAppOptions _appOptions;
         private readonly IOptionsFactory _optionsFactory;
-        private readonly CommandDictionary _commandDictionary;
+        private readonly ICommandDictionary _commandDictionary;
         private readonly StringBuilder _stringBuilder;
 
         /// <summary>
@@ -24,7 +24,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="commandDictionary"></param>
         /// <param name="appOptions"></param>
         /// <param name="optionsFactory"></param>
-        public CommandLineAppPrinter(CommandDictionary commandDictionary, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
+        public CommandLineAppPrinter(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
         {
             _commandDictionary = commandDictionary;
             _appOptions = appOptions;

@@ -99,7 +99,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act
-            CommandDictionary result = commandDictionaryFactory.CreateFromCommands(dummyCommands);
+            ICommandDictionary result = commandDictionaryFactory.CreateFromCommands(dummyCommands);
 
             // Assert
             Assert.Equal(2, result.Count);

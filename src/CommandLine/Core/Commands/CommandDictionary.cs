@@ -7,11 +7,8 @@ using System.Linq;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    /// <summary>
-    /// Represents a command line application's commands. Provides ease of access to commands given command names.
-    /// </summary>
-    // TODO create interface, factory should create interfaces
-    public class CommandDictionary : IDictionary<string, ICommand>
+    /// <inheritdoc/>
+    public class CommandDictionary : ICommandDictionary
     {
         private readonly IDictionary<string, ICommand> _commands;
         private ICommand _defaultCommand;
@@ -33,9 +30,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _commands = commands == null ? new Dictionary<string, ICommand>() : new Dictionary<string, ICommand>(commands);
         }
 
-        /// <summary>
-        /// Gets the command dictionary's default command.
-        /// </summary>
+        /// <inheritdoc/>
         public ICommand DefaultCommand
         {
             get

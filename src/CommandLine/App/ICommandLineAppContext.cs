@@ -9,9 +9,9 @@ namespace JeremyTCD.DotNet.CommandLine
     public interface ICommandLineAppContext
     {
         /// <summary>
-        /// Gets the command line application context's <see cref="CommandLine.CommandDictionary"/>.
+        /// Gets the command line application context's <see cref="CommandLine.ICommandDictionary"/>.
         /// </summary>
-        CommandDictionary CommandDictionary { get; }
+        ICommandDictionary CommandDictionary { get; }
 
         /// <summary>
         /// Gets the command line application context's <see cref="CommandLine.CommandLineAppOptions"/>.
