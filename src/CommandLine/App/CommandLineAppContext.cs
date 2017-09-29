@@ -7,9 +7,9 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandLineAppContext : ICommandLineAppContext
     {
         /// <summary>
-        /// Initializes a new instance of the <see cref="CommandLineAppContext"/> class for a command line application.
+        /// Initializes a new instance of the <see cref="CommandLineAppContext"/> class.
         /// </summary>
-        /// <param name="commandDictionary">The command line application's <see cref="CommandLine.ICommandDictionary"/>.</param>
+        /// <param name="commandDictionary">The command line application's <see cref="ICommandDictionary"/>.</param>
         /// <param name="commandLineAppOptions">The command line application's <see cref="CommandLine.CommandLineAppOptions"/>.</param>
         /// <param name="commandLineAppPrinter">The command line application's <see cref="ICommandLineAppPrinter"/>.</param>
         public CommandLineAppContext(ICommandDictionary commandDictionary, CommandLineAppOptions commandLineAppOptions, ICommandLineAppPrinter commandLineAppPrinter)

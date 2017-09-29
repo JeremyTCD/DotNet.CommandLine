@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine
     {
         /// <summary>
         /// Creates an instance of a class that implements <see cref="ICommandDictionary"/> from a collection of <see cref="ICommand"/>s.
-        /// This function serves as an early filter for incompatible/invalid commands.
+        /// This function serves as a filter for incompatible/invalid commands.
         /// </summary>
         /// <param name="commands">The collection whose elements are used to populate the new <see cref="CommandDictionary"/>.</param>
         /// <returns>A new command dictionary.</returns>

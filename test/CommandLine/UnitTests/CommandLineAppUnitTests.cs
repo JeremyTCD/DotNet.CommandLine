@@ -1,6 +1,7 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 using Moq;
 using Xunit;
@@ -9,40 +10,42 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
     public class CommandLineAppUnitTests
     {
-        private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
+        private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default);
 
         [Fact]
-        public void Run_ParsesCallsCommandRunAndReturnsExitCode()
+        public void Run_RunsCommandSpecifiedByCommandLineArguments()
         {
             // Arrange
             ICommand[] dummyCommands = new ICommand[0];
-            CommandDictionary dummyCommandDictionary = new CommandDictionary();
             string[] dummyArgs = new string[0];
             int dummyExitCode = 1;
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions();
-            CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, null);
+
+            Mock<ICommandDictionary> dummyCommandDictionary = _mockRepository.Create<ICommandDictionary>();
+
+            Mock<ICommandLineAppContext> dummyCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
 
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             ParseResult dummyParseResult = new ParseResult(null, mockCommand.Object);
-            mockCommand.Setup(c => c.Run(dummyParseResult, dummyAppContext)).Returns(dummyExitCode);
+            mockCommand.Setup(c => c.Run(dummyParseResult, dummyCommandLineAppContext.Object)).Returns(dummyExitCode);
 
             Mock<ICommandDictionaryFactory> mockCommandDictionaryFactory = _mockRepository.Create<ICommandDictionaryFactory>();
-            mockCommandDictionaryFactory.Setup(c => c.CreateFromCommands(dummyCommands)).Returns(dummyCommandDictionary);
+            mockCommandDictionaryFactory.Setup(c => c.CreateFromCommands(dummyCommands)).Returns(dummyCommandDictionary.Object);
 
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
-            mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandDictionary)).Returns(dummyParseResult);
+            mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandDictionary.Object)).Returns(dummyParseResult);
 
             Mock<IOptions<CommandLineAppOptions>> mockOptionsAccessor = _mockRepository.Create<IOptions<CommandLineAppOptions>>();
             mockOptionsAccessor.Setup(o => o.Value).Returns(dummyAppOptions);
 
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
-            mockAppContextFactory.Setup(a => a.Create(dummyCommandDictionary, dummyAppOptions)).Returns(dummyAppContext);
+            mockAppContextFactory.Setup(a => a.Create(dummyCommandDictionary.Object, dummyAppOptions)).Returns(dummyCommandLineAppContext.Object);
 
-            CommandLineApp commandLineApp = new CommandLineApp(
+            CommandLineApp commandLineApp = CreateCommandLineApp(
                 mockParser.Object,
+                mockAppContextFactory.Object,
                 mockCommandDictionaryFactory.Object,
                 dummyCommands,
-                mockAppContextFactory.Object,
                 mockOptionsAccessor.Object);
 
             // Act
@@ -54,7 +57,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         }
 
         [Fact]
-        public void Run_CallsDefaultCommandRunIfParseResultHasNoCommand()
+        public void Run_RunsDefaultCommandIfCommandLineArgumentsdoNotSpecifyACommand()
         {
             // Arrange
             ICommand[] dummyCommands = new ICommand[0];
@@ -67,7 +70,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
             mockCommand.Setup(c => c.Run(dummyParseResult, dummyAppContext)).Returns(dummyExitCode);
 
-            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            Mock<ICommandDictionary> mockCommandDictionary = _mockRepository.Create<ICommandDictionary>();
             mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(mockCommand.Object);
 
             Mock<ICommandDictionaryFactory> mockCommandDictionaryFactory = _mockRepository.Create<ICommandDictionaryFactory>();
@@ -82,11 +85,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(mockCommandDictionary.Object, dummyAppOptions)).Returns(dummyAppContext);
 
-            CommandLineApp commandLineApp = new CommandLineApp(
+            CommandLineApp commandLineApp = CreateCommandLineApp(
                 mockParser.Object,
+                mockAppContextFactory.Object,
                 mockCommandDictionaryFactory.Object,
                 dummyCommands,
-                mockAppContextFactory.Object,
                 mockOptionsAccessor.Object);
 
             // Act
@@ -95,6 +98,21 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             // Assert
             _mockRepository.VerifyAll();
             Assert.Equal(dummyExitCode, result);
+        }
+
+        public CommandLineApp CreateCommandLineApp(
+            IParser parser = null,
+            ICommandLineAppContextFactory commandLineAppContextFactory = null,
+            ICommandDictionaryFactory commandDictionaryFactory = null,
+            IEnumerable<ICommand> commands = null,
+            IOptions<CommandLineAppOptions> optionsAccessor = null)
+        {
+            return new CommandLineApp(
+                parser ?? _mockRepository.Create<IParser>().Object,
+                commandLineAppContextFactory ?? _mockRepository.Create<ICommandLineAppContextFactory>().Object,
+                commandDictionaryFactory ?? _mockRepository.Create<ICommandDictionaryFactory>().Object,
+                commands,
+                optionsAccessor);
         }
     }
 }

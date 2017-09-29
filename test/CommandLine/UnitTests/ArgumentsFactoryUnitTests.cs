@@ -7,7 +7,7 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
 {
-    public class ArgumentsFactoryIntegrationTests
+    public class ArgumentsFactoryUnitTests
     {
         [Fact]
         public void CreateFromArray_CreatesArgumentsInstanceFromArray()

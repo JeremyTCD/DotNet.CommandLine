@@ -4,15 +4,15 @@
 namespace JeremyTCD.DotNet.CommandLine
 {
     /// <summary>
-    /// Represents a command line application. Exposes the entry method for the command line application,
-    /// <see cref="Run(string[])"/>. Additionally, serves as the dependency injection root for the library.
+    /// Represents a command line application.
     /// </summary>
     public interface ICommandLineApp
     {
         /// <summary>
-        /// Entry method for the command line application. Returns an exit code.
+        /// Runs the command specified by the given command line arguments. If the command line arguments do not
+        /// specify a command, runs the default command.
         /// </summary>
-        /// <param name="args">Raw command line arguments.</param>
+        /// <param name="args">The command line arguments. Can be null if there are no arguments.</param>
         /// <returns>Exit code.</returns>
         int Run(string[] args);
     }

@@ -1,6 +1,7 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
+using System;
 using System.Collections.Generic;
 using Microsoft.Extensions.Options;
 
@@ -18,29 +19,26 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandLineApp"/> class.
         /// </summary>
-        /// <param name="parser">The command line application's <see cref="IParser"/>.</param>
-        /// <param name="commandDictionaryFactory">
-        /// The <see cref="ICommandDictionaryFactory"/> used to create the command line application's <see cref="ICommandDictionary"/>.
-        /// </param>
-        /// <param name="commands">
-        /// The collection whose elements are used to populate the command line application's <see cref="ICommandDictionary"/>.
-        /// </param>
-        /// <param name="commandLineAppContextFactory">
-        /// The <see cref="ICommandLineAppContextFactory"/> used to create the command line application's <see cref="CommandLineAppContext"/>.
+        /// <param name="parser">The <see cref="CommandLineApp"/>'s <see cref="IParser"/>.</param>
+        /// <param name="commandLineAppContextFactory">The <see cref="ICommandLineAppContextFactory"/> used to create the <see cref="CommandLineApp"/>'s
+        /// <see cref="ICommandLineAppContext"/>.</param>
+        /// <param name="commandDictionaryFactory">The <see cref="ICommandDictionaryFactory"/> used to create the <see cref="CommandLineApp"/>'s
+        /// <see cref="ICommandDictionary"/>.</param>
+        /// <param name="commands">The collection whose elements are used to populate the <see cref="CommandLineApp"/>'s <see cref="ICommandDictionary"/>.
         /// </param>
         /// <param name="optionsAccessor">The <see cref="CommandLineAppOptions"/> accessor.</param>
         public CommandLineApp(
             IParser parser,
+            ICommandLineAppContextFactory commandLineAppContextFactory,
             ICommandDictionaryFactory commandDictionaryFactory,
             IEnumerable<ICommand> commands,
-            ICommandLineAppContextFactory commandLineAppContextFactory,
             IOptions<CommandLineAppOptions> optionsAccessor)
         {
-            _appOptions = optionsAccessor.Value;
+            _parser = parser ?? throw new ArgumentNullException(nameof(parser));
+            _appContextFactory = commandLineAppContextFactory ?? throw new ArgumentNullException(nameof(commandLineAppContextFactory));
+            _commandDictionaryFactory = commandDictionaryFactory ?? throw new ArgumentNullException(nameof(commandDictionaryFactory));
             _commands = commands;
-            _parser = parser;
-            _appContextFactory = commandLineAppContextFactory;
-            _commandDictionaryFactory = commandDictionaryFactory;
+            _appOptions = optionsAccessor?.Value;
         }
 
         /// <inheritdoc/>

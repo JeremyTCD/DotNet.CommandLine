@@ -7,18 +7,12 @@ using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
+    /// <inheritdoc/>
     public class OptionsFactory : IOptionsFactory
     {
         private readonly IDictionary<ICommand, List<Option>> _optionsCache = new Dictionary<ICommand, List<Option>>();
 
-        /// <summary>
-        /// Creates a <see cref="List{T}"/> of <see cref="Option"/> instances from properties in <paramref name="command"/> that have an
-        /// <see cref="OptionAttribute"/>.
-        /// </summary>
-        /// <param name="command"></param>
-        /// <returns>
-        /// <see cref="List{Option}"/>
-        /// </returns>
+        /// <inheritdoc/>
         public List<Option> CreateFromCommand(ICommand command)
         {
             _optionsCache.TryGetValue(command, out List<Option> result);
@@ -42,16 +36,17 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Creates an <see cref="Option"/> instance from <paramref name="propertyInfo"/>'s <see cref="OptionAttribute"/>.
+        /// Creates an <see cref="Option"/> from a <see cref="PropertyInfo"/>. Returns a new <see cref="Option"/> if successful; otherwise, if
+        /// <see cref="PropertyInfo"/> does not contain an <see cref="OptionAttribute"/>, returns null.
         /// </summary>
         /// <param name="propertyInfo">
-        /// <see cref="PropertyInfo"/> instance with an <see cref="OptionAttribute"/>
+        /// The <see cref="PropertyInfo"/> used to create an <see cref="Option"/>. Must have an <see cref="OptionAttribute"/>.
         /// </param>
         /// <returns>
-        /// <see cref="Option"/> if successful, null if <paramref name="propertyInfo"/> does not contain an <see cref="OptionAttribute"/>.
+        /// A new <see cref="Option"/>.
         /// </returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if <paramref name="propertyInfo"/> instance's <see cref="OptionAttribute"/> has neither a long name or a short name.
+        /// Thrown if the <see cref="PropertyInfo"/>'s <see cref="OptionAttribute"/> has neither a long name or a short name.
         /// </exception>
         internal virtual Option TryCreateFromPropertyInfo(PropertyInfo propertyInfo)
         {

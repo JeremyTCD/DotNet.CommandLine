@@ -9,20 +9,17 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandLineAppOptions
     {
         /// <summary>
-        /// Gets or sets the name of the command line application executable. The executable name is used when
-        /// printing usage examples.
+        /// Gets or sets the name of the command line application executable.
         /// </summary>
         public string ExecutableName { get; set; }
 
         /// <summary>
-        /// Gets or sets the full name of the command line application. The full name is used when
-        /// printing headers.
+        /// Gets or sets the full name of the command line application.
         /// </summary>
         public string FullName { get; set; }
 
         /// <summary>
-        /// Gets or sets the command line application's version. The version is used when
-        /// printing headers.
+        /// Gets or sets a string representing the command line application's version.
         /// </summary>
         public string Version { get; set; }
     }
