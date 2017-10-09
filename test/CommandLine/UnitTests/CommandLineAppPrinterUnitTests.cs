@@ -8,7 +8,7 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 {
-    public class AppPrinterUnitTests
+    public class CommandLineAppPrinterUnitTests
     {
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 

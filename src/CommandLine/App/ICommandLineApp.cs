@@ -9,7 +9,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public interface ICommandLineApp
     {
         /// <summary>
-        /// Runs the command specified by the given command line arguments. If the command line arguments do not
+        /// Runs the command specified by the command line arguments. If the command line arguments do not
         /// specify a command, runs the default command.
         /// </summary>
         /// <param name="args">The command line arguments. Can be null if there are no arguments.</param>

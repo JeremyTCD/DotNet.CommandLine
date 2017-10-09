@@ -17,7 +17,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </param>
         public CommandLineAppContextFactory(ICommandLineAppPrinterFactory commandLineAppPrinterFactory)
         {
-            _appPrinterFactory = commandLineAppPrinterFactory;
+            _appPrinterFactory = commandLineAppPrinterFactory ?? throw new System.ArgumentNullException(nameof(commandLineAppPrinterFactory));
         }
 
         /// <inheritdoc/>
