@@ -7,7 +7,7 @@ using System.Reflection;
 using Moq;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandMapperUnitTests
     {

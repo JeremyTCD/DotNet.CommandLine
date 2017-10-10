@@ -7,7 +7,7 @@ using Microsoft.Extensions.DependencyInjection;
 using Moq;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     /// <summary>
     /// Battery of tests for typical usage scenarios. These tests also serve as basic usage examples.

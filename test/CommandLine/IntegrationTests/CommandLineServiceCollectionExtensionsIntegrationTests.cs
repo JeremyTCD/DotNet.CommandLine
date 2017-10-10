@@ -7,7 +7,7 @@ using System.Linq;
 using Microsoft.Extensions.DependencyInjection;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.IntegrationTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandLineServiceCollectionExtensionsIntegrationTests
     {

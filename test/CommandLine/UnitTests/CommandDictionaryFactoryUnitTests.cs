@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Moq;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandDictionaryFactoryUnitTests
     {
