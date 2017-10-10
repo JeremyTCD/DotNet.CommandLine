@@ -68,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
             [Option(typeof(DummyStrings), nameof(DummyStrings.OptionShortName_Dummy), nameof(DummyStrings.OptionLongName_Dummy), nameof(DummyStrings.OptionDescription_Dummy))]
             public bool DummyOption { get; set; }
 
-            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
+            public override int RunCommand(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 return 1;
             }
@@ -82,7 +82,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.EndToEndTests
 
             public override bool IsDefault { get; } = true;
 
-            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
+            public override int RunCommand(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 return 1;
             }

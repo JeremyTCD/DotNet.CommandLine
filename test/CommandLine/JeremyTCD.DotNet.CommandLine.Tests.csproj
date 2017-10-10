@@ -12,7 +12,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="JeremyTCD.DotNet.Analyzers" Version="0.1.0" />
+    <PackageReference Include="JeremyTCD.DotNet.Analyzers" Version="0.2.0" />
     <PackageReference Include="Microsoft.NET.Test.Sdk" Version="15.5.0-preview-20170810-02" />
     <PackageReference Include="Moq" Version="4.7.99" />
     <PackageReference Include="Moq.Sequences" Version="2.1.0" />

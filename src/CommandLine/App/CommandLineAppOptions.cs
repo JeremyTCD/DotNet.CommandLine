@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine
         public string FullName { get; set; }
 
         /// <summary>
-        /// Gets or sets a string representing the command line application's version.
+        /// Gets or sets a value representing the command line application's version.
         /// </summary>
         public string Version { get; set; }
     }

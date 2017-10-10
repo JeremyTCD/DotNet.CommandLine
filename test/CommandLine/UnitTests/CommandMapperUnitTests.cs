@@ -124,7 +124,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             [Option]
             public string DummyProperty { get; }
 
-            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

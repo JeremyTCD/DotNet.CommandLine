@@ -6,7 +6,7 @@ using System.Collections.Generic;
 using Moq;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandLineAppPrinterUnitTests
     {
@@ -348,7 +348,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             [Option(LongName = "DummyOptionLongName", Description = "DummyOptionDescription")]
             public string DummyOption { get; }
 
-            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }
@@ -369,7 +369,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             public bool IsDefault { get; }
 
-            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

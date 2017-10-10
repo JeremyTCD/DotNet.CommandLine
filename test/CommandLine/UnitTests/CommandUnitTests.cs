@@ -6,11 +6,11 @@ using System.Collections.Generic;
 using Moq;
 using Xunit;
 
-namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
+namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandUnitTests
     {
-        private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
+        private MockRepository _mockRepository = new MockRepository(MockBehavior.Default);
 
         [Theory]
         [MemberData(nameof(PrintsParseExceptionAndGetHelpTipIfParseResultContainsAParseExceptionInstanceData))]
@@ -53,8 +53,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         [Fact]
         public void Run_PrintsAppHelpIfHelpIsTrueAndCommandIsDefaultCommand()
         {
-            // Arrange
-            ParseResult dummyParseResult = new ParseResult(null, null);
+            Mock<IParseResult> dummyParseResult = _mockRepository.Create<IParseResult>();
 
             Mock<ICommandLineAppPrinter> mockAppPrinter = _mockRepository.Create<ICommandLineAppPrinter>();
             mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
@@ -67,7 +66,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand = new DummyCommand(isDefault: true, help: true);
 
             // Act
-            int result = dummyCommand.Run(dummyParseResult, dummyAppContext);
+            int result = dummyCommand.Run(dummyParseResult.Object, dummyAppContext);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -79,7 +78,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
         {
             // Arrange
             string dummyName = "dummyName";
-            ParseResult dummyParseResult = new ParseResult(null, null);
+            Mock<IParseResult> dummyParseResult = _mockRepository.Create<IParseResult>();
 
             Mock<ICommandLineAppPrinter> mockAppPrinter = _mockRepository.Create<ICommandLineAppPrinter>();
             mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
@@ -92,7 +91,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             DummyCommand dummyCommand = new DummyCommand(name: dummyName, help: true);
 
             // Act
-            int result = dummyCommand.Run(dummyParseResult, dummyAppContext);
+            int result = dummyCommand.Run(dummyParseResult.Object, dummyAppContext);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -110,15 +109,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
             mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.Print());
 
-            ParseResult dummyParseResult = new ParseResult(null, null);
+            Mock<IParseResult> dummyParseResult = _mockRepository.Create<IParseResult>();
+
             CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, mockAppPrinter.Object);
 
             Mock<DummyCommand> dummyCommand = _mockRepository.Create<DummyCommand>();
-            dummyCommand.Setup(c => c.RunCommand(dummyParseResult, dummyAppContext)).Returns(exitCode);
+            dummyCommand.Setup(c => c.RunCommand(dummyParseResult.Object, dummyAppContext)).Returns(exitCode);
             dummyCommand.CallBase = true;
 
             // Act
-            int result = dummyCommand.Object.Run(dummyParseResult, dummyAppContext);
+            int result = dummyCommand.Object.Run(dummyParseResult.Object, dummyAppContext);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -146,7 +146,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             public override bool IsDefault { get; }
 
-            public override int RunCommand(ParseResult parseResult, ICommandLineAppContext appContext)
+            public override int RunCommand(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

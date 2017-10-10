@@ -3,7 +3,7 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class ParseResult
+    public class ParseResult : IParseResult
     {
         public ParseResult(ParseException parseException, ICommand command)
         {

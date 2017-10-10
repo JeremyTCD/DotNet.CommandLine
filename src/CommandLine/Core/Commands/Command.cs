@@ -23,24 +23,23 @@ namespace JeremyTCD.DotNet.CommandLine
         [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
         public bool Help { get; set; }
 
-        /// <inheritdoc/>
         /// <summary>
-        /// Contains logic for handling common scenarios:
-        /// If <paramref name="parseResult"/> contains a <see cref="ParseException"/>, prints exception and a get help tip before returning 0.
-        /// Otherwise, if <see cref="Help"/> is true, prints help and returns 1.
-        /// <para/>
-        /// If the current scenario is not one of the above scenarios, calls <see cref="RunCommand(ParseResult, ICommandLineAppContext)"/>.
+        /// Prints <see cref="ParseException"/> and a get help tip if the specified <see cref="IParseResult"/> contains a <see cref="ParseException"/>.
         /// </summary>
-        public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+        /// <param name="parseResult">The result from parsing command line arguments.</param>
+        /// <param name="commandLineAppContext">The command line application's context.</param>
+        /// <returns>Exit code.</returns>
+        public int Run(IParseResult parseResult, ICommandLineAppContext commandLineAppContext)
         {
-            appContext.
+            commandLineAppContext.
                 CommandLineAppPrinter.
                 AppendHeader().
                 AppendLine();
 
+            // Handle parse exception
             if (parseResult.ParseException != null)
             {
-                appContext.
+                commandLineAppContext.
                     CommandLineAppPrinter.
                     AppendParseException(parseResult.ParseException).
                     AppendLine().
@@ -50,42 +49,43 @@ namespace JeremyTCD.DotNet.CommandLine
                 return 0;
             }
 
+            // Handle help requested
             if (Help)
             {
                 if (IsDefault)
                 {
-                    appContext.
+                    commandLineAppContext.
                         CommandLineAppPrinter.
                         AppendAppHelp();
                 }
                 else
                 {
-                    appContext.
+                    commandLineAppContext.
                         CommandLineAppPrinter.
                         AppendCommandHelp(Name);
                 }
 
-                appContext.
+                commandLineAppContext.
                     CommandLineAppPrinter.
                     Print();
 
                 return 1;
             }
 
-            appContext.
+            commandLineAppContext.
                 CommandLineAppPrinter.
                 Print();
 
-            return RunCommand(parseResult, appContext);
+            return RunCommand(parseResult, commandLineAppContext);
         }
 
         /// <summary>
-        /// Runs logic specific to the command. <see cref="Run(ParseResult, ICommandLineAppContext)"/> attempts to handle common scenarios,
+        /// Runs logic specific to the command. <see cref="Run(IParseResult, ICommandLineAppContext)"/> attempts to handle common scenarios,
         /// it calls this method if it is unable to handle the current scenario.
         /// </summary>
-        /// <param name="parseResult">Result of parsing command line arguments.</param>
-        /// <param name="commandLineAppContext">Context of executing command line application.</param>
+        /// <param name="parseResult">The result from parsing command line arguments.</param>
+        /// <param name="commandLineAppContext">The command line application's context.</param>
         /// <returns>Exit code.</returns>
-        public abstract int RunCommand(ParseResult parseResult, ICommandLineAppContext commandLineAppContext);
+        public abstract int RunCommand(IParseResult parseResult, ICommandLineAppContext commandLineAppContext);
     }
 }

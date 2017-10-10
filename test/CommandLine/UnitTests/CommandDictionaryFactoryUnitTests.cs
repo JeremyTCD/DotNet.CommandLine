@@ -121,7 +121,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests.UnitTests
 
             public bool IsDefault { get; }
 
-            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new NotImplementedException();
             }

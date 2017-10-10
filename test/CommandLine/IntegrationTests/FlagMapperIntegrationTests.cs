@@ -63,7 +63,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public bool IsDefault => throw new System.NotImplementedException();
 
-            public int Run(ParseResult parseResult, ICommandLineAppContext appContext)
+            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
                 throw new System.NotImplementedException();
             }
