@@ -12,20 +12,31 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     {
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
+        // TODO codeanalysis verify test method name corresponds to test under class member
+        // TODO codeanalysis if test under class throws exceptions, verify each exception tested with expected test method name
         [Fact]
         public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
             string dummyCommand2Name = "dummyCommand2Name";
-            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, true);
-            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, true);
-            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
+            Mock<ICommand> mockCommand1 = _mockRepository.Create<ICommand>();
+            mockCommand1.Setup(d => d.IsDefault).Returns(true);
+            mockCommand1.Setup(d => d.Name).Returns(dummyCommand1Name);
+
+            Mock<ICommand> mockCommand2 = _mockRepository.Create<ICommand>();
+            mockCommand2.Setup(d => d.IsDefault).Returns(true);
+            mockCommand2.Setup(d => d.Name).Returns(dummyCommand2Name);
+
+            ICommand[] dummyCommands = new ICommand[] { mockCommand1.Object, mockCommand2.Object };
+
+            // TODO codeanalysis create method for class under test
             CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
+            // TODO codeanalysis verifyall required if setup called
             Assert.Equal(
                 string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
                 exception.Message);
@@ -46,6 +57,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
         }
 
+        // TODO codeanalysis data method name
         public static IEnumerable<object[]> ThrowsInvalidOperationExceptionIfACommandNameIsNullOrWhitespaceData()
         {
             yield return new object[] { null };
@@ -105,6 +117,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(2, result.Count);
             Assert.Equal(dummyCommand1, result[dummyCommand1Name]);
             Assert.Equal(dummyCommand2, result[dummyCommand2Name]);
+        }
+
+        private CommandDictionaryFactory CreateCommandDictionaryFactory()
+        {
+            return new CommandDictionaryFactory();
         }
 
         private class DummyCommand : ICommand
