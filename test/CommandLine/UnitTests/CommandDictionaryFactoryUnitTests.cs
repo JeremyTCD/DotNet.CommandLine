@@ -32,7 +32,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             ICommand[] dummyCommands = new ICommand[] { mockCommand1.Object, mockCommand2.Object };
 
             // TODO codeanalysis create method for class under test
-            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
+            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
@@ -50,7 +50,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand = new DummyCommand(dummyName, true);
             DummyCommand[] dummyCommands = new[] { dummyCommand };
 
-            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
+            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
@@ -74,7 +74,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommandName, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
+            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
@@ -91,7 +91,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
+            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
@@ -108,7 +108,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
             DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
 
-            CommandDictionaryFactory commandDictionaryFactory = new CommandDictionaryFactory();
+            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act
             ICommandDictionary result = commandDictionaryFactory.CreateFromCommands(dummyCommands);

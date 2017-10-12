@@ -25,7 +25,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(dummyOptions);
 
-            CommandMapper commandMapper = new CommandMapper(null, mockOptionsFactory.Object);
+            CommandMapper commandMapper = CreateCommandMapper(optionsFactory: mockOptionsFactory.Object);
 
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand));
@@ -51,7 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo, dummyOptionValue, dummyCommand)).Throws(dummyException);
 
-            CommandMapper commandMapper = new CommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand));
@@ -78,7 +78,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo, dummyOptionValue, dummyCommand)).Returns(false);
 
-            CommandMapper commandMapper = new CommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand));
@@ -104,7 +104,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo, dummyOptionValue, dummyCommand)).Returns(true);
 
-            CommandMapper commandMapper = new CommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act
             commandMapper.Map(dummyArguments, dummyCommand);

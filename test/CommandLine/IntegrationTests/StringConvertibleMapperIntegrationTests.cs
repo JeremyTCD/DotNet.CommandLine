@@ -15,7 +15,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper stringConvertibleMapper = new StringConvertibleMapper();
+            StringConvertibleMapper stringConvertibleMapper = CreateStringConvertibleMapper();
 
             // Act
             bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
@@ -48,7 +48,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper stringConvertibleMapper = new StringConvertibleMapper();
+            StringConvertibleMapper stringConvertibleMapper = CreateStringConvertibleMapper();
 
             // Act
             bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
@@ -68,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNull()
         {
             // Arrange
-            StringConvertibleMapper defaultMapper = new StringConvertibleMapper();
+            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
 
             // Act
             bool result = defaultMapper.TryMap(null, null, null);
@@ -82,7 +82,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.NotConvertible));
-            StringConvertibleMapper defaultMapper = new StringConvertibleMapper();
+            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
 
             // Act
             bool result = defaultMapper.TryMap(propertyInfo, "dummy", null);
@@ -97,7 +97,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.Convertible));
             StubCommand stubModel = new StubCommand();
-            StringConvertibleMapper defaultMapper = new StringConvertibleMapper();
+            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
             string dummyString = "1";
 
             // Act

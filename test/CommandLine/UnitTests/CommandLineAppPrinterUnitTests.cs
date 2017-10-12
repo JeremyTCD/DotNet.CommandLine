@@ -20,7 +20,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyVersion = "dummyVersion";
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { FullName = dummyFullName, Version = dummyVersion };
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
             printer.AppendHeader();
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyDefaultCommand)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendAppHelp(rowPrefix, columnGap);
@@ -85,7 +85,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
             printer.AppendGetHelpTip(dummyTargetPosValue, dummyCommandPosValue);
@@ -124,7 +124,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, dummyAppOptions, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
             printer.AppendUsage(dummyOptionsPosValue, dummyCommandPosValue);
@@ -163,7 +163,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyDescription = "dummyDescription";
             DummyCommand dummyCommand = new DummyCommand(description: dummyDescription);
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             printer.AppendDescription(dummyDescription);
@@ -244,7 +244,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             Option dummyOption = new Option(null, dummyShortName, dummyLongName, null);
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             string result = printer.GetOptionNames(dummyOption);
@@ -270,7 +270,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void GetNormalizedPosValue_GetsNormalizedPosValue(string dummyPosValue, string expected)
         {
             // Arrange
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             string result = printer.GetNormalizedPosValue(dummyPosValue);
@@ -302,7 +302,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 new string[] { "12", "1", "1" }
             };
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             printer.AppendRows(rows, dummyColumnGap, dummyRowPrefix);

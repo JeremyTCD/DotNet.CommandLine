@@ -22,12 +22,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Creates an <see cref="CommandLineAppPrinter"/> instance.
         /// </summary>
         /// <param name="commandDictionary"></param>
-        /// <param name="appOptions"></param>
+        /// <param name="commandLineAppOptions"></param>
         /// <param name="optionsFactory"></param>
-        public CommandLineAppPrinter(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions, IOptionsFactory optionsFactory)
+        public CommandLineAppPrinter(ICommandDictionary commandDictionary, CommandLineAppOptions commandLineAppOptions, IOptionsFactory optionsFactory)
         {
             _commandDictionary = commandDictionary;
-            _appOptions = appOptions;
+            _appOptions = commandLineAppOptions;
             _optionsFactory = optionsFactory;
             _stringBuilder = new StringBuilder();
         }

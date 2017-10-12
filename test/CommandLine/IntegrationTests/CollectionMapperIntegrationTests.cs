@@ -15,7 +15,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNull()
         {
             // Arrange
-            CollectionMapper collectionMapper = new CollectionMapper(null);
+            CollectionMapper collectionMapper = CreateCollectionMapper();
 
             // Act
             bool result = collectionMapper.TryMap(null, null, null);
@@ -29,7 +29,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.NotCollection));
-            CollectionMapper collectionMapper = new CollectionMapper(null);
+            CollectionMapper collectionMapper = CreateCollectionMapper();
 
             // Act
             bool result = collectionMapper.TryMap(propertyInfo, "dummy", null);
@@ -46,7 +46,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             IActivatorService activatorService = new ActivatorService(mockASLS.Object);
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.StringCollection));
             StubCommand stubCommand = new StubCommand();
-            CollectionMapper collectionMapper = new CollectionMapper(activatorService);
+            CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
             string dummyString = "1,2,3";
 
             // Act
@@ -68,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ILoggingService<ActivatorService>> mockASLS = new Mock<ILoggingService<ActivatorService>>();
             IActivatorService activatorService = new ActivatorService(mockASLS.Object);
 
-            CollectionMapper collectionMapper = new CollectionMapper(activatorService);
+            CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
 
             // Act
             bool result = collectionMapper.TryMap(dummyPropertyInfo, dummyString, stubCommand);

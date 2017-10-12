@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string[] dummyArgs = new string[] { arg };
 
-            ArgumentsFactory argumentsFactory = new ArgumentsFactory();
+            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(dummyArgs));
@@ -55,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
-            ArgumentsFactory argumentsFactory = new ArgumentsFactory();
+            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(args));

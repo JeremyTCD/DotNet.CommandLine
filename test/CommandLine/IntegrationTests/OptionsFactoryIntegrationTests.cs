@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.DummyNoAttributeProperty));
 
-            OptionsFactory optionFactory = new OptionsFactory();
+            OptionsFactory optionFactory = CreateOptionsFactory();
 
             // Act
             Option result = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
@@ -53,7 +53,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.DummyOptionProperty));
 
-            OptionsFactory optionFactory = new OptionsFactory();
+            OptionsFactory optionFactory = CreateOptionsFactory();
 
             // Act
             Option result = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
@@ -71,7 +71,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommandWithNamelessProperty).GetProperty(nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty));
 
-            OptionsFactory optionFactory = new OptionsFactory();
+            OptionsFactory optionFactory = CreateOptionsFactory();
 
             // Act and Assert
             Exception exception = Assert.Throws<InvalidOperationException>(() => optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo));
@@ -116,6 +116,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             {
                 throw new System.NotImplementedException();
             }
+        }
+
+        private OptionsFactory CreateOptionsFactory()
+        {
+            return new OptionsFactory();
         }
     }
 }

@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.NotBool));
-            FlagMapper flagMapper = new FlagMapper();
+            FlagMapper flagMapper = CreateFlagMapper();
 
             // Act
             bool result = flagMapper.TryMap(propertyInfo, null, null);
@@ -26,7 +26,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNotNull()
         {
             // Arrange
-            FlagMapper flagMapper = new FlagMapper();
+            FlagMapper flagMapper = CreateFlagMapper();
 
             // Act
             bool result = flagMapper.TryMap(null, "dummy", null);
@@ -41,7 +41,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.Bool));
             StubCommand stubCommand = new StubCommand();
-            FlagMapper flagMapper = new FlagMapper();
+            FlagMapper flagMapper = CreateFlagMapper();
 
             // Act
             bool result = flagMapper.TryMap(propertyInfo, null, stubCommand);

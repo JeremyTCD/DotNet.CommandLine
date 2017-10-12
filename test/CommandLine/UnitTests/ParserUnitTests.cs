@@ -21,7 +21,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
             mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
-            Parser parser = new Parser(null, null);
+            Parser parser = CreateParser();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => parser.GetCommand(dummyCommandName, mockCommandDictionary.Object));
@@ -39,7 +39,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
             mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
 
-            Parser parser = new Parser(null, null);
+            Parser parser = CreateParser();
 
             // Act
             ICommand result = parser.GetCommand(dummyCommandName, mockCommandDictionary.Object);
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
             mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand);
 
-            Parser parser = new Parser(null, null);
+            Parser parser = CreateParser();
 
             // Act
             ICommand result = parser.GetCommand(null, mockCommandDictionary.Object);
@@ -107,7 +107,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
 
-            Parser parser = new Parser(mockArgumentsFactory.Object, null);
+            Parser parser = CreateParser(mockArgumentsFactory.Object);
 
             // Act
             ParseResult result = parser.Parse(dummyArgs, null);
@@ -127,7 +127,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
 
-            Parser parser = new Parser(mockArgumentsFactory.Object, null);
+            Parser parser = CreateParser(mockArgumentsFactory.Object);
 
             // Act
             ParseResult result = parser.Parse(dummyArgs, null);
