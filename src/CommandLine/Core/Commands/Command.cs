@@ -21,7 +21,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Gets or sets a value indicating whether help should be printed by the command. True if help should be printed; otherwise, false.
         /// </summary>
         [Option(typeof(Strings), nameof(Strings.OptionShortName_Help), nameof(Strings.OptionLongName_Help), nameof(Strings.OptionDescription_Help))]
-        public bool Help { get; set; }
+        public virtual bool Help { get; set; }
 
         /// <summary>
         /// Prints <see cref="ParseException"/> and a get help tip if the specified <see cref="IParseResult"/> contains a <see cref="ParseException"/>.
@@ -29,7 +29,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="parseResult">The result from parsing command line arguments.</param>
         /// <param name="commandLineAppContext">The command line application's context.</param>
         /// <returns>Exit code.</returns>
-        public int Run(IParseResult parseResult, ICommandLineAppContext commandLineAppContext)
+        public virtual int Run(IParseResult parseResult, ICommandLineAppContext commandLineAppContext)
         {
             commandLineAppContext.
                 CommandLineAppPrinter.

@@ -11,8 +11,8 @@ namespace JeremyTCD.DotNet.CommandLine
             Command = command;
         }
 
-        public ParseException ParseException { get; }
+        public virtual ParseException ParseException { get; }
 
-        public ICommand Command { get; }
+        public virtual ICommand Command { get; }
     }
 }

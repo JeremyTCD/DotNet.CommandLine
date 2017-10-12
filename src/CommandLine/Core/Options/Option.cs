@@ -15,12 +15,12 @@ namespace JeremyTCD.DotNet.CommandLine
             Description = description;
         }
 
-        public PropertyInfo PropertyInfo { get; }
+        public virtual PropertyInfo PropertyInfo { get; }
 
-        public string ShortName { get; }
+        public virtual string ShortName { get; }
 
-        public string LongName { get; }
+        public virtual string LongName { get; }
 
-        public string Description { get; }
+        public virtual string Description { get; }
     }
 }

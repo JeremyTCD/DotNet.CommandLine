@@ -17,7 +17,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// True if property was set succesfully, false otherwise.
         /// </returns>
-        public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
+        public virtual bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
             if (value != null || propertyInfo.PropertyType != typeof(bool))
             {

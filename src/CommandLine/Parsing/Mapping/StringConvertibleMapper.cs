@@ -18,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// True if property was set succesfully, false otherwise.
         /// </returns>
-        public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
+        public virtual bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
             if (value == null || !CanBeConvertedToFromString(propertyInfo.PropertyType))
             {
@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// True if <paramref name="type"/> can be converted to from <see cref="string"/>.
         /// </returns>
-        internal bool CanBeConvertedToFromString(Type type)
+        internal virtual bool CanBeConvertedToFromString(Type type)
         {
             return type.GetTypeInfo().IsPrimitive || type == typeof(string) || type == typeof(DateTime) || type == typeof(decimal);
         }

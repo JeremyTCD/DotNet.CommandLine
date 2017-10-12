@@ -32,7 +32,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidCastException"></exception>
         /// <exception cref="FormatException"></exception>
         /// <exception cref="OverflowException"></exception>
-        public bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
+        public virtual bool TryMap(PropertyInfo propertyInfo, string value, ICommand command)
         {
             if (value == null)
             {

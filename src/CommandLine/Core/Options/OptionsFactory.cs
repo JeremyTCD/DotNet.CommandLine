@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine
         private readonly IDictionary<ICommand, List<Option>> _optionsCache = new Dictionary<ICommand, List<Option>>();
 
         /// <inheritdoc/>
-        public List<Option> CreateFromCommand(ICommand command)
+        public virtual List<Option> CreateFromCommand(ICommand command)
         {
             _optionsCache.TryGetValue(command, out List<Option> result);
 

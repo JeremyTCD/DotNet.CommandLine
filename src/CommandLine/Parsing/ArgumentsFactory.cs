@@ -21,7 +21,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="ParseException">
         /// Thrown if an element in <paramref name="args"/> other than the first element has the format of a command.
         /// </exception>
-        public Arguments CreateFromArray(string[] args)
+        public virtual Arguments CreateFromArray(string[] args)
         {
             int numArgs = args.Length;
             string commandName = null;

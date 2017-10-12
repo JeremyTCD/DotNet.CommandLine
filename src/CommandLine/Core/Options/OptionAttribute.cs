@@ -30,7 +30,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _descriptionResourceName = descriptionResourceName;
         }
 
-        public string ShortName
+        public virtual string ShortName
         {
             get
             {
@@ -43,7 +43,7 @@ namespace JeremyTCD.DotNet.CommandLine
             }
         }
 
-        public string LongName
+        public virtual string LongName
         {
             get
             {
@@ -56,7 +56,7 @@ namespace JeremyTCD.DotNet.CommandLine
             }
         }
 
-        public string Description
+        public virtual string Description
         {
             get
             {

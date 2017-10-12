@@ -32,35 +32,35 @@ namespace JeremyTCD.DotNet.CommandLine
             _stringBuilder = new StringBuilder();
         }
 
-        public ICommandLineAppPrinter Clear()
+        public virtual ICommandLineAppPrinter Clear()
         {
             _stringBuilder.Clear();
 
             return this;
         }
 
-        public ICommandLineAppPrinter Print()
+        public virtual ICommandLineAppPrinter Print()
         {
             Console.Write(_stringBuilder.ToString());
 
             return this;
         }
 
-        public ICommandLineAppPrinter AppendLine()
+        public virtual ICommandLineAppPrinter AppendLine()
         {
             _stringBuilder.AppendLine();
 
             return this;
         }
 
-        public ICommandLineAppPrinter AppendHeader()
+        public virtual ICommandLineAppPrinter AppendHeader()
         {
             _stringBuilder.Append(string.Format(Strings.Printer_Header, _appOptions.FullName, _appOptions.Version));
 
             return this;
         }
 
-        public ICommandLineAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
+        public virtual ICommandLineAppPrinter AppendAppHelp(string rowPrefix = null, int columnGap = 2)
         {
             // Usage
             AppendUsage("[command options]", "[command]");
@@ -110,7 +110,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public ICommandLineAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
+        public virtual ICommandLineAppPrinter AppendGetHelpTip(string targetPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(
@@ -122,7 +122,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public ICommandLineAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
+        public virtual ICommandLineAppPrinter AppendUsage(string optionsPosValue, string commandPosValue = null)
         {
             _stringBuilder.
                 Append(string.Format(
@@ -134,7 +134,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public ICommandLineAppPrinter AppendDescription(string description)
+        public virtual ICommandLineAppPrinter AppendDescription(string description)
         {
             _stringBuilder.
                 Append(string.Format(Strings.Printer_Description, description));
@@ -151,7 +151,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if no command with name <paramref name="commandName"/> exists.
         /// </exception>
-        public ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
+        public virtual ICommandLineAppPrinter AppendCommandHelp(string commandName, string rowPrefix = null, int columnGap = 2)
         {
             if (!_commandDictionary.TryGetValue(commandName, out ICommand command))
             {
@@ -189,7 +189,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public ICommandLineAppPrinter AppendParseException(ParseException parseException)
+        public virtual ICommandLineAppPrinter AppendParseException(ParseException parseException)
         {
             string innerMostMessage = parseException.Message;
             Exception innerException = parseException.InnerException;
@@ -209,7 +209,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public override string ToString()
+        public override virtual string ToString()
         {
             return _stringBuilder.ToString();
         }
@@ -222,7 +222,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        internal string GetOptionNames(Option option)
+        internal virtual string GetOptionNames(Option option)
         {
             List<string> names = new List<string>();
 
@@ -245,7 +245,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="posValue"></param>
         /// <returns><see cref="string"/></returns>
-        internal string GetNormalizedPosValue(string posValue)
+        internal virtual string GetNormalizedPosValue(string posValue)
         {
             if (string.IsNullOrEmpty(posValue))
             {
@@ -263,7 +263,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// columns as the first row.</param>
         /// <param name="columnGap"></param>
         /// <param name="rowPrefix"></param>
-        internal void AppendRows(string[][] rows, int columnGap, string rowPrefix)
+        internal virtual void AppendRows(string[][] rows, int columnGap, string rowPrefix)
         {
             int numRows = rows.Length;
             int numColumns = rows[0].Length;

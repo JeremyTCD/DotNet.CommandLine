@@ -20,12 +20,12 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <inheritdoc/>
-        public ICommandDictionary CommandDictionary { get; }
+        public virtual ICommandDictionary CommandDictionary { get; }
 
         /// <inheritdoc/>
-        public CommandLineAppOptions CommandLineAppOptions { get; }
+        public virtual CommandLineAppOptions CommandLineAppOptions { get; }
 
         /// <inheritdoc/>
-        public ICommandLineAppPrinter CommandLineAppPrinter { get; }
+        public virtual ICommandLineAppPrinter CommandLineAppPrinter { get; }
     }
 }

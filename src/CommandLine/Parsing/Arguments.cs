@@ -24,11 +24,11 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <summary>
         /// 
         /// </summary>
-        public string CommandName { get; }
+        public virtual string CommandName { get; }
 
         /// <summary>
         /// 
         /// </summary>
-        public Dictionary<string, string> OptionArgs { get; }
+        public virtual Dictionary<string, string> OptionArgs { get; }
     }
 }

@@ -42,7 +42,7 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <inheritdoc/>
-        public int Run(string[] args)
+        public virtual int Run(string[] args)
         {
             ICommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
             ICommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);

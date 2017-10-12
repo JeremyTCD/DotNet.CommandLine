@@ -12,7 +12,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _optionsFactory = optionsFactory;
         }
 
-        public ICommandLineAppPrinter Create(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions)
+        public virtual ICommandLineAppPrinter Create(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions)
         {
             return new CommandLineAppPrinter(commandDictionary, appOptions, _optionsFactory);
         }

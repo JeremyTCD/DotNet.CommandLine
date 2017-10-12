@@ -15,7 +15,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _resourceType = resourceType;
         }
 
-        public string TryGetResource(string resourceName)
+        public virtual string TryGetResource(string resourceName)
         {
             if (_resourceType == null || resourceName == null)
             {

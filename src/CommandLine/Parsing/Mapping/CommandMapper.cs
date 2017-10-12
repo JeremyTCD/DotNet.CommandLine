@@ -34,7 +34,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="ParseException">
         /// Thrown if <paramref name="arguments"/> contains an invalid option value.
         /// </exception>
-        public void Map(Arguments arguments, ICommand command)
+        public virtual void Map(Arguments arguments, ICommand command)
         {
             IEnumerable<Option> options = _optionsFactory.CreateFromCommand(command);
 

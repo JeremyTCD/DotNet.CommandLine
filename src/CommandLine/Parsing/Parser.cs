@@ -29,7 +29,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <returns>
         /// <see cref="ParseResult"/>
         /// </returns>
-        public ParseResult Parse(string[] args, ICommandDictionary commandDictionary)
+        public virtual ParseResult Parse(string[] args, ICommandDictionary commandDictionary)
         {
             ICommand command = null;
             ParseException parseException = null;

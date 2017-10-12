@@ -12,7 +12,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandDictionaryFactory : ICommandDictionaryFactory
     {
         /// <inheritdoc/>
-        public ICommandDictionary CreateFromCommands(IEnumerable<ICommand> commands)
+        public virtual ICommandDictionary CreateFromCommands(IEnumerable<ICommand> commands)
         {
             ICommand defaultCommand = null;
             CommandDictionary result = new CommandDictionary();
