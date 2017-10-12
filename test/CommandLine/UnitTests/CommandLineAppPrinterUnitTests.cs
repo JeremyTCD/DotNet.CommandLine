@@ -199,7 +199,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
@@ -220,7 +220,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)
         {
             // Arrange
-            CommandLineAppPrinter printer = new CommandLineAppPrinter(null, null, null);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             printer.AppendParseException(parseException);
@@ -328,6 +328,17 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 null,
                 dummyColumnGap, $"  {columnSeparator}123{columnSeparator}1 {Environment.NewLine}1 {columnSeparator}12 {columnSeparator}12{Environment.NewLine}12{columnSeparator}1  {columnSeparator}1 "
             };
+        }
+
+        private CommandLineAppPrinter CreateCommandLineAppPrinter(
+            ICommandDictionary commandDictionary = null,
+            CommandLineAppOptions commandLineAppOptions = null,
+            IOptionsFactory optionsFactory = null)
+        {
+            return new CommandLineAppPrinter(
+                commandDictionary,
+                commandLineAppOptions,
+                optionsFactory);
         }
 
         private class DummyCommandWithOptions : ICommand

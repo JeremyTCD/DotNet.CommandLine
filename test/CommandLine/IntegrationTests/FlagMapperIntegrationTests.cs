@@ -68,5 +68,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 throw new System.NotImplementedException();
             }
         }
+
+        private FlagMapper CreateFlagMapper()
+        {
+            return new FlagMapper();
+        }
     }
 }

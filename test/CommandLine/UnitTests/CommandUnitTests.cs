@@ -12,14 +12,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     {
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default);
 
-        [Theory]
-        [MemberData(nameof(PrintsParseExceptionAndGetHelpTipIfParseResultContainsAParseExceptionInstanceData))]
-        public void Run_PrintsParseExceptionAndGetHelpTipIfParseResultContainsAParseExceptionInstance(
-            bool dummyIsDefault,
-            string expectedTargetPosValue,
-            string dummyAndExpectedName)
+        [Fact]
+        public void Run_PrintsParseExceptionAndCommandGetHelpTipIfParseResultContainsAParseExceptionAndCommandIsNotDefaultCommand()
         {
             // Arrange
+            bool dummyIsDefault = false;
+            string dummyTargetPosValue = "this command";
+            string dummyCommandName = "dummyCommandName";
             ParseException dummyParseException = new ParseException();
             ParseResult dummyParseResult = new ParseResult(dummyParseException, null);
 
@@ -27,27 +26,53 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.AppendParseException(dummyParseException)).Returns(mockAppPrinter.Object);
-            mockAppPrinter.Setup(a => a.AppendGetHelpTip(expectedTargetPosValue, dummyAndExpectedName)).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendGetHelpTip(dummyTargetPosValue, dummyCommandName)).Returns(mockAppPrinter.Object);
             mockAppPrinter.Setup(a => a.Print());
 
             CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, mockAppPrinter.Object);
 
-            DummyCommand dummyCommand = new DummyCommand(dummyAndExpectedName, isDefault: dummyIsDefault);
+            // TODO codeanalysis mock of class under test does not need mock prefix
+            Mock<Command> command = _mockRepository.Create<Command>();
+            command.Setup(c => c.Name).Returns(dummyCommandName);
+            command.Setup(c => c.IsDefault).Returns(dummyIsDefault);
+            command.CallBase = true;
 
             // Act
-            int result = dummyCommand.Run(dummyParseResult, dummyAppContext);
+            int result = command.Object.Run(dummyParseResult, dummyAppContext);
 
             // Assert
             _mockRepository.VerifyAll();
             Assert.Equal(0, result);
         }
 
-        public static IEnumerable<object[]> PrintsParseExceptionAndGetHelpTipIfParseResultContainsAParseExceptionInstanceData()
+        [Fact]
+        public void Run_PrintsParseExceptionAndAppGetHelpTipIfParseResultContainsAParseExceptionAndCommandIsDefaultCommand()
         {
-            string dummyName = "dummyName";
+            // Arrange
+            bool dummyIsDefault = true;
+            string dummyTargetPosValue = "this application";
+            ParseException dummyParseException = new ParseException();
+            ParseResult dummyParseResult = new ParseResult(dummyParseException, null);
 
-            yield return new object[] { true, "this application", null };
-            yield return new object[] { false, "this command", dummyName };
+            Mock<ICommandLineAppPrinter> mockAppPrinter = _mockRepository.Create<ICommandLineAppPrinter>();
+            mockAppPrinter.Setup(a => a.AppendHeader()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendLine()).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendParseException(dummyParseException)).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.AppendGetHelpTip(dummyTargetPosValue, null)).Returns(mockAppPrinter.Object);
+            mockAppPrinter.Setup(a => a.Print());
+
+            CommandLineAppContext dummyAppContext = new CommandLineAppContext(null, null, mockAppPrinter.Object);
+
+            Mock<Command> command = _mockRepository.Create<Command>();
+            command.Setup(c => c.IsDefault).Returns(dummyIsDefault);
+            command.CallBase = true;
+
+            // Act
+            int result = command.Object.Run(dummyParseResult, dummyAppContext);
+
+            // Assert
+            _mockRepository.VerifyAll();
+            Assert.Equal(0, result);
         }
 
         [Fact]

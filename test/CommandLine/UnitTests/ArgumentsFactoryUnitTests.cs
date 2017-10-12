@@ -18,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyCommandName = "dummyCommandName";
             string[] dummyArgs = new[] { dummyCommandName, $"-{dummyOptionName}={dummyOptionValue}" };
 
-            ArgumentsFactory argumentsFactory = new ArgumentsFactory();
+            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
 
             // Act
             Arguments result = argumentsFactory.CreateFromArray(dummyArgs);
@@ -66,6 +66,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             yield return new object[] { new string[] { "-optionName", "commandName" } };
             yield return new object[] { new string[] { "commandName", "-optionName", "commandName" } };
+        }
+
+        private ArgumentsFactory CreateArgumentsFactory()
+        {
+            return new ArgumentsFactory();
         }
     }
 }

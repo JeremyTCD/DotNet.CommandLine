@@ -125,5 +125,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 throw new NotImplementedException();
             }
         }
+
+        private StringConvertibleMapper CreateStringConvertibleMapper()
+        {
+            return new StringConvertibleMapper();
+        }
     }
 }

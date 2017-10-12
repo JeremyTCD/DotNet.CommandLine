@@ -129,5 +129,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 throw new NotImplementedException();
             }
         }
+
+        private CommandMapper CreateCommandMapper(IEnumerable<IMapper> mappers = null, IOptionsFactory optionsFactory = null)
+        {
+            return new CommandMapper(mappers, optionsFactory);
+        }
     }
 }

@@ -97,5 +97,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 throw new System.NotImplementedException();
             }
         }
+
+        private CollectionMapper CreateCollectionMapper(IActivatorService activatorService = null)
+        {
+            return new CollectionMapper(activatorService);
+        }
     }
 }

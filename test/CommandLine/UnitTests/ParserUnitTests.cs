@@ -156,5 +156,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 throw new NotImplementedException();
             }
         }
+
+        private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        {
+            return new Parser(argumentsFactory, commandMapper);
+        }
     }
 }

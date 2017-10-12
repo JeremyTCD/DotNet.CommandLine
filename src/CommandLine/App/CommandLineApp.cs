@@ -34,9 +34,9 @@ namespace JeremyTCD.DotNet.CommandLine
             IEnumerable<ICommand> commands,
             IOptions<CommandLineAppOptions> optionsAccessor)
         {
-            _parser = parser ?? throw new ArgumentNullException(nameof(parser));
-            _appContextFactory = commandLineAppContextFactory ?? throw new ArgumentNullException(nameof(commandLineAppContextFactory));
-            _commandDictionaryFactory = commandDictionaryFactory ?? throw new ArgumentNullException(nameof(commandDictionaryFactory));
+            _parser = parser;
+            _appContextFactory = commandLineAppContextFactory;
+            _commandDictionaryFactory = commandDictionaryFactory;
             _commands = commands;
             _appOptions = optionsAccessor?.Value;
         }
