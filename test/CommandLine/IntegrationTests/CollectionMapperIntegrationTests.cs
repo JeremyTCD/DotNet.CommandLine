@@ -11,6 +11,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CollectionMapperIntegrationTests
     {
+        private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default);
+
         [Fact]
         public void TryMap_ReturnsFalseIfValueIsNull()
         {
@@ -47,7 +49,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.StringCollection));
             DummyCommand dummyCommand = new DummyCommand();
 
-            Mock<ILoggingService<ActivatorService>> mockLoggingService = new Mock<ILoggingService<ActivatorService>>();
+            Mock<ILoggingService<ActivatorService>> mockLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
             IActivatorService activatorService = new ActivatorService(mockLoggingService.Object);
 
             CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
@@ -68,7 +70,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand = new DummyCommand();
             string dummyString = "1,2,3";
 
-            Mock<ILoggingService<ActivatorService>> mockLoggingService = new Mock<ILoggingService<ActivatorService>>();
+            Mock<ILoggingService<ActivatorService>> mockLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
             IActivatorService activatorService = new ActivatorService(mockLoggingService.Object);
 
             CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
