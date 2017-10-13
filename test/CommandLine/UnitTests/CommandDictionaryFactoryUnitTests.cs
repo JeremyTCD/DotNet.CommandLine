@@ -29,13 +29,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             mockCommand2.Setup(d => d.IsDefault).Returns(true);
             mockCommand2.Setup(d => d.Name).Returns(dummyCommand2Name);
 
-            ICommand[] dummyCommands = new ICommand[] { mockCommand1.Object, mockCommand2.Object };
+            ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             // TODO codeanalysis verifyall required if setup called
+            _mockRepository.VerifyAll();
             Assert.Equal(
                 string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
                 exception.Message);
@@ -46,14 +47,18 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace(string dummyName)
         {
             // Arrange
-            DummyCommand dummyCommand = new DummyCommand(dummyName, true);
-            DummyCommand[] dummyCommands = new[] { dummyCommand };
+            Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
+            mockCommand.Setup(m => m.Name).Returns(dummyName);
+            mockCommand.Setup(m => m.IsDefault).Returns(true);
+
+            ICommand[] dummyCommands = new[] { mockCommand.Object };
 
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
+            _mockRepository.VerifyAll();
         }
 
         // TODO codeanalysis data method name

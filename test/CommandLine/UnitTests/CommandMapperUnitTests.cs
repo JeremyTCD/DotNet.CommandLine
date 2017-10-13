@@ -30,6 +30,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Act and Assert
             ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand));
             Assert.Equal(string.Format(Strings.ParseException_OptionDoesNotExist, dummyOptionKey), parseException.Message);
+            _mockRepository.VerifyAll();
         }
 
         [Fact]

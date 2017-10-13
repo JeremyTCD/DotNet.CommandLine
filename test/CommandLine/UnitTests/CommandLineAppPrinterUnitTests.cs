@@ -76,6 +76,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                               $"{Environment.NewLine}" +
                               $"Run '{dummyExecutableName} [command] -help' for more information about a command.";
             Assert.Equal(expected, result);
+            _mockRepository.VerifyAll();
         }
 
         [Theory]
@@ -213,6 +214,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                               $"Options:{Environment.NewLine}" +
                               $"{rowPrefix}-{dummyOptionLongName}{columnSeparator}{dummyOptionDescription}";
             Assert.Equal(expected, result);
+            _mockRepository.VerifyAll();
         }
 
         [Theory]
