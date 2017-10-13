@@ -209,7 +209,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return this;
         }
 
-        public override virtual string ToString()
+        public override string ToString()
         {
             return _stringBuilder.ToString();
         }

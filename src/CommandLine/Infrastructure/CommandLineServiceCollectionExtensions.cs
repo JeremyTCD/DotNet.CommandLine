@@ -9,7 +9,7 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public static class CommandLineServiceCollectionExtensions
     {
-        public static virtual IServiceCollection AddCommandLine(this IServiceCollection serviceCollection)
+        public static IServiceCollection AddCommandLine(this IServiceCollection serviceCollection)
         {
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppPrinterFactory, CommandLineAppPrinterFactory>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppContextFactory, CommandLineAppContextFactory>());

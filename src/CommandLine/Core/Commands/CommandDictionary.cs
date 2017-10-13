@@ -116,8 +116,6 @@ namespace JeremyTCD.DotNet.CommandLine
             return _commands.GetEnumerator();
         }
 
-        virtual
-
         /// <inheritdoc/>
         IEnumerator IEnumerable.GetEnumerator()
         {
