@@ -61,7 +61,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             yield return new object[] { typeof(List<>) };
             yield return new object[] { typeof(Array) };
-            yield return new object[] { typeof(StubCommand) };
+            yield return new object[] { typeof(DummyCommand) };
         }
 
         [Fact]
@@ -81,7 +81,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfPropertyTypeCannotBeConvertedToFromString()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.NotConvertible));
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotConvertible));
             StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
 
             // Act
@@ -95,20 +95,20 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsTrueIfMappingIsSuccessful()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.Convertible));
-            StubCommand stubModel = new StubCommand();
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Convertible));
+            DummyCommand dummyCommand = new DummyCommand();
             StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
             string dummyString = "1";
 
             // Act
-            bool result = defaultMapper.TryMap(propertyInfo, dummyString, stubModel);
+            bool result = defaultMapper.TryMap(propertyInfo, dummyString, dummyCommand);
 
             // Assert
-            Assert.Equal(1, stubModel.Convertible);
+            Assert.Equal(1, dummyCommand.Convertible);
             Assert.True(result);
         }
 
-        private class StubCommand : ICommand
+        private class DummyCommand : ICommand
         {
             public List<int> NotConvertible { get; set; }
 

@@ -12,7 +12,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfPropertyTypeIsNotBool()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.NotBool));
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotBool));
             FlagMapper flagMapper = CreateFlagMapper();
 
             // Act
@@ -39,19 +39,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsTrueIfMappingIsSuccessful()
         {
             // Arrange
-            PropertyInfo propertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.Bool));
-            StubCommand stubCommand = new StubCommand();
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Bool));
+            DummyCommand dummyCommand = new DummyCommand();
             FlagMapper flagMapper = CreateFlagMapper();
 
             // Act
-            bool result = flagMapper.TryMap(propertyInfo, null, stubCommand);
+            bool result = flagMapper.TryMap(propertyInfo, null, dummyCommand);
 
             // Assert
-            Assert.True(stubCommand.Bool);
+            Assert.True(dummyCommand.Bool);
             Assert.True(result);
         }
 
-        private class StubCommand : ICommand
+        private class DummyCommand : ICommand
         {
             public bool Bool { get; set; }
 

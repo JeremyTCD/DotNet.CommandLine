@@ -37,34 +37,39 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             int columnGap = 2;
             string columnSeparator = new string(' ', columnGap);
             string rowPrefix = "    ";
-
-            DummyCommand dummyDefaultCommand = new DummyCommand(isDefault: true);
             string dummyCommandName = "dummyCommandName";
             string dummyCommandDescription = "dummyCommandDescription";
-            DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyCommandDescription);
-            CommandDictionary dummyCommandDictionary = new CommandDictionary(new Dictionary<string, ICommand>()
-            {
-                { dummyCommandName, dummyCommand },
-                { string.Empty, dummyDefaultCommand }
-            });
-
             string dummyExecutableName = "dummyExecutableName";
-            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
-
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
+
+            Mock<ICommand> mockDefaultCommand = _mockRepository.Create<ICommand>();
+            mockDefaultCommand.Setup(m => m.IsDefault).Returns(true);
+
+            Mock<ICommand> mockNamedCommand = _mockRepository.Create<ICommand>();
+            mockNamedCommand.Setup(m => m.Name).Returns(dummyCommandName);
+            mockNamedCommand.Setup(m => m.Description).Returns(dummyCommandDescription);
+
+            ICommand[] dummyCommands = new[] { mockDefaultCommand.Object, mockNamedCommand.Object };
+
+            Mock<ICommandDictionary> mockCommandDictionary = _mockRepository.Create<ICommandDictionary>();
+            mockCommandDictionary.Setup(c => c.Values).Returns(dummyCommands);
+            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(mockDefaultCommand.Object);
+
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
+
             Option dummyOption = new Option(null, null, dummyOptionLongName, dummyOptionDescription);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
-            mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyDefaultCommand)).Returns(new List<Option> { dummyOption });
+            mockOptionsFactory.Setup(o => o.CreateFromCommand(mockDefaultCommand.Object)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendAppHelp(rowPrefix, columnGap);
-            string result = printer.ToString();
 
             // Assert
+            string result = printer.ToString();
             string expected = $"Usage: '{dummyExecutableName} [command] [command options]'{Environment.NewLine}" +
                               $"Usage: '{dummyExecutableName} [options]'{Environment.NewLine}" +
                               $"{Environment.NewLine}" +
@@ -162,15 +167,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             string dummyDescription = "dummyDescription";
-            DummyCommand dummyCommand = new DummyCommand(description: dummyDescription);
 
             CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
 
             // Act
             printer.AppendDescription(dummyDescription);
-            string result = printer.ToString();
 
             // Assert
+            string result = printer.ToString();
             Assert.Equal(string.Format(Strings.Printer_Description, dummyDescription), result);
         }
 
@@ -181,32 +185,33 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             int columnGap = 2;
             string columnSeparator = new string(' ', columnGap);
             string rowPrefix = "    ";
-
             string dummyCommandName = "dummyCommandName";
             string dummyDescription = "dummyDescription";
-            DummyCommand dummyCommand = new DummyCommand(dummyCommandName, dummyDescription);
-            CommandDictionary dummyCommandDictionary = new CommandDictionary(new Dictionary<string, ICommand>()
-            {
-                { dummyCommandName, dummyCommand },
-            });
-
             string dummyExecutableName = "dummyExecutableName";
-            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
-
             string dummyOptionLongName = "dummyOptionLongName";
             string dummyOptionDescription = "dummyOptionDescription";
+
+            Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
+            mockCommand.Setup(c => c.Description).Returns(dummyDescription);
+
+            ICommand outValue = mockCommand.Object;
+            Mock<ICommandDictionary> mockCommandDictionary = _mockRepository.Create<ICommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out outValue)).Returns(true);
+
+            CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
+
             Option dummyOption = new Option(null, null, dummyOptionLongName, dummyOptionDescription);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
-            mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand)).Returns(new List<Option> { dummyOption });
+            mockOptionsFactory.Setup(o => o.CreateFromCommand(mockCommand.Object)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(dummyCommandDictionary, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
             printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
-            string result = printer.ToString();
 
             // Assert
+            string result = printer.ToString();
             string expected = $"Description: {dummyDescription}{Environment.NewLine}" +
                               $"{Environment.NewLine}" +
                               $"Usage: '{dummyExecutableName} {dummyCommandName} [options]'{Environment.NewLine}" +
@@ -360,27 +365,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             [Option(LongName = "DummyOptionLongName", Description = "DummyOptionDescription")]
             public string DummyOption { get; }
-
-            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
-            {
-                throw new NotImplementedException();
-            }
-        }
-
-        private class DummyCommand : ICommand
-        {
-            public DummyCommand(string name = null, string description = null, bool isDefault = false)
-            {
-                Name = name;
-                Description = description;
-                IsDefault = isDefault;
-            }
-
-            public string Name { get; }
-
-            public string Description { get; }
-
-            public bool IsDefault { get; }
 
             public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {

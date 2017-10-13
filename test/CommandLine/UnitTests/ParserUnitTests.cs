@@ -34,10 +34,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             string dummyCommandName = "dummyCommandName";
-            ICommand dummyCommand = new DummyCommand();
 
+            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
+
+            ICommand outValue = dummyCommand.Object;
             Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
-            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out outValue));
 
             Parser parser = CreateParser();
 
@@ -46,17 +48,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Assert
             _mockRepository.VerifyAll();
-            Assert.Equal(dummyCommand, result);
+            Assert.Equal(dummyCommand.Object, result);
         }
 
         [Fact]
         public void GetCommand_ReturnsDefaultCommandIfCommandNameIsNull()
         {
-            // Arrange
-            DummyCommand dummyCommand = new DummyCommand();
+            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
             Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
-            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand);
+            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand.Object);
 
             Parser parser = CreateParser();
 
@@ -65,7 +66,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Assert
             _mockRepository.VerifyAll();
-            Assert.Equal(dummyCommand, result);
+            Assert.Equal(dummyCommand.Object, result);
         }
 
         [Fact]
@@ -75,26 +76,28 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string[] dummyArgs = new string[0];
             string dummyCommandName = "dummyCommandName";
             Arguments dummyArguments = new Arguments(dummyCommandName, null);
-            DummyCommand dummyCommand = new DummyCommand();
-            CommandDictionary dummyCommandDictionary = new CommandDictionary();
+
+            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
+
+            Mock<ICommandDictionary> dummyCommandDictionary = _mockRepository.Create<ICommandDictionary>();
 
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
             mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
 
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
-            mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand));
+            mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand.Object));
 
             Mock<Parser> mockParser = _mockRepository.
                 Create<Parser>(mockArgumentsFactory.Object, mockCommandMapper.Object);
-            mockParser.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary)).Returns(dummyCommand);
+            mockParser.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary.Object)).Returns(dummyCommand.Object);
             mockParser.CallBase = true;
 
             // Act
-            ParseResult result = mockParser.Object.Parse(dummyArgs, dummyCommandDictionary);
+            IParseResult result = mockParser.Object.Parse(dummyArgs, dummyCommandDictionary.Object);
 
             // Assert
             _mockRepository.VerifyAll();
-            Assert.Equal(dummyCommand, result.Command);
+            Assert.Equal(dummyCommand.Object, result.Command);
         }
 
         [Fact]
@@ -110,7 +113,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Parser parser = CreateParser(mockArgumentsFactory.Object);
 
             // Act
-            ParseResult result = parser.Parse(dummyArgs, null);
+            IParseResult result = parser.Parse(dummyArgs, null);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -130,31 +133,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Parser parser = CreateParser(mockArgumentsFactory.Object);
 
             // Act
-            ParseResult result = parser.Parse(dummyArgs, null);
+            IParseResult result = parser.Parse(dummyArgs, null);
 
             // Assert
             _mockRepository.VerifyAll();
             Assert.NotNull(result.ParseException);
             Assert.Equal(dummyException, result.ParseException.InnerException);
-        }
-
-        private class DummyCommand : ICommand
-        {
-            public DummyCommand(bool isDefault = false)
-            {
-                IsDefault = isDefault;
-            }
-
-            public string Name => throw new NotImplementedException();
-
-            public string Description => throw new NotImplementedException();
-
-            public bool IsDefault { get; }
-
-            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
-            {
-                throw new NotImplementedException();
-            }
         }
 
         private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)

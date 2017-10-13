@@ -17,15 +17,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromCommand_CreatesOptionsFromCommandOrReturnsCachedOptionsIfTheyExist()
         {
             // Arrange
-            StubCommand stubCommand = new StubCommand();
-            int numProperties = stubCommand.GetType().GetProperties().Length;
+            DummyCommand dummyCommand = new DummyCommand();
+            int numProperties = dummyCommand.GetType().GetProperties().Length;
 
             Mock<OptionsFactory> optionsFactory = _mockRepository.Create<OptionsFactory>();
             optionsFactory.CallBase = true;
 
             // Act
-            List<Option> result1 = optionsFactory.Object.CreateFromCommand(stubCommand);
-            List<Option> result2 = optionsFactory.Object.CreateFromCommand(stubCommand);
+            List<Option> result1 = optionsFactory.Object.CreateFromCommand(dummyCommand);
+            List<Option> result2 = optionsFactory.Object.CreateFromCommand(dummyCommand);
 
             // Assert
             Assert.Equal(result1, result2);
@@ -36,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryCreateFromPropertyInfo_ReturnsNullIfPropertyInfoDoesNotContainOptionAttribute()
         {
             // Arrange
-            PropertyInfo dummyPropertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.DummyNoAttributeProperty));
+            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyNoAttributeProperty));
 
             OptionsFactory optionFactory = CreateOptionsFactory();
 
@@ -51,7 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryCreateFromPropertyInfo_CreatesOptionIfSuccessful()
         {
             // Arrange
-            PropertyInfo dummyPropertyInfo = typeof(StubCommand).GetProperty(nameof(StubCommand.DummyOptionProperty));
+            PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyOptionProperty));
 
             OptionsFactory optionFactory = CreateOptionsFactory();
 
@@ -95,7 +95,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             }
         }
 
-        private class StubCommand : ICommand
+        private class DummyCommand : ICommand
         {
             [Option(
                 typeof(DummyStrings),
@@ -106,15 +106,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             public string DummyNoAttributeProperty { get; }
 
-            public string Name => throw new System.NotImplementedException();
+            public string Name => throw new NotImplementedException();
 
-            public string Description => throw new System.NotImplementedException();
+            public string Description => throw new NotImplementedException();
 
-            public bool IsDefault => throw new System.NotImplementedException();
+            public bool IsDefault => throw new NotImplementedException();
 
             public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
             {
-                throw new System.NotImplementedException();
+                throw new NotImplementedException();
             }
         }
 

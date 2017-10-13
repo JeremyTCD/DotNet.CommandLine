@@ -38,7 +38,7 @@ namespace JeremyTCD.DotNet.CommandLine
             _appContextFactory = commandLineAppContextFactory;
             _commandDictionaryFactory = commandDictionaryFactory;
             _commands = commands;
-            _appOptions = optionsAccessor?.Value;
+            _appOptions = optionsAccessor.Value;
         }
 
         /// <inheritdoc/>
@@ -46,7 +46,7 @@ namespace JeremyTCD.DotNet.CommandLine
         {
             ICommandDictionary commandDictionary = _commandDictionaryFactory.CreateFromCommands(_commands);
             ICommandLineAppContext appContext = _appContextFactory.Create(commandDictionary, _appOptions);
-            ParseResult result = _parser.Parse(args, commandDictionary);
+            IParseResult result = _parser.Parse(args, commandDictionary);
 
             if (result.Command == null)
             {

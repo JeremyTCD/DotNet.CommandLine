@@ -10,7 +10,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class CommandDictionaryFactoryUnitTests
     {
-        private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
+        private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         // TODO codeanalysis verify test method name corresponds to test under class member
         // TODO codeanalysis if test under class throws exceptions, verify each exception tested with expected test method name
@@ -74,15 +74,23 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             string dummyCommandName = "dummyCommandName";
-            DummyCommand dummyCommand1 = new DummyCommand(dummyCommandName, false);
-            DummyCommand dummyCommand2 = new DummyCommand(dummyCommandName, false);
-            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
+
+            Mock<ICommand> mockCommand1 = _mockRepository.Create<ICommand>();
+            mockCommand1.Setup(d => d.IsDefault).Returns(false);
+            mockCommand1.Setup(d => d.Name).Returns(dummyCommandName);
+
+            Mock<ICommand> mockCommand2 = _mockRepository.Create<ICommand>();
+            mockCommand2.Setup(d => d.IsDefault).Returns(false);
+            mockCommand2.Setup(d => d.Name).Returns(dummyCommandName);
+
+            ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object};
 
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName), exception.Message);
+            _mockRepository.VerifyAll();
         }
 
         [Fact]
@@ -91,15 +99,23 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
             string dummyCommand2Name = "dummyCommand2Name";
-            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, false);
-            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
-            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
+
+            Mock<ICommand> mockCommand1 = _mockRepository.Create<ICommand>();
+            mockCommand1.Setup(d => d.IsDefault).Returns(false);
+            mockCommand1.Setup(d => d.Name).Returns(dummyCommand1Name);
+
+            Mock<ICommand> mockCommand2 = _mockRepository.Create<ICommand>();
+            mockCommand2.Setup(d => d.IsDefault).Returns(false);
+            mockCommand2.Setup(d => d.Name).Returns(dummyCommand2Name);
+
+            ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_DefaultCommandRequired, exception.Message);
+            _mockRepository.VerifyAll();
         }
 
         [Fact]
@@ -108,9 +124,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
             string dummyCommand2Name = "dummyCommand2Name";
-            DummyCommand dummyCommand1 = new DummyCommand(dummyCommand1Name, true);
-            DummyCommand dummyCommand2 = new DummyCommand(dummyCommand2Name, false);
-            DummyCommand[] dummyCommands = new[] { dummyCommand1, dummyCommand2 };
+
+            Mock<ICommand> mockCommand1 = _mockRepository.Create<ICommand>();
+            mockCommand1.Setup(d => d.IsDefault).Returns(true);
+            mockCommand1.Setup(d => d.Name).Returns(dummyCommand1Name);
+
+            Mock<ICommand> mockCommand2 = _mockRepository.Create<ICommand>();
+            mockCommand2.Setup(d => d.IsDefault).Returns(false);
+            mockCommand2.Setup(d => d.Name).Returns(dummyCommand2Name);
+
+            ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
@@ -119,33 +142,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Assert
             Assert.Equal(2, result.Count);
-            Assert.Equal(dummyCommand1, result[dummyCommand1Name]);
-            Assert.Equal(dummyCommand2, result[dummyCommand2Name]);
+            Assert.Equal(mockCommand1.Object, result[dummyCommand1Name]);
+            Assert.Equal(mockCommand2.Object, result[dummyCommand2Name]);
+            _mockRepository.VerifyAll();
         }
 
         private CommandDictionaryFactory CreateCommandDictionaryFactory()
         {
             return new CommandDictionaryFactory();
-        }
-
-        private class DummyCommand : ICommand
-        {
-            public DummyCommand(string name, bool isDefault)
-            {
-                Name = name;
-                IsDefault = isDefault;
-            }
-
-            public string Name { get; }
-
-            public string Description => throw new NotImplementedException();
-
-            public bool IsDefault { get; }
-
-            public int Run(IParseResult parseResult, ICommandLineAppContext appContext)
-            {
-                throw new NotImplementedException();
-            }
         }
     }
 }
