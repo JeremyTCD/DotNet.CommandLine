@@ -31,7 +31,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new ICommand[] { mockCommand1.Object, mockCommand2.Object };
 
-            // TODO codeanalysis create method for class under test
             CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
 
             // Act and Assert
