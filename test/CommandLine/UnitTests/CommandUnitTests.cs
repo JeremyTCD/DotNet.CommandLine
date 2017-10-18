@@ -1,8 +1,6 @@
 ﻿// Copyright (c) JeremyTCD. All rights reserved.
 // Licensed under the MIT license. See LICENSE file in the project root for full license information.
 
-using System;
-using System.Collections.Generic;
 using Moq;
 using Xunit;
 
@@ -34,7 +32,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            // TODO codeanalysis mock of class under test does not need mock prefix
+            // TODO codeanalysis if mocking non abstract class under test, must use create method since there may be arguments
+            // TODO codeanalysis if mocking abstract class class under test, this is allowed
             Mock<Command> command = _mockRepository.Create<Command>();
             command.Setup(c => c.Name).Returns(dummyCommandName);
             command.Setup(c => c.IsDefault).Returns(dummyIsDefault);
