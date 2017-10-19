@@ -13,10 +13,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotBool));
-            FlagMapper flagMapper = CreateFlagMapper();
+            FlagMapper testSubject = CreateFlagMapper();
 
             // Act
-            bool result = flagMapper.TryMap(propertyInfo, null, null);
+            bool result = testSubject.TryMap(propertyInfo, null, null);
 
             // Assert
             Assert.False(result);
@@ -26,10 +26,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNotNull()
         {
             // Arrange
-            FlagMapper flagMapper = CreateFlagMapper();
+            FlagMapper testSubject = CreateFlagMapper();
 
             // Act
-            bool result = flagMapper.TryMap(null, "dummy", null);
+            bool result = testSubject.TryMap(null, "dummy", null);
 
             // Assert
             Assert.False(result);
@@ -41,10 +41,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Bool));
             DummyCommand dummyCommand = new DummyCommand();
-            FlagMapper flagMapper = CreateFlagMapper();
+            FlagMapper testSubject = CreateFlagMapper();
 
             // Act
-            bool result = flagMapper.TryMap(propertyInfo, null, dummyCommand);
+            bool result = testSubject.TryMap(propertyInfo, null, dummyCommand);
 
             // Assert
             Assert.True(dummyCommand.Bool);

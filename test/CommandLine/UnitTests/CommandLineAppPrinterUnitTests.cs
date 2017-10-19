@@ -20,11 +20,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyVersion = "dummyVersion";
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { FullName = dummyFullName, Version = dummyVersion };
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
-            printer.AppendHeader();
-            string result = printer.ToString();
+            testSubject.AppendHeader();
+            string result = testSubject.ToString();
 
             // Assert
             Assert.Equal(string.Format(Strings.Printer_Header, dummyFullName, dummyVersion), result);
@@ -63,13 +63,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(mockDefaultCommand.Object)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
-            printer.AppendAppHelp(rowPrefix, columnGap);
+            testSubject.AppendAppHelp(rowPrefix, columnGap);
 
             // Assert
-            string result = printer.ToString();
+            string result = testSubject.ToString();
             string expected = $"Usage: '{dummyExecutableName} [command] [command options]'{Environment.NewLine}" +
                               $"Usage: '{dummyExecutableName} [options]'{Environment.NewLine}" +
                               $"{Environment.NewLine}" +
@@ -91,11 +91,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
-            printer.AppendGetHelpTip(dummyTargetPosValue, dummyCommandPosValue);
-            string result = printer.ToString();
+            testSubject.AppendGetHelpTip(dummyTargetPosValue, dummyCommandPosValue);
+            string result = testSubject.ToString();
 
             // Assert
             Assert.Equal(expected, result);
@@ -130,11 +130,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             CommandLineAppOptions dummyAppOptions = new CommandLineAppOptions() { ExecutableName = dummyExecutableName };
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(commandLineAppOptions: dummyAppOptions);
 
             // Act
-            printer.AppendUsage(dummyOptionsPosValue, dummyCommandPosValue);
-            string result = printer.ToString();
+            testSubject.AppendUsage(dummyOptionsPosValue, dummyCommandPosValue);
+            string result = testSubject.ToString();
 
             // Assert
             Assert.Equal(expected, result);
@@ -168,13 +168,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string dummyDescription = "dummyDescription";
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter();
 
             // Act
-            printer.AppendDescription(dummyDescription);
+            testSubject.AppendDescription(dummyDescription);
 
             // Assert
-            string result = printer.ToString();
+            string result = testSubject.ToString();
             Assert.Equal(string.Format(Strings.Printer_Description, dummyDescription), result);
         }
 
@@ -205,13 +205,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(mockCommand.Object)).Returns(new List<Option> { dummyOption });
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(mockCommandDictionary.Object, dummyAppOptions, mockOptionsFactory.Object);
 
             // Act
-            printer.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
+            testSubject.AppendCommandHelp(dummyCommandName, rowPrefix, columnGap);
 
             // Assert
-            string result = printer.ToString();
+            string result = testSubject.ToString();
             string expected = $"Description: {dummyDescription}{Environment.NewLine}" +
                               $"{Environment.NewLine}" +
                               $"Usage: '{dummyExecutableName} {dummyCommandName} [options]'{Environment.NewLine}" +
@@ -227,11 +227,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)
         {
             // Arrange
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter();
 
             // Act
-            printer.AppendParseException(parseException);
-            string result = printer.ToString();
+            testSubject.AppendParseException(parseException);
+            string result = testSubject.ToString();
 
             // Assert
             Assert.Equal(expected, result);
@@ -251,10 +251,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             Option dummyOption = new Option(null, dummyShortName, dummyLongName, null);
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter();
 
             // Act
-            string result = printer.GetOptionNames(dummyOption);
+            string result = testSubject.GetOptionNames(dummyOption);
 
             // Assert
             Assert.Equal(expected, result);
@@ -277,10 +277,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void GetNormalizedPosValue_GetsNormalizedPosValue(string dummyPosValue, string expected)
         {
             // Arrange
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter();
 
             // Act
-            string result = printer.GetNormalizedPosValue(dummyPosValue);
+            string result = testSubject.GetNormalizedPosValue(dummyPosValue);
 
             // Assert
             Assert.Equal(expected, result);
@@ -309,11 +309,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 new string[] { "12", "1", "1" }
             };
 
-            CommandLineAppPrinter printer = CreateCommandLineAppPrinter();
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter();
 
             // Act
-            printer.AppendRows(rows, dummyColumnGap, dummyRowPrefix);
-            string result = printer.ToString();
+            testSubject.AppendRows(rows, dummyColumnGap, dummyRowPrefix);
+            string result = testSubject.ToString();
 
             // Assert
             Assert.Equal(expected, result);

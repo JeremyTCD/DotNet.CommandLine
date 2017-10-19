@@ -31,10 +31,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
-            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
+            CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
             // TODO codeanalysis verifyall required if setup called
             _mockRepository.VerifyAll();
             Assert.Equal(
@@ -53,10 +53,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new[] { mockCommand.Object };
 
-            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
+            CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
             _mockRepository.VerifyAll();
         }
@@ -85,10 +85,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object};
 
-            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
+            CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
             Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName), exception.Message);
             _mockRepository.VerifyAll();
         }
@@ -110,10 +110,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
-            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
+            CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => commandDictionaryFactory.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
             Assert.Equal(Strings.Exception_DefaultCommandRequired, exception.Message);
             _mockRepository.VerifyAll();
         }
@@ -135,10 +135,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             ICommand[] dummyCommands = new[] { mockCommand1.Object, mockCommand2.Object };
 
-            CommandDictionaryFactory commandDictionaryFactory = CreateCommandDictionaryFactory();
+            CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act
-            ICommandDictionary result = commandDictionaryFactory.CreateFromCommands(dummyCommands);
+            ICommandDictionary result = testSubject.CreateFromCommands(dummyCommands);
 
             // Assert
             Assert.Equal(2, result.Count);

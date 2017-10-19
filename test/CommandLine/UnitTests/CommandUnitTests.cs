@@ -34,13 +34,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // TODO codeanalysis if mocking non abstract class under test, must use create method since there may be arguments
             // TODO codeanalysis if mocking abstract class class under test, this is allowed
-            Mock<Command> command = _mockRepository.Create<Command>();
-            command.Setup(c => c.Name).Returns(dummyCommandName);
-            command.Setup(c => c.IsDefault).Returns(dummyIsDefault);
-            command.CallBase = true;
+            Mock<Command> testSubject = _mockRepository.Create<Command>();
+            testSubject.Setup(c => c.Name).Returns(dummyCommandName);
+            testSubject.Setup(c => c.IsDefault).Returns(dummyIsDefault);
+            testSubject.CallBase = true;
 
             // Act
-            int result = command.Object.Run(mockParseResult.Object, mockCommandLineAppContext.Object);
+            int result = testSubject.Object.Run(mockParseResult.Object, mockCommandLineAppContext.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -68,12 +68,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            Mock<Command> command = _mockRepository.Create<Command>();
-            command.Setup(c => c.IsDefault).Returns(dummyIsDefault);
-            command.CallBase = true;
+            Mock<Command> testSubject = _mockRepository.Create<Command>();
+            testSubject.Setup(c => c.IsDefault).Returns(dummyIsDefault);
+            testSubject.CallBase = true;
 
             // Act
-            int result = command.Object.Run(mockParseResult.Object, mockCommandLineAppContext.Object);
+            int result = testSubject.Object.Run(mockParseResult.Object, mockCommandLineAppContext.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -94,13 +94,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            Mock<Command> command = _mockRepository.Create<Command>();
-            command.Setup(c => c.IsDefault).Returns(true);
-            command.Setup(c => c.Help).Returns(true);
-            command.CallBase = true;
+            Mock<Command> testSubject = _mockRepository.Create<Command>();
+            testSubject.Setup(c => c.IsDefault).Returns(true);
+            testSubject.Setup(c => c.Help).Returns(true);
+            testSubject.CallBase = true;
 
             // Act
-            int result = command.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
+            int result = testSubject.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -123,13 +123,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            Mock<Command> command = _mockRepository.Create<Command>();
-            command.Setup(c => c.Name).Returns(dummyName);
-            command.Setup(c => c.Help).Returns(true);
-            command.CallBase = true;
+            Mock<Command> testSubject = _mockRepository.Create<Command>();
+            testSubject.Setup(c => c.Name).Returns(dummyName);
+            testSubject.Setup(c => c.Help).Returns(true);
+            testSubject.CallBase = true;
 
             // Act
-            int result = command.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
+            int result = testSubject.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -152,12 +152,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            Mock<Command> command = _mockRepository.Create<Command>();
-            command.Setup(c => c.RunCommand(dummyParseResult.Object, mockCommandLineAppContext.Object)).Returns(exitCode);
-            command.CallBase = true;
+            Mock<Command> testSubject = _mockRepository.Create<Command>();
+            testSubject.Setup(c => c.RunCommand(dummyParseResult.Object, mockCommandLineAppContext.Object)).Returns(exitCode);
+            testSubject.CallBase = true;
 
             // Act
-            int result = command.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
+            int result = testSubject.Object.Run(dummyParseResult.Object, mockCommandLineAppContext.Object);
 
             // Assert
             _mockRepository.VerifyAll();

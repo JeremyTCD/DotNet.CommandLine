@@ -20,16 +20,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand = new DummyCommand();
             int numProperties = dummyCommand.GetType().GetProperties().Length;
 
-            Mock<OptionsFactory> optionsFactory = _mockRepository.Create<OptionsFactory>();
-            optionsFactory.CallBase = true;
+            Mock<OptionsFactory> testSubject = _mockRepository.Create<OptionsFactory>();
+            testSubject.CallBase = true;
 
             // Act
-            List<Option> result1 = optionsFactory.Object.CreateFromCommand(dummyCommand);
-            List<Option> result2 = optionsFactory.Object.CreateFromCommand(dummyCommand);
+            List<Option> result1 = testSubject.Object.CreateFromCommand(dummyCommand);
+            List<Option> result2 = testSubject.Object.CreateFromCommand(dummyCommand);
 
             // Assert
             Assert.Equal(result1, result2);
-            optionsFactory.Verify(o => o.TryCreateFromPropertyInfo(It.IsAny<PropertyInfo>()), Times.Exactly(numProperties));
+            testSubject.Verify(o => o.TryCreateFromPropertyInfo(It.IsAny<PropertyInfo>()), Times.Exactly(numProperties));
         }
 
         [Fact]
@@ -38,10 +38,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyNoAttributeProperty));
 
-            OptionsFactory optionFactory = CreateOptionsFactory();
+            OptionsFactory testSubject = CreateOptionsFactory();
 
             // Act
-            Option result = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
+            Option result = testSubject.TryCreateFromPropertyInfo(dummyPropertyInfo);
 
             // Assert
             Assert.Null(result);
@@ -53,10 +53,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyOptionProperty));
 
-            OptionsFactory optionFactory = CreateOptionsFactory();
+            OptionsFactory testSubject = CreateOptionsFactory();
 
             // Act
-            Option result = optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo);
+            Option result = testSubject.TryCreateFromPropertyInfo(dummyPropertyInfo);
 
             // Assert
             Assert.Equal(DummyStrings.OptionShortName_Dummy, result.ShortName);
@@ -71,10 +71,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommandWithNamelessProperty).GetProperty(nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty));
 
-            OptionsFactory optionFactory = CreateOptionsFactory();
+            OptionsFactory testSubject = CreateOptionsFactory();
 
             // Act and Assert
-            Exception exception = Assert.Throws<InvalidOperationException>(() => optionFactory.TryCreateFromPropertyInfo(dummyPropertyInfo));
+            Exception exception = Assert.Throws<InvalidOperationException>(() => testSubject.TryCreateFromPropertyInfo(dummyPropertyInfo));
             Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty)), exception.Message);
         }
 

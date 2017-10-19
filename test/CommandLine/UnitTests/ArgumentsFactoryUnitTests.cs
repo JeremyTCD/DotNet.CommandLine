@@ -18,10 +18,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyCommandName = "dummyCommandName";
             string[] dummyArgs = new[] { dummyCommandName, $"-{dummyOptionName}={dummyOptionValue}" };
 
-            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
+            ArgumentsFactory testSubject = CreateArgumentsFactory();
 
             // Act
-            Arguments result = argumentsFactory.CreateFromArray(dummyArgs);
+            Arguments result = testSubject.CreateFromArray(dummyArgs);
 
             // Assert
             Assert.Equal(dummyCommandName, result.CommandName);
@@ -37,10 +37,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string[] dummyArgs = new string[] { arg };
 
-            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
+            ArgumentsFactory testSubject = CreateArgumentsFactory();
 
             // Act and Assert
-            ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(dummyArgs));
+            ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(dummyArgs));
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", dummyArgs)), exception.Message);
         }
 
@@ -55,10 +55,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
-            ArgumentsFactory argumentsFactory = CreateArgumentsFactory();
+            ArgumentsFactory testSubject = CreateArgumentsFactory();
 
             // Act and Assert
-            ParseException exception = Assert.Throws<ParseException>(() => argumentsFactory.CreateFromArray(args));
+            ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(args));
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", args)), exception.Message);
         }
 

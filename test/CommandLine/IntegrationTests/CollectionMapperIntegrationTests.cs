@@ -17,10 +17,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNull()
         {
             // Arrange
-            CollectionMapper collectionMapper = CreateCollectionMapper();
+            CollectionMapper testSubject = CreateCollectionMapper();
 
             // Act
-            bool result = collectionMapper.TryMap(null, null, null);
+            bool result = testSubject.TryMap(null, null, null);
 
             // Assert
             Assert.False(result);
@@ -32,10 +32,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotCollection));
 
-            CollectionMapper collectionMapper = CreateCollectionMapper();
+            CollectionMapper testSubject = CreateCollectionMapper();
 
             // Act
-            bool result = collectionMapper.TryMap(dummyPropertyInfo, "dummy", null);
+            bool result = testSubject.TryMap(dummyPropertyInfo, "dummy", null);
 
             // Assert
             Assert.False(result);
@@ -49,13 +49,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.StringCollection));
             DummyCommand dummyCommand = new DummyCommand();
 
-            Mock<ILoggingService<ActivatorService>> mockLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
-            IActivatorService activatorService = new ActivatorService(mockLoggingService.Object);
+            Mock<ILoggingService<ActivatorService>> dummyLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
+            IActivatorService activatorService = new ActivatorService(dummyLoggingService.Object);
 
-            CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
+            CollectionMapper testSubject = CreateCollectionMapper(activatorService);
 
             // Act
-            bool result = collectionMapper.TryMap(dummyPropertyInfo, dummyString, dummyCommand);
+            bool result = testSubject.TryMap(dummyPropertyInfo, dummyString, dummyCommand);
 
             // Assert
             Assert.Equal(new List<string> { "1", "2", "3" }, dummyCommand.StringCollection);
@@ -70,13 +70,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand = new DummyCommand();
             string dummyString = "1,2,3";
 
-            Mock<ILoggingService<ActivatorService>> mockLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
-            IActivatorService activatorService = new ActivatorService(mockLoggingService.Object);
+            Mock<ILoggingService<ActivatorService>> dummyLoggingService = _mockRepository.Create<ILoggingService<ActivatorService>>();
+            IActivatorService activatorService = new ActivatorService(dummyLoggingService.Object);
 
-            CollectionMapper collectionMapper = CreateCollectionMapper(activatorService);
+            CollectionMapper testSubject = CreateCollectionMapper(activatorService);
 
             // Act
-            bool result = collectionMapper.TryMap(dummyPropertyInfo, dummyString, dummyCommand);
+            bool result = testSubject.TryMap(dummyPropertyInfo, dummyString, dummyCommand);
 
             // Assert
             Assert.Equal(new List<int> { 1, 2, 3 }, dummyCommand.IntCollection);

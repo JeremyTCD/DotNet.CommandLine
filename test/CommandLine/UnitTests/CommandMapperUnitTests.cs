@@ -26,10 +26,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand.Object)).Returns(dummyOptions);
 
-            CommandMapper commandMapper = CreateCommandMapper(optionsFactory: mockOptionsFactory.Object);
+            CommandMapper testSubject = CreateCommandMapper(optionsFactory: mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(dummyArguments, dummyCommand.Object));
             Assert.Equal(string.Format(Strings.ParseException_OptionDoesNotExist, dummyOptionKey), parseException.Message);
             _mockRepository.VerifyAll();
         }
@@ -57,10 +57,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo.Object, dummyOptionValue, dummyCommand.Object)).Throws(dummyException);
 
-            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(dummyArguments, dummyCommand.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
             Assert.Equal(dummyException, parseException.InnerException);
@@ -88,10 +88,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo.Object, dummyOptionValue, dummyCommand.Object)).Returns(false);
 
-            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => commandMapper.Map(dummyArguments, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(dummyArguments, dummyCommand.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
         }
@@ -118,10 +118,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<IMapper> mockMapper = _mockRepository.Create<IMapper>();
             mockMapper.Setup(m => m.TryMap(dummyPropertyInfo.Object, dummyOptionValue, dummyCommand.Object)).Returns(true);
 
-            CommandMapper commandMapper = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
+            CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act
-            commandMapper.Map(dummyArguments, dummyCommand.Object);
+            testSubject.Map(dummyArguments, dummyCommand.Object);
 
             // Assert
             _mockRepository.VerifyAll();

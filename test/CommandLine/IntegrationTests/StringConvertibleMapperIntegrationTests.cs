@@ -15,10 +15,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper stringConvertibleMapper = CreateStringConvertibleMapper();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
 
             // Act
-            bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
+            bool result = testSubject.CanBeConvertedToFromString(type);
 
             // Assert
             Assert.True(result);
@@ -48,10 +48,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString(Type type)
         {
             // Arrange
-            StringConvertibleMapper stringConvertibleMapper = CreateStringConvertibleMapper();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
 
             // Act
-            bool result = stringConvertibleMapper.CanBeConvertedToFromString(type);
+            bool result = testSubject.CanBeConvertedToFromString(type);
 
             // Assert
             Assert.False(result);
@@ -68,10 +68,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void TryMap_ReturnsFalseIfValueIsNull()
         {
             // Arrange
-            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
 
             // Act
-            bool result = defaultMapper.TryMap(null, null, null);
+            bool result = testSubject.TryMap(null, null, null);
 
             // Assert
             Assert.False(result);
@@ -82,10 +82,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         {
             // Arrange
             PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotConvertible));
-            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
 
             // Act
-            bool result = defaultMapper.TryMap(propertyInfo, "dummy", null);
+            bool result = testSubject.TryMap(propertyInfo, "dummy", null);
 
             // Assert
             Assert.False(result);
@@ -97,11 +97,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Convertible));
             DummyCommand dummyCommand = new DummyCommand();
-            StringConvertibleMapper defaultMapper = CreateStringConvertibleMapper();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
             string dummyString = "1";
 
             // Act
-            bool result = defaultMapper.TryMap(propertyInfo, dummyString, dummyCommand);
+            bool result = testSubject.TryMap(propertyInfo, dummyString, dummyCommand);
 
             // Assert
             Assert.Equal(1, dummyCommand.Convertible);

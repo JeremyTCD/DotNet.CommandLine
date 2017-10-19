@@ -44,7 +44,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(dummyCommandDictionary.Object, dummyAppOptions)).Returns(dummyCommandLineAppContext.Object);
 
-            CommandLineApp commandLineApp = CreateCommandLineApp(
+            CommandLineApp testSubject = CreateCommandLineApp(
                 mockParser.Object,
                 mockAppContextFactory.Object,
                 mockCommandDictionaryFactory.Object,
@@ -52,7 +52,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 mockOptionsAccessor.Object);
 
             // Act
-            int result = commandLineApp.Run(dummyArgs);
+            int result = testSubject.Run(dummyArgs);
 
             // Assert
             _mockRepository.VerifyAll();
@@ -90,7 +90,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContextFactory> mockAppContextFactory = _mockRepository.Create<ICommandLineAppContextFactory>();
             mockAppContextFactory.Setup(a => a.Create(mockCommandDictionary.Object, dummyAppOptions)).Returns(dummyAppContext.Object);
 
-            CommandLineApp commandLineApp = CreateCommandLineApp(
+            CommandLineApp testSubject = CreateCommandLineApp(
                 mockParser.Object,
                 mockAppContextFactory.Object,
                 mockCommandDictionaryFactory.Object,
@@ -98,7 +98,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
                 mockOptionsAccessor.Object);
 
             // Act
-            int result = commandLineApp.Run(dummyArgs);
+            int result = testSubject.Run(dummyArgs);
 
             // Assert
             _mockRepository.VerifyAll();
