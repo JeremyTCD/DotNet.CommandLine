@@ -87,8 +87,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
             mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand.Object));
 
-            Mock<Parser> testSubject = _mockRepository.
-                Create<Parser>(mockArgumentsFactory.Object, mockCommandMapper.Object);
+            Mock<Parser> testSubject = CreateMockParser(mockArgumentsFactory.Object, mockCommandMapper.Object);
             testSubject.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary.Object)).Returns(dummyCommand.Object);
             testSubject.CallBase = true;
 
@@ -144,6 +143,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
         {
             return new Parser(argumentsFactory, commandMapper);
+        }
+
+        private Mock<Parser> CreateMockParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        {
+            return _mockRepository.Create<Parser>(argumentsFactory, commandMapper);
         }
     }
 }

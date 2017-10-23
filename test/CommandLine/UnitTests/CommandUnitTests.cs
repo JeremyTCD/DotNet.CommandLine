@@ -32,8 +32,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Mock<ICommandLineAppContext> mockCommandLineAppContext = _mockRepository.Create<ICommandLineAppContext>();
             mockCommandLineAppContext.Setup(c => c.CommandLineAppPrinter).Returns(mockCommandLineAppPrinter.Object);
 
-            // TODO codeanalysis if mocking non abstract class under test, must use create method since there may be arguments
-            // TODO codeanalysis if mocking abstract class class under test, this is allowed
             Mock<Command> testSubject = _mockRepository.Create<Command>();
             testSubject.Setup(c => c.Name).Returns(dummyCommandName);
             testSubject.Setup(c => c.IsDefault).Returns(dummyIsDefault);

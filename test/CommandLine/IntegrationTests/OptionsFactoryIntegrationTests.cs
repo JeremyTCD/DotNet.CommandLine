@@ -20,7 +20,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             DummyCommand dummyCommand = new DummyCommand();
             int numProperties = dummyCommand.GetType().GetProperties().Length;
 
-            Mock<OptionsFactory> testSubject = _mockRepository.Create<OptionsFactory>();
+            Mock<OptionsFactory> testSubject = CreateMockOptionsFactory();
             testSubject.CallBase = true;
 
             // Act
@@ -78,6 +78,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty)), exception.Message);
         }
 
+        private OptionsFactory CreateOptionsFactory()
+        {
+            return new OptionsFactory();
+        }
+
+        private Mock<OptionsFactory> CreateMockOptionsFactory()
+        {
+            return _mockRepository.Create<OptionsFactory>();
+        }
+
         private class DummyCommandWithNamelessProperty : ICommand
         {
             [Option]
@@ -116,11 +126,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             {
                 throw new NotImplementedException();
             }
-        }
-
-        private OptionsFactory CreateOptionsFactory()
-        {
-            return new OptionsFactory();
         }
     }
 }
