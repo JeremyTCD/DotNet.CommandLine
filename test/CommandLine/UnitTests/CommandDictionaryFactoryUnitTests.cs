@@ -43,7 +43,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(ThrowsInvalidOperationExceptionIfACommandNameIsNullOrWhitespaceData))]
+        [MemberData(nameof(CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace_Data))]
         public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace(string dummyName)
         {
             // Arrange
@@ -62,7 +62,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         // TODO codeanalysis data method name
-        public static IEnumerable<object[]> ThrowsInvalidOperationExceptionIfACommandNameIsNullOrWhitespaceData()
+        public static IEnumerable<object[]> CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace_Data()
         {
             yield return new object[] { null };
             yield return new object[] { " " };

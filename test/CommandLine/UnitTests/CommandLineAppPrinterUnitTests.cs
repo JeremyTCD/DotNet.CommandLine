@@ -85,7 +85,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(AppendsGetHelpTipData))]
+        [MemberData(nameof(AppendGetHelpTip_AppendsGetHelpTip_Data))]
         public void AppendGetHelpTip_AppendsGetHelpTip(string dummyCommandPosValue, string dummyTargetPosValue, string dummyExecutableName, string expected)
         {
             // Arrange
@@ -101,7 +101,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> AppendsGetHelpTipData()
+        public static IEnumerable<object[]> AppendGetHelpTip_AppendsGetHelpTip_Data()
         {
             string dummyCommandPosValue = "dummyCommandPosValue";
             string dummyTargetPosValue = "dummyTargetPosValue";
@@ -124,7 +124,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(AppendsUsageData))]
+        [MemberData(nameof(AppendUsage_AppendsUsage_Data))]
         public void AppendUsage_AppendsUsage(string dummyOptionsPosValue, string dummyCommandPosValue, string dummyExecutableName, string expected)
         {
             // Arrange
@@ -140,7 +140,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> AppendsUsageData()
+        public static IEnumerable<object[]> AppendUsage_AppendsUsage_Data()
         {
             string dummyExecutableName = "dummyExecutableName";
             string dummyOptionsPosValue = "dummyOptionsPosValue";
@@ -223,7 +223,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(AppendsParseExceptionData))]
+        [MemberData(nameof(AppendParseException_AppendsParseException_Data))]
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)
         {
             // Arrange
@@ -237,7 +237,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> AppendsParseExceptionData()
+        public static IEnumerable<object[]> AppendParseException_AppendsParseException_Data()
         {
             string dummyMessage = "dummyMessage";
 
@@ -246,7 +246,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GetsOptionNamesData))]
+        [MemberData(nameof(GetOptionNames_GetsOptionNames_Data))]
         public void GetOptionNames_GetsOptionNames(string dummyShortName, string dummyLongName, string expected)
         {
             // Arrange
@@ -260,7 +260,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> GetsOptionNamesData()
+        public static IEnumerable<object[]> GetOptionNames_GetsOptionNames_Data()
         {
             string dummyShortName = "dummyShortName";
             string dummyLongName = "dummyLongName";
@@ -273,7 +273,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(GetsNormalizedPosValueData))]
+        [MemberData(nameof(GetNormalizedPosValue_GetsNormalizedPosValue_Data))]
         public void GetNormalizedPosValue_GetsNormalizedPosValue(string dummyPosValue, string expected)
         {
             // Arrange
@@ -286,7 +286,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> GetsNormalizedPosValueData()
+        public static IEnumerable<object[]> GetNormalizedPosValue_GetsNormalizedPosValue_Data()
         {
             string dummyPosValue = "dummyPosValue";
 
@@ -295,7 +295,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(AppendsRowsData))]
+        [MemberData(nameof(AppendRows_AppendsRows_Data))]
         public void AppendRows_AppendsRows(string dummyRowPrefix, int dummyColumnGap, string expected)
         {
             // Arrange
@@ -319,7 +319,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(expected, result);
         }
 
-        public static IEnumerable<object[]> AppendsRowsData()
+        public static IEnumerable<object[]> AppendRows_AppendsRows_Data()
         {
             string dummyRowPrefix = "    ";
             int dummyColumnGap = 2;

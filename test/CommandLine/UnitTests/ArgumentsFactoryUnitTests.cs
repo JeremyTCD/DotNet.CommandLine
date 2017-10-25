@@ -31,7 +31,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespaceData))]
+        [MemberData(nameof(CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace_Data))]
         public void CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace(string arg)
         {
             // Arrange
@@ -44,14 +44,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", dummyArgs)), exception.Message);
         }
 
-        public static IEnumerable<object[]> ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespaceData()
+        public static IEnumerable<object[]> CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace_Data()
         {
             yield return new object[] { null };
             yield return new object[] { " " };
         }
 
         [Theory]
-        [MemberData(nameof(ThrowsArgumentsExceptionIfACommandNameIsNotTheFirstElementInArray))]
+        [MemberData(nameof(CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand_Data))]
         public void CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
@@ -62,7 +62,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", args)), exception.Message);
         }
 
-        public static IEnumerable<object[]> ThrowsArgumentsExceptionIfACommandNameIsNotTheFirstElementInArray()
+        public static IEnumerable<object[]> CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand_Data()
         {
             yield return new object[] { new string[] { "-optionName", "commandName" } };
             yield return new object[] { new string[] { "commandName", "-optionName", "commandName" } };

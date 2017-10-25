@@ -17,7 +17,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Theory]
-        [MemberData(nameof(ReturnsExpectedExitCodeData))]
+        [MemberData(nameof(Run_ReturnsExpectedExitCode_Data))]
         public void Run_ReturnsExpectedExitCode(string dummyArguments, int expectedExitCode)
         {
             // Arrange
@@ -48,7 +48,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         // Only verify exit codes
         // - printer output is tested in printer unit tests
         // - command output is tested in command unit tests
-        public static IEnumerable<object[]> ReturnsExpectedExitCodeData()
+        public static IEnumerable<object[]> Run_ReturnsExpectedExitCode_Data()
         {
             yield return new object[] { $"test", 0 };
             yield return new object[] { $"-{Strings.OptionLongName_Help}", 1 };

@@ -11,7 +11,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     public class StringConvertibleMapperIntegrationTests
     {
         [Theory]
-        [MemberData(nameof(ReturnsTrueIfTypeCanBeConvertedToFromString))]
+        [MemberData(nameof(CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString_Data))]
         public void CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
         {
             // Arrange
@@ -24,7 +24,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
-        public static IEnumerable<object[]> ReturnsTrueIfTypeCanBeConvertedToFromString()
+        public static IEnumerable<object[]> CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString_Data()
         {
             yield return new object[] { typeof(bool) };
             yield return new object[] { typeof(byte) };
@@ -44,7 +44,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(ReturnsFalseIfTypeCannotBeConvertedToFromString))]
+        [MemberData(nameof(CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString_Data))]
         public void CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString(Type type)
         {
             // Arrange
@@ -57,7 +57,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.False(result);
         }
 
-        public static IEnumerable<object[]> ReturnsFalseIfTypeCannotBeConvertedToFromString()
+        public static IEnumerable<object[]> CanBeConvertedToFromString_ReturnsFalseIfTypeCannotBeConvertedToFromString_Data()
         {
             yield return new object[] { typeof(List<>) };
             yield return new object[] { typeof(Array) };
