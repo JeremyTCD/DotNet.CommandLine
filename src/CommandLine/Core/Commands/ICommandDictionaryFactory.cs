@@ -17,10 +17,10 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <param name="commands">The collection whose elements are used to populate the new <see cref="CommandDictionary"/>.</param>
         /// <returns>A new command dictionary.</returns>
         /// <exception cref="InvalidOperationException">
-        /// Thrown there are multiple default commands.
+        /// Thrown if there are multiple default commands.
         /// </exception>
         /// <exception cref="InvalidOperationException">
-        /// Thrown if a <see cref="ICommand"/>'s name property is null or whitespace.
+        /// Thrown if an <see cref="ICommand"/>'s name property is null or whitespace.
         /// </exception>
         /// <exception cref="InvalidOperationException">
         /// Thrown if multiple commands have the same name.
