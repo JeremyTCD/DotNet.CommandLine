@@ -12,8 +12,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
     {
         private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
-        // TODO codeanalysis verify test method name corresponds to test under class member
-        // TODO codeanalysis if test under class throws exceptions, verify each exception tested with expected test method name
         [Fact]
         public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
         {
@@ -35,7 +33,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             // Act and Assert
             InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
-            // TODO codeanalysis verifyall required if setup called
             _mockRepository.VerifyAll();
             Assert.Equal(
                 string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
@@ -61,7 +58,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             _mockRepository.VerifyAll();
         }
 
-        // TODO codeanalysis data method name
         public static IEnumerable<object[]> CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace_Data()
         {
             yield return new object[] { null };
