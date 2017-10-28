@@ -40,8 +40,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace_Data))]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace(string dummyName)
+        [MemberData(nameof(CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data))]
+        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace(string dummyName)
         {
             // Arrange
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
@@ -58,7 +58,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             _mockRepository.VerifyAll();
         }
 
-        public static IEnumerable<object[]> CreateFromCommands_ThrowsInvalidOperationExceptionIfACommandsNameIsNullOrWhitespace_Data()
+        public static IEnumerable<object[]> CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data()
         {
             yield return new object[] { null };
             yield return new object[] { " " };

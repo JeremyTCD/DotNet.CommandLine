@@ -222,6 +222,24 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             _mockRepository.VerifyAll();
         }
 
+        [Fact]
+        public void AppendCommandHelp_ThrowsInvalidOperationExceptionIfNoCommandWithNameCommandNameExists()
+        {
+            // Arrange
+            string dummyCommandName = "dummyCommandName";
+
+            ICommand dummyOutValue = null;
+            Mock<ICommandDictionary> mockCommandDictionary = _mockRepository.Create<ICommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyOutValue)).Returns(false);
+
+            CommandLineAppPrinter testSubject = CreateCommandLineAppPrinter(mockCommandDictionary.Object);
+
+            // Act and assert
+            InvalidOperationException result = Assert.Throws<InvalidOperationException>(() => testSubject.AppendCommandHelp(dummyCommandName));
+            Assert.Equal(string.Format(Strings.Exception_CommandDoesNotExist, dummyCommandName), result.Message);
+            _mockRepository.VerifyAll();
+        }
+
         [Theory]
         [MemberData(nameof(AppendParseException_AppendsParseException_Data))]
         public void AppendParseException_AppendsParseException(ParseException parseException, string expected)

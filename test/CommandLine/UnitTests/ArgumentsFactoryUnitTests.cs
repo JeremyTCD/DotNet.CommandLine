@@ -31,8 +31,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace_Data))]
-        public void CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace(string arg)
+        [MemberData(nameof(CreateFromArray_ThrowsParseExceptionIfArrayContainsNullOrWhitespaceElements_Data))]
+        public void CreateFromArray_ThrowsParseExceptionIfArrayContainsNullOrWhitespaceElements(string arg)
         {
             // Arrange
             string[] dummyArgs = new string[] { arg };
@@ -44,15 +44,15 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", dummyArgs)), exception.Message);
         }
 
-        public static IEnumerable<object[]> CreateFromArray_ThrowsArgumentsExceptionIfArrayContainsNullOrWhitespace_Data()
+        public static IEnumerable<object[]> CreateFromArray_ThrowsParseExceptionIfArrayContainsNullOrWhitespaceElements_Data()
         {
             yield return new object[] { null };
             yield return new object[] { " " };
         }
 
         [Theory]
-        [MemberData(nameof(CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand_Data))]
-        public void CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
+        [MemberData(nameof(CreateFromArray_ThrowsParseExceptionIfAnElementInArgsOtherThanTheFirstElementHasTheFormatOfACommand_Data))]
+        public void CreateFromArray_ThrowsParseExceptionIfAnElementInArgsOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
             ArgumentsFactory testSubject = CreateArgumentsFactory();
@@ -62,7 +62,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.ParseException_MalformedArguments, string.Join(" ", args)), exception.Message);
         }
 
-        public static IEnumerable<object[]> CreateFromArray_ThrowsArgumentsExceptionIfAnElementOtherThanTheFirstElementHasTheFormatOfACommand_Data()
+        public static IEnumerable<object[]> CreateFromArray_ThrowsParseExceptionIfAnElementInArgsOtherThanTheFirstElementHasTheFormatOfACommand_Data()
         {
             yield return new object[] { new string[] { "-optionName", "commandName" } };
             yield return new object[] { new string[] { "commandName", "-optionName", "commandName" } };
