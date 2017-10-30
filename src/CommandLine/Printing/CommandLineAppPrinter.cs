@@ -214,8 +214,6 @@ namespace JeremyTCD.DotNet.CommandLine
             return _stringBuilder.ToString();
         }
 
-        #region Helpers
-
         /// <summary>
         /// Creates a string containing <paramref name="option"/>'s names. If it has more than one name, the names
         /// are separated by a |.
@@ -295,6 +293,5 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
             }
         }
-        #endregion
     }
 }
