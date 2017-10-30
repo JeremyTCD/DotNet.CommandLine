@@ -51,6 +51,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
+        private FlagMapper CreateFlagMapper()
+        {
+            return new FlagMapper();
+        }
+
         private class DummyCommand : ICommand
         {
             public bool Bool { get; set; }
@@ -67,11 +72,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             {
                 throw new System.NotImplementedException();
             }
-        }
-
-        private FlagMapper CreateFlagMapper()
-        {
-            return new FlagMapper();
         }
     }
 }

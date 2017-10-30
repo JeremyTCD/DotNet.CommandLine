@@ -12,64 +12,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void GetCommand_ThrowsParseExceptionIfNoCommandWithNameCommandNameExists()
-        {
-            // Arrange
-            string dummyCommandName = "dummyCommandName";
-
-            ICommand dummyCommand = null;
-            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
-            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
-
-            Parser testSubject = CreateParser();
-
-            // Act and Assert
-            ParseException exception = Assert.Throws<ParseException>(() => testSubject.GetCommand(dummyCommandName, mockCommandDictionary.Object));
-            _mockRepository.VerifyAll();
-            Assert.Equal(string.Format(Strings.ParseException_CommandDoesNotExist, dummyCommandName), exception.Message);
-        }
-
-        [Fact]
-        public void GetCommand_ReturnsRequestedCommandIfCommandNameIsNotNull()
-        {
-            // Arrange
-            string dummyCommandName = "dummyCommandName";
-
-            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
-
-            ICommand outValue = dummyCommand.Object;
-            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
-            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out outValue));
-
-            Parser testSubject = CreateParser();
-
-            // Act
-            ICommand result = testSubject.GetCommand(dummyCommandName, mockCommandDictionary.Object);
-
-            // Assert
-            _mockRepository.VerifyAll();
-            Assert.Equal(dummyCommand.Object, result);
-        }
-
-        [Fact]
-        public void GetCommand_ReturnsDefaultCommandIfCommandNameIsNull()
-        {
-            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
-
-            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
-            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand.Object);
-
-            Parser testSubject = CreateParser();
-
-            // Act
-            ICommand result = testSubject.GetCommand(null, mockCommandDictionary.Object);
-
-            // Assert
-            _mockRepository.VerifyAll();
-            Assert.Equal(dummyCommand.Object, result);
-        }
-
-        [Fact]
         public void Parse_ReturnsParseResultContainingCommandInstanceIfSuccessful()
         {
             // Arrange
@@ -140,14 +82,72 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(dummyException, result.ParseException.InnerException);
         }
 
-        private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        [Fact]
+        public void GetCommand_ThrowsParseExceptionIfNoCommandWithNameCommandNameExists()
         {
-            return new Parser(argumentsFactory, commandMapper);
+            // Arrange
+            string dummyCommandName = "dummyCommandName";
+
+            ICommand dummyCommand = null;
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out dummyCommand));
+
+            Parser testSubject = CreateParser();
+
+            // Act and Assert
+            ParseException exception = Assert.Throws<ParseException>(() => testSubject.GetCommand(dummyCommandName, mockCommandDictionary.Object));
+            _mockRepository.VerifyAll();
+            Assert.Equal(string.Format(Strings.ParseException_CommandDoesNotExist, dummyCommandName), exception.Message);
+        }
+
+        [Fact]
+        public void GetCommand_ReturnsRequestedCommandIfCommandNameIsNotNull()
+        {
+            // Arrange
+            string dummyCommandName = "dummyCommandName";
+
+            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
+
+            ICommand outValue = dummyCommand.Object;
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.TryGetValue(dummyCommandName, out outValue));
+
+            Parser testSubject = CreateParser();
+
+            // Act
+            ICommand result = testSubject.GetCommand(dummyCommandName, mockCommandDictionary.Object);
+
+            // Assert
+            _mockRepository.VerifyAll();
+            Assert.Equal(dummyCommand.Object, result);
+        }
+
+        [Fact]
+        public void GetCommand_ReturnsDefaultCommandIfCommandNameIsNull()
+        {
+            Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
+
+            Mock<CommandDictionary> mockCommandDictionary = _mockRepository.Create<CommandDictionary>();
+            mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(dummyCommand.Object);
+
+            Parser testSubject = CreateParser();
+
+            // Act
+            ICommand result = testSubject.GetCommand(null, mockCommandDictionary.Object);
+
+            // Assert
+            _mockRepository.VerifyAll();
+            Assert.Equal(dummyCommand.Object, result);
         }
 
         private Mock<Parser> CreateMockParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
         {
             return _mockRepository.Create<Parser>(argumentsFactory, commandMapper);
+        }
+
+        private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        {
+            return new Parser(argumentsFactory, commandMapper);
         }
     }
 }

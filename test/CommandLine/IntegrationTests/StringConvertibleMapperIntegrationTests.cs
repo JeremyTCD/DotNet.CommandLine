@@ -10,6 +10,50 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 {
     public class StringConvertibleMapperIntegrationTests
     {
+        [Fact]
+        public void TryMap_ReturnsFalseIfValueIsNull()
+        {
+            // Arrange
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
+
+            // Act
+            bool result = testSubject.TryMap(null, null, null);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void TryMap_ReturnsFalseIfPropertyTypeCannotBeConvertedToFromString()
+        {
+            // Arrange
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotConvertible));
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
+
+            // Act
+            bool result = testSubject.TryMap(propertyInfo, "dummy", null);
+
+            // Assert
+            Assert.False(result);
+        }
+
+        [Fact]
+        public void TryMap_ReturnsTrueIfMappingIsSuccessful()
+        {
+            // Arrange
+            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Convertible));
+            DummyCommand dummyCommand = new DummyCommand();
+            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
+            string dummyString = "1";
+
+            // Act
+            bool result = testSubject.TryMap(propertyInfo, dummyString, dummyCommand);
+
+            // Assert
+            Assert.Equal(1, dummyCommand.Convertible);
+            Assert.True(result);
+        }
+
         [Theory]
         [MemberData(nameof(CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString_Data))]
         public void CanBeConvertedToFromString_ReturnsTrueIfTypeCanBeConvertedToFromString(Type type)
@@ -64,48 +108,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             yield return new object[] { typeof(DummyCommand) };
         }
 
-        [Fact]
-        public void TryMap_ReturnsFalseIfValueIsNull()
+        private StringConvertibleMapper CreateStringConvertibleMapper()
         {
-            // Arrange
-            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
-
-            // Act
-            bool result = testSubject.TryMap(null, null, null);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
-        public void TryMap_ReturnsFalseIfPropertyTypeCannotBeConvertedToFromString()
-        {
-            // Arrange
-            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.NotConvertible));
-            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
-
-            // Act
-            bool result = testSubject.TryMap(propertyInfo, "dummy", null);
-
-            // Assert
-            Assert.False(result);
-        }
-
-        [Fact]
-        public void TryMap_ReturnsTrueIfMappingIsSuccessful()
-        {
-            // Arrange
-            PropertyInfo propertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.Convertible));
-            DummyCommand dummyCommand = new DummyCommand();
-            StringConvertibleMapper testSubject = CreateStringConvertibleMapper();
-            string dummyString = "1";
-
-            // Act
-            bool result = testSubject.TryMap(propertyInfo, dummyString, dummyCommand);
-
-            // Assert
-            Assert.Equal(1, dummyCommand.Convertible);
-            Assert.True(result);
+            return new StringConvertibleMapper();
         }
 
         private class DummyCommand : ICommand
@@ -124,11 +129,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             {
                 throw new NotImplementedException();
             }
-        }
-
-        private StringConvertibleMapper CreateStringConvertibleMapper()
-        {
-            return new StringConvertibleMapper();
         }
     }
 }

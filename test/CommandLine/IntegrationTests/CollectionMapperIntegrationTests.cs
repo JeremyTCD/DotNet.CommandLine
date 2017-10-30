@@ -83,6 +83,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.True(result);
         }
 
+        private CollectionMapper CreateCollectionMapper(IActivatorService activatorService = null)
+        {
+            return new CollectionMapper(activatorService);
+        }
+
         private class DummyCommand : ICommand
         {
             public List<string> StringCollection { get; set; }
@@ -101,11 +106,6 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             {
                 throw new System.NotImplementedException();
             }
-        }
-
-        private CollectionMapper CreateCollectionMapper(IActivatorService activatorService = null)
-        {
-            return new CollectionMapper(activatorService);
         }
     }
 }

@@ -78,20 +78,26 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(string.Format(Strings.Exception_OptionAttributeMustHaveName, nameof(DummyCommandWithNamelessProperty.DummyNamelessOptionProperty)), exception.Message);
         }
 
-        private OptionsFactory CreateOptionsFactory()
-        {
-            return new OptionsFactory();
-        }
-
         private Mock<OptionsFactory> CreateMockOptionsFactory()
         {
             return _mockRepository.Create<OptionsFactory>();
         }
 
-        private class DummyCommandWithNamelessProperty : ICommand
+        private OptionsFactory CreateOptionsFactory()
         {
-            [Option]
-            public string DummyNamelessOptionProperty { get; }
+            return new OptionsFactory();
+        }
+
+        private class DummyCommand : ICommand
+        {
+            [Option(
+                typeof(DummyStrings),
+                nameof(DummyStrings.OptionShortName_Dummy),
+                nameof(DummyStrings.OptionLongName_Dummy),
+                nameof(DummyStrings.OptionDescription_Dummy))]
+            public string DummyOptionProperty { get; }
+
+            public string DummyNoAttributeProperty { get; }
 
             public string Name => throw new NotImplementedException();
 
@@ -105,16 +111,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             }
         }
 
-        private class DummyCommand : ICommand
+        private class DummyCommandWithNamelessProperty : ICommand
         {
-            [Option(
-                typeof(DummyStrings),
-                nameof(DummyStrings.OptionShortName_Dummy),
-                nameof(DummyStrings.OptionLongName_Dummy),
-                nameof(DummyStrings.OptionDescription_Dummy))]
-            public string DummyOptionProperty { get; }
-
-            public string DummyNoAttributeProperty { get; }
+            [Option]
+            public string DummyNamelessOptionProperty { get; }
 
             public string Name => throw new NotImplementedException();
 
