@@ -19,7 +19,7 @@ namespace JeremyTCD.DotNet.CommandLine
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandLineAppPrinter, CommandLineAppPrinter>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<ICommandMapper, CommandMapper>());
             serviceCollection.TryAdd(ServiceDescriptor.Singleton<IOptionsFactory, OptionsFactory>());
-            serviceCollection.TryAdd(ServiceDescriptor.Singleton<IArgumentsFactory, ArgumentsFactory>());
+            serviceCollection.TryAdd(ServiceDescriptor.Singleton<IArgumentAccessorFactory, ArgumentAccessorFactory>());
 
             // Multiple implementations of IMapper are allowed
             serviceCollection.AddSingleton<IMapper, CollectionMapper>();

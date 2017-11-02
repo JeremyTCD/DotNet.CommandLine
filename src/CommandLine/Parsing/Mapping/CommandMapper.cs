@@ -24,21 +24,21 @@ namespace JeremyTCD.DotNet.CommandLine
         }
 
         /// <summary>
-        /// Maps <paramref name="arguments"/> to properties in <paramref name="command"/> that have an <see cref="OptionAttribute"/>.
+        /// Maps <paramref name="argumentAccessor"/> to properties in <paramref name="command"/> that have an <see cref="OptionAttribute"/>.
         /// </summary>
-        /// <param name="arguments"></param>
+        /// <param name="argumentAccessor"></param>
         /// <param name="command"></param>
         /// <exception cref="ParseException">
-        /// Thrown if <paramref name="arguments"/> contains an option that does not exist.
+        /// Thrown if <paramref name="argumentAccessor"/> contains an option that does not exist.
         /// </exception>
         /// <exception cref="ParseException">
-        /// Thrown if <paramref name="arguments"/> contains an invalid option value.
+        /// Thrown if <paramref name="argumentAccessor"/> contains an invalid option value.
         /// </exception>
-        public virtual void Map(IArguments arguments, ICommand command)
+        public virtual void Map(IArgumentAccessor argumentAccessor, ICommand command)
         {
             IEnumerable<Option> options = _optionsFactory.CreateFromCommand(command);
 
-            foreach (KeyValuePair<string, string> optionArg in arguments.OptionArgs)
+            foreach (KeyValuePair<string, string> optionArg in argumentAccessor.OptionArgs)
             {
                 Option option = options.SingleOrDefault(o => o.ShortName == optionArg.Key || o.LongName == optionArg.Key);
 

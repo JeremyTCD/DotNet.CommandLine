@@ -3,8 +3,8 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public interface IArgumentsFactory
+    public interface IArgumentAccessorFactory
     {
-        IArguments CreateFromArray(string[] args);
+        IArgumentAccessor CreateFromArray(string[] args);
     }
 }

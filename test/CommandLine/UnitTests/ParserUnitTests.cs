@@ -22,16 +22,16 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
 
             Mock<ICommandDictionary> dummyCommandDictionary = _mockRepository.Create<ICommandDictionary>();
 
-            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
-            mockArguments.Setup(a => a.CommandName).Returns(dummyCommandName);
+            Mock<IArgumentAccessor> mockArgumentAccessor = _mockRepository.Create<IArgumentAccessor>();
+            mockArgumentAccessor.Setup(a => a.CommandName).Returns(dummyCommandName);
 
-            Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(mockArguments.Object);
+            Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
+            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(mockArgumentAccessor.Object);
 
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
-            mockCommandMapper.Setup(c => c.Map(mockArguments.Object, dummyCommand.Object));
+            mockCommandMapper.Setup(c => c.Map(mockArgumentAccessor.Object, dummyCommand.Object));
 
-            Mock<Parser> testSubject = CreateMockParser(mockArgumentsFactory.Object, mockCommandMapper.Object);
+            Mock<Parser> testSubject = CreateMockParser(mockArgumentAccessorFactory.Object, mockCommandMapper.Object);
             testSubject.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary.Object)).Returns(dummyCommand.Object);
             testSubject.CallBase = true;
 
@@ -50,10 +50,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string[] dummyArgs = new string[0];
             ParseException dummyParseException = new ParseException();
 
-            Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
+            Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
+            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
 
-            Parser testSubject = CreateParser(mockArgumentsFactory.Object);
+            Parser testSubject = CreateParser(mockArgumentAccessorFactory.Object);
 
             // Act
             IParseResult result = testSubject.Parse(dummyArgs, null);
@@ -70,10 +70,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string[] dummyArgs = new string[0];
             Exception dummyException = new Exception();
 
-            Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
+            Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
+            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
 
-            Parser testSubject = CreateParser(mockArgumentsFactory.Object);
+            Parser testSubject = CreateParser(mockArgumentAccessorFactory.Object);
 
             // Act
             IParseResult result = testSubject.Parse(dummyArgs, null);
@@ -142,14 +142,14 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Assert.Equal(dummyCommand.Object, result);
         }
 
-        private Mock<Parser> CreateMockParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        private Mock<Parser> CreateMockParser(IArgumentAccessorFactory argumentsAccessorFactory = null, ICommandMapper commandMapper = null)
         {
-            return _mockRepository.Create<Parser>(argumentsFactory, commandMapper);
+            return _mockRepository.Create<Parser>(argumentsAccessorFactory, commandMapper);
         }
 
-        private Parser CreateParser(IArgumentsFactory argumentsFactory = null, ICommandMapper commandMapper = null)
+        private Parser CreateParser(IArgumentAccessorFactory argumentsAccessorFactory = null, ICommandMapper commandMapper = null)
         {
-            return new Parser(argumentsFactory, commandMapper);
+            return new Parser(argumentsAccessorFactory, commandMapper);
         }
     }
 }

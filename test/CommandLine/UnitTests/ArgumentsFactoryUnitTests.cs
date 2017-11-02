@@ -18,10 +18,10 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyCommandName = "dummyCommandName";
             string[] dummyArgs = new[] { dummyCommandName, $"-{dummyOptionName}={dummyOptionValue}" };
 
-            ArgumentsFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
 
             // Act
-            IArguments result = testSubject.CreateFromArray(dummyArgs);
+            IArgumentAccessor result = testSubject.CreateFromArray(dummyArgs);
 
             // Assert
             Assert.Equal(dummyCommandName, result.CommandName);
@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string[] dummyArgs = new string[] { arg };
 
-            ArgumentsFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(dummyArgs));
@@ -55,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromArray_ThrowsParseExceptionIfAnElementInArgsOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
-            ArgumentsFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(args));
@@ -68,9 +68,9 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             yield return new object[] { new string[] { "commandName", "-optionName", "commandName" } };
         }
 
-        private ArgumentsFactory CreateArgumentsFactory()
+        private ArgumentAccessorFactory CreateArgumentsFactory()
         {
-            return new ArgumentsFactory();
+            return new ArgumentAccessorFactory();
         }
     }
 }

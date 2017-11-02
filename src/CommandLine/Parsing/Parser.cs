@@ -7,17 +7,17 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class Parser : IParser
     {
-        private readonly IArgumentsFactory _argumentsFactory;
+        private readonly IArgumentAccessorFactory _argumentsAccessorFactory;
         private readonly ICommandMapper _commandMapper;
 
         /// <summary>
         /// Creates a <see cref="Parser"/> instance.
         /// </summary>
-        /// <param name="argumentsFactory"></param>
+        /// <param name="argumentsAccessorFactory"></param>
         /// <param name="commandMapper"></param>
-        public Parser(IArgumentsFactory argumentsFactory, ICommandMapper commandMapper)
+        public Parser(IArgumentAccessorFactory argumentsAccessorFactory, ICommandMapper commandMapper)
         {
-            _argumentsFactory = argumentsFactory;
+            _argumentsAccessorFactory = argumentsAccessorFactory;
             _commandMapper = commandMapper;
         }
 
@@ -36,10 +36,10 @@ namespace JeremyTCD.DotNet.CommandLine
 
             try
             {
-                IArguments arguments = _argumentsFactory.CreateFromArray(args);
-                command = GetCommand(arguments.CommandName, commandDictionary);
+                IArgumentAccessor argumentAccessor = _argumentsAccessorFactory.CreateFromArray(args);
+                command = GetCommand(argumentAccessor.CommandName, commandDictionary);
 
-                _commandMapper.Map(arguments, command);
+                _commandMapper.Map(argumentAccessor, command);
             }
             catch (Exception exception)
             {

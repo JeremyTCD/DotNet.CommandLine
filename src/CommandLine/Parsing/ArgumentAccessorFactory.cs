@@ -5,19 +5,19 @@ using System.Collections.Generic;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class ArgumentsFactory : IArgumentsFactory
+    public class ArgumentAccessorFactory : IArgumentAccessorFactory
     {
         /// <summary>
-        /// Creates an <see cref="Arguments"/> instance from a string array. This function serves as an early filter for
+        /// Creates an <see cref="ArgumentAccessor"/> instance from a string array. This function serves as an early filter for
         /// malformed arguments.
         /// </summary>
         /// <param name="args"></param>
         /// <returns>
-        /// <see cref="Arguments"/>
+        /// <see cref="ArgumentAccessor"/>
         /// </returns>
         /// <exception cref="ParseException">Thrown if array contains null or whitespace elements.</exception>
         /// <exception cref="ParseException">Thrown if an element in <paramref name="args"/> other than the first element has the format of a command.</exception>
-        public virtual IArguments CreateFromArray(string[] args)
+        public virtual IArgumentAccessor CreateFromArray(string[] args)
         {
             int numArgs = args.Length;
             string commandName = null;
@@ -56,7 +56,7 @@ namespace JeremyTCD.DotNet.CommandLine
                 }
             }
 
-            return new Arguments(commandName, options);
+            return new ArgumentAccessor(commandName, options);
         }
     }
 }

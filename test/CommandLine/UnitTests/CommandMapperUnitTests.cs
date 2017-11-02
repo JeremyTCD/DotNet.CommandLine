@@ -22,8 +22,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Dictionary<string, string> dummyOptionArgs = new Dictionary<string, string>() { { dummyOptionKey, null } };
             Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
-            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
-            mockArguments.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
+            Mock<IArgumentAccessor> mockArgumentAccessor = _mockRepository.Create<IArgumentAccessor>();
+            mockArgumentAccessor.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand.Object)).Returns(dummyOptions);
@@ -31,7 +31,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandMapper testSubject = CreateCommandMapper(optionsFactory: mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArguments.Object, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArgumentAccessor.Object, dummyCommand.Object));
             Assert.Equal(string.Format(Strings.ParseException_OptionDoesNotExist, dummyOptionKey), parseException.Message);
             _mockRepository.VerifyAll();
         }
@@ -49,8 +49,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             List<Option> dummyOptions = new List<Option> { dummyOption };
             Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
-            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
-            mockArguments.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
+            Mock<IArgumentAccessor> mockArgumentAccessor = _mockRepository.Create<IArgumentAccessor>();
+            mockArgumentAccessor.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand.Object)).Returns(dummyOptions);
@@ -61,7 +61,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArguments.Object, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArgumentAccessor.Object, dummyCommand.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
             Assert.Equal(dummyException, parseException.InnerException);
@@ -79,8 +79,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             List<Option> dummyOptions = new List<Option> { dummyOption };
             Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
-            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
-            mockArguments.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
+            Mock<IArgumentAccessor> mockArgumentAccessor = _mockRepository.Create<IArgumentAccessor>();
+            mockArgumentAccessor.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand.Object)).Returns(dummyOptions);
@@ -91,7 +91,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act and Assert
-            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArguments.Object, dummyCommand.Object));
+            ParseException parseException = Assert.Throws<ParseException>(() => testSubject.Map(mockArgumentAccessor.Object, dummyCommand.Object));
             _mockRepository.VerifyAll();
             Assert.Equal(string.Format(Strings.ParseException_InvalidOptionValue, dummyOptionValue, dummyOptionKey), parseException.Message);
         }
@@ -108,8 +108,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             List<Option> dummyOptions = new List<Option> { dummyOption };
             Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
-            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
-            mockArguments.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
+            Mock<IArgumentAccessor> mockArgumentAccessor = _mockRepository.Create<IArgumentAccessor>();
+            mockArgumentAccessor.Setup(a => a.OptionArgs).Returns(dummyOptionArgs);
 
             Mock<IOptionsFactory> mockOptionsFactory = _mockRepository.Create<IOptionsFactory>();
             mockOptionsFactory.Setup(o => o.CreateFromCommand(dummyCommand.Object)).Returns(dummyOptions);
@@ -120,7 +120,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandMapper testSubject = CreateCommandMapper(new IMapper[] { mockMapper.Object }, mockOptionsFactory.Object);
 
             // Act
-            testSubject.Map(mockArguments.Object, dummyCommand.Object);
+            testSubject.Map(mockArgumentAccessor.Object, dummyCommand.Object);
 
             // Assert
             _mockRepository.VerifyAll();

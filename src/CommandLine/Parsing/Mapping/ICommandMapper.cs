@@ -5,6 +5,6 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public interface ICommandMapper
     {
-        void Map(IArguments arguments, ICommand command);
+        void Map(IArgumentAccessor argumentAccessor, ICommand command);
     }
 }

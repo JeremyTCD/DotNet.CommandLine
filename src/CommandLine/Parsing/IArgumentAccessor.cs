@@ -2,7 +2,7 @@
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public interface IArguments
+    public interface IArgumentAccessor
     {
         string CommandName { get; }
 
