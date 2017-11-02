@@ -17,17 +17,19 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string[] dummyArgs = new string[0];
             string dummyCommandName = "dummyCommandName";
-            Arguments dummyArguments = new Arguments(dummyCommandName, null);
 
             Mock<ICommand> dummyCommand = _mockRepository.Create<ICommand>();
 
             Mock<ICommandDictionary> dummyCommandDictionary = _mockRepository.Create<ICommandDictionary>();
 
+            Mock<IArguments> mockArguments = _mockRepository.Create<IArguments>();
+            mockArguments.Setup(a => a.CommandName).Returns(dummyCommandName);
+
             Mock<IArgumentsFactory> mockArgumentsFactory = _mockRepository.Create<IArgumentsFactory>();
-            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(dummyArguments);
+            mockArgumentsFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(mockArguments.Object);
 
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
-            mockCommandMapper.Setup(c => c.Map(dummyArguments, dummyCommand.Object));
+            mockCommandMapper.Setup(c => c.Map(mockArguments.Object, dummyCommand.Object));
 
             Mock<Parser> testSubject = CreateMockParser(mockArgumentsFactory.Object, mockCommandMapper.Object);
             testSubject.Setup(p => p.GetCommand(dummyCommandName, dummyCommandDictionary.Object)).Returns(dummyCommand.Object);

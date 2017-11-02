@@ -8,7 +8,7 @@ namespace JeremyTCD.DotNet.CommandLine
     /// <summary>
     /// Convenience type. Representation of an array of strings passed as command line arguments.
     /// </summary>
-    public class Arguments
+    public class Arguments : IArguments
     {
         /// <summary>
         /// Initializes a new instance of the <see cref="Arguments"/> class.

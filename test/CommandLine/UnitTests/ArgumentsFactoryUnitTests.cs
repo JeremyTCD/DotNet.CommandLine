@@ -21,7 +21,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             ArgumentsFactory testSubject = CreateArgumentsFactory();
 
             // Act
-            Arguments result = testSubject.CreateFromArray(dummyArgs);
+            IArguments result = testSubject.CreateFromArray(dummyArgs);
 
             // Assert
             Assert.Equal(dummyCommandName, result.CommandName);
