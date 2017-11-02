@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void Map_ThrowsParseExceptionIfArgumentsContainsAnOptionThatDoesNotExist()
+        public void Map_ThrowsParseExceptionIfArgumentAccessorContainsAnOptionThatDoesNotExist()
         {
             // Arrange
             string dummyOptionKey = "dummyOptionKey";
@@ -68,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Fact]
-        public void Map_ThrowsParseExceptionIfArgumentsContainsAnInvalidOptionValue()
+        public void Map_ThrowsParseExceptionIfArgumentAccessorContainsAnInvalidOptionValue()
         {
             // Arrange
             string dummyOptionKey = "dummyOptionKey";

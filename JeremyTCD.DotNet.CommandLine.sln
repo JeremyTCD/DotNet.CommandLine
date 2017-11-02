@@ -1,7 +1,7 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
-VisualStudioVersion = 15.0.26906.1
+VisualStudioVersion = 15.0.27019.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "JeremyTCD.DotNet.CommandLine", "src\CommandLine\JeremyTCD.DotNet.CommandLine.csproj", "{7DC0FE2D-2DFF-4A15-95D5-745BED2DCB4C}"
 EndProject
@@ -51,6 +51,9 @@ Global
 	GlobalSection(NestedProjects) = preSolution
 		{7DC0FE2D-2DFF-4A15-95D5-745BED2DCB4C} = {CF7D8B60-C46E-427A-8C0E-3F3CB131C7E6}
 		{4C58AF7E-DA16-4047-93E2-6E70E89527D2} = {ED25A249-6CC2-42B1-87C7-4F755C6414C1}
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {7B4B7305-F4BA-43F9-AA84-7B9984BCDF00}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {7B4B7305-F4BA-43F9-AA84-7B9984BCDF00}

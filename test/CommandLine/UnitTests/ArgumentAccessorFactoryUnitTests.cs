@@ -7,7 +7,7 @@ using Xunit;
 
 namespace JeremyTCD.DotNet.CommandLine.Tests
 {
-    public class ArgumentsFactoryUnitTests
+    public class ArgumentAccessorFactoryUnitTests
     {
         [Fact]
         public void CreateFromArray_CreatesArgumentsInstanceFromArray()
@@ -18,7 +18,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             string dummyCommandName = "dummyCommandName";
             string[] dummyArgs = new[] { dummyCommandName, $"-{dummyOptionName}={dummyOptionValue}" };
 
-            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentAccessorFactory();
 
             // Act
             IArgumentAccessor result = testSubject.CreateFromArray(dummyArgs);
@@ -37,7 +37,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             string[] dummyArgs = new string[] { arg };
 
-            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentAccessorFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(dummyArgs));
@@ -55,7 +55,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         public void CreateFromArray_ThrowsParseExceptionIfAnElementInArgsOtherThanTheFirstElementHasTheFormatOfACommand(string[] args)
         {
             // Arrange
-            ArgumentAccessorFactory testSubject = CreateArgumentsFactory();
+            ArgumentAccessorFactory testSubject = CreateArgumentAccessorFactory();
 
             // Act and Assert
             ParseException exception = Assert.Throws<ParseException>(() => testSubject.CreateFromArray(args));
@@ -68,7 +68,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             yield return new object[] { new string[] { "commandName", "-optionName", "commandName" } };
         }
 
-        private ArgumentAccessorFactory CreateArgumentsFactory()
+        private ArgumentAccessorFactory CreateArgumentAccessorFactory()
         {
             return new ArgumentAccessorFactory();
         }
