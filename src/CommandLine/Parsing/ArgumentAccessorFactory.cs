@@ -17,7 +17,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </returns>
         /// <exception cref="ParseException">Thrown if array contains null or whitespace elements.</exception>
         /// <exception cref="ParseException">Thrown if an element in <paramref name="args"/> other than the first element has the format of a command.</exception>
-        public virtual IArgumentAccessor CreateFromArray(string[] args)
+        public virtual IArgumentAccessor Create(string[] args)
         {
             int numArgs = args.Length;
             string commandName = null;

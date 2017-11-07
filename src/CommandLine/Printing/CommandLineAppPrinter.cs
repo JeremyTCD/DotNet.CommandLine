@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandLineAppPrinter : ICommandLineAppPrinter
     {
         private readonly CommandLineAppOptions _appOptions;
-        private readonly IOptionsFactory _optionsFactory;
+        private readonly IOptionCollectionFactory _optionCollectionFactory;
         private readonly ICommandDictionary _commandDictionary;
         private readonly StringBuilder _stringBuilder;
 
@@ -23,12 +23,12 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="commandDictionary"></param>
         /// <param name="commandLineAppOptions"></param>
-        /// <param name="optionsFactory"></param>
-        public CommandLineAppPrinter(ICommandDictionary commandDictionary, CommandLineAppOptions commandLineAppOptions, IOptionsFactory optionsFactory)
+        /// <param name="optionCollectionFactory"></param>
+        public CommandLineAppPrinter(ICommandDictionary commandDictionary, CommandLineAppOptions commandLineAppOptions, IOptionCollectionFactory optionCollectionFactory)
         {
             _commandDictionary = commandDictionary;
             _appOptions = commandLineAppOptions;
-            _optionsFactory = optionsFactory;
+            _optionCollectionFactory = optionCollectionFactory;
             _stringBuilder = new StringBuilder();
         }
 
@@ -86,10 +86,10 @@ namespace JeremyTCD.DotNet.CommandLine
             }
 
             // Default command options
-            IEnumerable<Option> defaultCommandOptions = _optionsFactory.CreateFromCommand(_commandDictionary.DefaultCommand);
-            if (defaultCommandOptions.Count() > 0)
+            IOptionCollection defaultCommandOptionCollection = _optionCollectionFactory.Create(_commandDictionary.DefaultCommand);
+            if (defaultCommandOptionCollection.Count() > 0)
             {
-                string[][] optionDescriptions = defaultCommandOptions.
+                string[][] optionDescriptions = defaultCommandOptionCollection.
                     Select(o => new string[] { GetOptionNames(o), o.Description }).
                     ToArray();
 
@@ -171,10 +171,10 @@ namespace JeremyTCD.DotNet.CommandLine
             AppendUsage("[options]", commandName);
 
             // Options
-            IEnumerable<Option> options = _optionsFactory.CreateFromCommand(command);
-            if (options.Count() > 0)
+            IOptionCollection optionCollection = _optionCollectionFactory.Create(command);
+            if (optionCollection.Count() > 0)
             {
-                string[][] optionDescriptions = options.
+                string[][] optionDescriptions = optionCollection.
                     Select(o => new string[] { GetOptionNames(o), o.Description }).
                     ToArray();
 
@@ -220,7 +220,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </summary>
         /// <param name="option"></param>
         /// <returns></returns>
-        internal virtual string GetOptionNames(Option option)
+        internal virtual string GetOptionNames(IOption option)
         {
             List<string> names = new List<string>();
 

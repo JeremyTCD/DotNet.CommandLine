@@ -26,7 +26,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             mockArgumentAccessor.Setup(a => a.CommandName).Returns(dummyCommandName);
 
             Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
-            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Returns(mockArgumentAccessor.Object);
+            mockArgumentAccessorFactory.Setup(a => a.Create(dummyArgs)).Returns(mockArgumentAccessor.Object);
 
             Mock<ICommandMapper> mockCommandMapper = _mockRepository.Create<ICommandMapper>();
             mockCommandMapper.Setup(c => c.Map(mockArgumentAccessor.Object, dummyCommand.Object));
@@ -51,7 +51,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             ParseException dummyParseException = new ParseException();
 
             Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
-            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyParseException);
+            mockArgumentAccessorFactory.Setup(a => a.Create(dummyArgs)).Throws(dummyParseException);
 
             Parser testSubject = CreateParser(mockArgumentAccessorFactory.Object);
 
@@ -71,7 +71,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             Exception dummyException = new Exception();
 
             Mock<IArgumentAccessorFactory> mockArgumentAccessorFactory = _mockRepository.Create<IArgumentAccessorFactory>();
-            mockArgumentAccessorFactory.Setup(a => a.CreateFromArray(dummyArgs)).Throws(dummyException);
+            mockArgumentAccessorFactory.Setup(a => a.Create(dummyArgs)).Throws(dummyException);
 
             Parser testSubject = CreateParser(mockArgumentAccessorFactory.Object);
 

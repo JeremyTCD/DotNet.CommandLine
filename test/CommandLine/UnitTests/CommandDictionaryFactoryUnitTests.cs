@@ -13,7 +13,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         private readonly MockRepository _mockRepository = new MockRepository(MockBehavior.Default) { DefaultValue = DefaultValue.Mock };
 
         [Fact]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
+        public void Create_ThrowsInvalidOperationExceptionIfThereAreMultipleDefaultCommands()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
@@ -32,7 +32,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.Create(dummyCommands));
             _mockRepository.VerifyAll();
             Assert.Equal(
                 string.Format(Strings.Exception_MultipleDefaultCommands, $"\t{dummyCommand1Name}{Environment.NewLine}\t{dummyCommand2Name}"),
@@ -40,8 +40,8 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Theory]
-        [MemberData(nameof(CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data))]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace(string dummyName)
+        [MemberData(nameof(Create_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data))]
+        public void Create_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace(string dummyName)
         {
             // Arrange
             Mock<ICommand> mockCommand = _mockRepository.Create<ICommand>();
@@ -53,12 +53,12 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.Create(dummyCommands));
             Assert.Equal(Strings.Exception_CommandsMustHaveNames, exception.Message);
             _mockRepository.VerifyAll();
         }
 
-        public static IEnumerable<object[]> CreateFromCommands_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data()
+        public static IEnumerable<object[]> Create_ThrowsInvalidOperationExceptionIfAnICommandsNamePropertyIsNullOrWhitespace_Data()
         {
             yield return new object[] { null };
             yield return new object[] { " " };
@@ -66,7 +66,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
         }
 
         [Fact]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfMultipleCommandsHaveTheSameName()
+        public void Create_ThrowsInvalidOperationExceptionIfMultipleCommandsHaveTheSameName()
         {
             // Arrange
             string dummyCommandName = "dummyCommandName";
@@ -84,13 +84,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.Create(dummyCommands));
             Assert.Equal(string.Format(Strings.Exception_MultipleCommandsWithSameName, dummyCommandName), exception.Message);
             _mockRepository.VerifyAll();
         }
 
         [Fact]
-        public void CreateFromCommands_ThrowsInvalidOperationExceptionIfThereIsNoDefaultCommand()
+        public void Create_ThrowsInvalidOperationExceptionIfThereIsNoDefaultCommand()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
@@ -109,13 +109,13 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act and Assert
-            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.CreateFromCommands(dummyCommands));
+            InvalidOperationException exception = Assert.Throws<InvalidOperationException>(() => testSubject.Create(dummyCommands));
             Assert.Equal(Strings.Exception_DefaultCommandRequired, exception.Message);
             _mockRepository.VerifyAll();
         }
 
         [Fact]
-        public void CreateFromCommands_CreatesCommandDictionary()
+        public void Create_CreatesCommandDictionary()
         {
             // Arrange
             string dummyCommand1Name = "dummyCommand1Name";
@@ -134,7 +134,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             CommandDictionaryFactory testSubject = CreateCommandDictionaryFactory();
 
             // Act
-            ICommandDictionary result = testSubject.CreateFromCommands(dummyCommands);
+            ICommandDictionary result = testSubject.Create(dummyCommands);
 
             // Assert
             Assert.Equal(2, result.Count);

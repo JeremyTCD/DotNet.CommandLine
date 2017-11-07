@@ -6,7 +6,7 @@ using System.Collections.Generic;
 namespace JeremyTCD.DotNet.CommandLine
 {
     /// <summary>
-    /// Represents a factory that creates <see cref="CommandDictionary"/>s.
+    /// Represents a factory that creates an <see cref="ICommandDictionary"/>s.
     /// </summary>
     public interface ICommandDictionaryFactory
     {
@@ -14,7 +14,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// Creates an instance of a class that implements <see cref="ICommandDictionary"/> from a collection of <see cref="ICommand"/>s.
         /// This function serves as a filter for incompatible/invalid commands.
         /// </summary>
-        /// <param name="commands">The collection whose elements are used to populate the new <see cref="CommandDictionary"/>.</param>
+        /// <param name="commands">The collection whose elements are used to populate the new <see cref="ICommandDictionary"/>.</param>
         /// <returns>A new command dictionary.</returns>
         /// <exception cref="InvalidOperationException">
         /// Thrown if there are multiple default commands.
@@ -28,6 +28,6 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <exception cref="InvalidOperationException">
         /// Thrown if there is no default command.
         /// </exception>
-        ICommandDictionary CreateFromCommands(IEnumerable<ICommand> commands);
+        ICommandDictionary Create(IEnumerable<ICommand> commands);
     }
 }

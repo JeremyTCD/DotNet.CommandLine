@@ -5,16 +5,16 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public class CommandLineAppPrinterFactory : ICommandLineAppPrinterFactory
     {
-        private readonly IOptionsFactory _optionsFactory;
+        private readonly IOptionCollectionFactory _optionCollectionFactory;
 
-        public CommandLineAppPrinterFactory(IOptionsFactory optionsFactory)
+        public CommandLineAppPrinterFactory(IOptionCollectionFactory optionCollectionFactory)
         {
-            _optionsFactory = optionsFactory;
+            _optionCollectionFactory = optionCollectionFactory;
         }
 
         public virtual ICommandLineAppPrinter Create(ICommandDictionary commandDictionary, CommandLineAppOptions appOptions)
         {
-            return new CommandLineAppPrinter(commandDictionary, appOptions, _optionsFactory);
+            return new CommandLineAppPrinter(commandDictionary, appOptions, _optionCollectionFactory);
         }
     }
 }

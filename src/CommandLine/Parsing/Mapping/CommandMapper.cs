@@ -10,17 +10,17 @@ namespace JeremyTCD.DotNet.CommandLine
     public class CommandMapper : ICommandMapper
     {
         private readonly IEnumerable<IMapper> _mappers;
-        private readonly IOptionsFactory _optionsFactory;
+        private readonly IOptionCollectionFactory _optionCollectionFactory;
 
         /// <summary>
         /// Initializes a new instance of the <see cref="CommandMapper"/> class.
         /// </summary>
         /// <param name="mappers"></param>
-        /// <param name="optionsFactory"></param>
-        public CommandMapper(IEnumerable<IMapper> mappers, IOptionsFactory optionsFactory)
+        /// <param name="optionCollectionFactory"></param>
+        public CommandMapper(IEnumerable<IMapper> mappers, IOptionCollectionFactory optionCollectionFactory)
         {
             _mappers = mappers;
-            _optionsFactory = optionsFactory;
+            _optionCollectionFactory = optionCollectionFactory;
         }
 
         /// <summary>
@@ -36,11 +36,11 @@ namespace JeremyTCD.DotNet.CommandLine
         /// </exception>
         public virtual void Map(IArgumentAccessor argumentAccessor, ICommand command)
         {
-            IEnumerable<Option> options = _optionsFactory.CreateFromCommand(command);
+            IOptionCollection optionCollection = _optionCollectionFactory.Create(command);
 
             foreach (KeyValuePair<string, string> optionArg in argumentAccessor.OptionArgs)
             {
-                Option option = options.SingleOrDefault(o => o.ShortName == optionArg.Key || o.LongName == optionArg.Key);
+                IOption option = optionCollection.SingleOrDefault(o => o.ShortName == optionArg.Key || o.LongName == optionArg.Key);
 
                 if (option == null)
                 {

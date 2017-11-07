@@ -5,6 +5,6 @@ namespace JeremyTCD.DotNet.CommandLine
 {
     public interface IArgumentAccessorFactory
     {
-        IArgumentAccessor CreateFromArray(string[] args);
+        IArgumentAccessor Create(string[] args);
     }
 }

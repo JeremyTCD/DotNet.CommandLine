@@ -33,7 +33,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             mockCommand.Setup(c => c.Run(mockParseResult.Object, dummyCommandLineAppContext.Object)).Returns(dummyExitCode);
 
             Mock<ICommandDictionaryFactory> mockCommandDictionaryFactory = _mockRepository.Create<ICommandDictionaryFactory>();
-            mockCommandDictionaryFactory.Setup(c => c.CreateFromCommands(dummyCommands)).Returns(dummyCommandDictionary.Object);
+            mockCommandDictionaryFactory.Setup(c => c.Create(dummyCommands)).Returns(dummyCommandDictionary.Object);
 
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, dummyCommandDictionary.Object)).Returns(mockParseResult.Object);
@@ -79,7 +79,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             mockCommandDictionary.Setup(c => c.DefaultCommand).Returns(mockCommand.Object);
 
             Mock<ICommandDictionaryFactory> mockCommandDictionaryFactory = _mockRepository.Create<ICommandDictionaryFactory>();
-            mockCommandDictionaryFactory.Setup(c => c.CreateFromCommands(dummyCommands)).Returns(mockCommandDictionary.Object);
+            mockCommandDictionaryFactory.Setup(c => c.Create(dummyCommands)).Returns(mockCommandDictionary.Object);
 
             Mock<IParser> mockParser = _mockRepository.Create<IParser>();
             mockParser.Setup(p => p.Parse(dummyArgs, mockCommandDictionary.Object)).Returns(dummyParseResult.Object);

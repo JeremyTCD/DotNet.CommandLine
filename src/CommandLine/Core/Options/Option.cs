@@ -5,7 +5,7 @@ using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
 {
-    public class Option
+    public class Option : IOption
     {
         internal Option(PropertyInfo propertyInfo, string shortName, string longName, string description)
         {

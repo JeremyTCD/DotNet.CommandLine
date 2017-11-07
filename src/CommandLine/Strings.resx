@@ -186,4 +186,7 @@
   <data name="OptionShortName_Help" xml:space="preserve">
     <value>h</value>
   </data>
+  <data name="ArgumentException_PropertyInfoMustHaveOptionAttribute" xml:space="preserve">
+    <value>PropertyInfo for property {0} must have an OptionAttribute.</value>
+  </data>
 </root>

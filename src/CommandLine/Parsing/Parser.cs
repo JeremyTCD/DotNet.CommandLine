@@ -36,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine
 
             try
             {
-                IArgumentAccessor argumentAccessor = _argumentsAccessorFactory.CreateFromArray(args);
+                IArgumentAccessor argumentAccessor = _argumentsAccessorFactory.Create(args);
                 command = GetCommand(argumentAccessor.CommandName, commandDictionary);
 
                 _commandMapper.Map(argumentAccessor, command);

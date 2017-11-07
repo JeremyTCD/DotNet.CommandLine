@@ -62,6 +62,15 @@ namespace JeremyTCD.DotNet.CommandLine {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to PropertyInfo for property {0} must have an OptionAttribute..
+        /// </summary>
+        public static string ArgumentException_PropertyInfoMustHaveOptionAttribute {
+            get {
+                return ResourceManager.GetString("ArgumentException_PropertyInfoMustHaveOptionAttribute", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Command &quot;{0}&quot; does not exist.
         /// </summary>
         public static string Exception_CommandDoesNotExist {
