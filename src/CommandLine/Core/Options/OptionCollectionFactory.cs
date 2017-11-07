@@ -2,10 +2,10 @@
 using System.Reflection;
 
 namespace JeremyTCD.DotNet.CommandLine
-{
+{ 
     public class OptionCollectionFactory : IOptionCollectionFactory
     {
-        private readonly IDictionary<ICommand, IOptionCollection> _optionCollectionCache = new Dictionary<ICommand, IOptionCollection>();
+        private readonly IDictionary<ICommand, OptionCollection> _optionCollectionCache = new Dictionary<ICommand, OptionCollection>();
         private readonly IOptionFactory _optionFactory;
 
         public OptionCollectionFactory(IOptionFactory optionFactory)
@@ -16,7 +16,7 @@ namespace JeremyTCD.DotNet.CommandLine
         /// <inheritdoc/>
         public virtual IOptionCollection Create(ICommand command)
         {
-            _optionCollectionCache.TryGetValue(command, out IOptionCollection result);
+            _optionCollectionCache.TryGetValue(command, out OptionCollection result);
 
             if (result == null)
             {
