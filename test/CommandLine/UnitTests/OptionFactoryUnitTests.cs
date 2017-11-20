@@ -33,7 +33,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyOptionProperty));
             OptionAttribute dummyOptionAttribute = dummyPropertyInfo.GetCustomAttribute<OptionAttribute>();
-            Mock<IOption> dummyOption = _mockRepository.Create<IOption>();
+            Mock<Option> dummyOption = _mockRepository.Create<Option>();
 
             Mock<OptionFactory> testSubject = CreateMockOptionFactory();
             testSubject.CallBase = true;
@@ -82,7 +82,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             // Arrange
             PropertyInfo dummyPropertyInfo = typeof(DummyCommand).GetProperty(nameof(DummyCommand.DummyOptionProperty));
             OptionAttribute dummyOptionAttribute = dummyPropertyInfo.GetCustomAttribute<OptionAttribute>();
-            Mock<IOption> dummyOption = _mockRepository.Create<IOption>();
+            Mock<Option> dummyOption = _mockRepository.Create<Option>();
 
             Mock<OptionFactory> testSubject = CreateMockOptionFactory();
             testSubject.CallBase = true;
@@ -136,7 +136,7 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             OptionFactory testSubject = CreateOptionFactory();
 
             // Act 
-            IOption result = testSubject.CreateCore(dummyPropertyInfo, dummyOptionAttribute);
+            Option result = testSubject.CreateCore(dummyPropertyInfo, dummyOptionAttribute);
 
             // Assert
             Assert.Equal(dummyPropertyInfo, result.PropertyInfo);
