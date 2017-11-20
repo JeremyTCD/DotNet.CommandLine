@@ -36,7 +36,7 @@ namespace JeremyTCD.DotNet.CommandLine
             return CreateCore(propertyInfo, optionAttribute);
         }
 
-        internal virtual Option CreateCore(PropertyInfo propertyInfo, OptionAttribute optionAttribute)
+        internal virtual IOption CreateCore(PropertyInfo propertyInfo, OptionAttribute optionAttribute)
         {
             if (string.IsNullOrWhiteSpace(optionAttribute.ShortName) && string.IsNullOrWhiteSpace(optionAttribute.LongName))
             {
