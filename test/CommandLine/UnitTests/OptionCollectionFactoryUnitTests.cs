@@ -44,11 +44,11 @@ namespace JeremyTCD.DotNet.CommandLine.Tests
             OptionCollectionFactory testSubject = CreateOptionCollectionFactory(mockOptionFactory.Object);
 
             // Act
-            IOptionCollection result1 = testSubject.Create(dummyCommand.Object);
-            IOptionCollection result2 = testSubject.Create(dummyCommand.Object);
+            IOptionCollection firstResult = testSubject.Create(dummyCommand.Object);
+            IOptionCollection secondResult = testSubject.Create(dummyCommand.Object);
 
             // Assert
-            Assert.Same(result1, result2);
+            Assert.Same(firstResult, secondResult);
             _mockRepository.VerifyAll();
         }
 
